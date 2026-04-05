@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ascendia RH – Moteur de Paie 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #080b18; --bg2: #0e1225; --bg3: #121830;
+  --card:   #141b30; --card2: #1a2240;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
+  --p1: #7c5cfc; --p2: #5b8af7; --p3: #a78bfa;
+  --gold: #f59e0b; --gold2: #fbbf24;
+  --red: #f87171; --green: #34d399; --orange: #fb923c; --cyan: #22d3ee;
+  --white: #fff; --text: rgba(255,255,255,0.87); --muted: rgba(255,255,255,0.42); --muted2: rgba(255,255,255,0.22);
+  --grad: linear-gradient(135deg,#7c5cfc,#5b8af7);
+  --shadow: 0 20px 60px rgba(0,0,0,0.55); --shadow2: 0 6px 24px rgba(0,0,0,0.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-25vh;left:-20vw;width:70vw;height:60vh;background:radial-gradient(ellipse,rgba(124,92,252,0.1) 0%,transparent 65%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-15vh;right:-10vw;width:45vw;height:45vh;background:radial-gradient(ellipse,rgba(91,138,247,0.07) 0%,transparent 65%);pointer-events:none;z-index:0}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:300;background:rgba(8,11,24,0.9);backdrop-filter:blur(22px);border-bottom:1px solid var(--border);padding:0 36px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.lmark{width:36px;height:36px;background:var(--grad);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;box-shadow:0 4px 18px rgba(124,92,252,0.45)}
+.lname{font-size:17px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ltag{font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:1px}
+.hright{display:flex;align-items:center;gap:11px}
+.dpill{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(251,191,36,.08));border:1px solid rgba(245,158,11,.3);color:var(--gold2);font-size:8px;font-weight:700;letter-spacing:2px;padding:4px 12px;border-radius:20px;text-transform:uppercase;animation:shimmer 3s infinite}
+@keyframes shimmer{0%,100%{opacity:1}50%{opacity:.68}}
+.tabs{display:flex;gap:2px;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:3px;border-radius:10px}
+.tbtn{padding:7px 16px;border:none;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--muted);background:transparent;letter-spacing:.2px}
+.tbtn.active{background:var(--grad);color:#fff;font-weight:600;box-shadow:0 3px 14px rgba(124,92,252,.4)}
+
+.main{max-width:1260px;margin:0 auto;padding:28px 20px;position:relative;z-index:1}
+.panel{display:none}
+.panel.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===================== LAYOUT ===================== */
+.gen-layout{display:grid;grid-template-columns:420px 1fr;gap:20px;align-items:start}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow2);overflow:hidden}
+.ch{padding:14px 20px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.ci{width:29px;height:29px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.ct{font-size:13px;font-weight:600;color:#fff}
+.cs{font-size:9px;color:var(--muted)}
+.cb{padding:16px 20px}
+
+/* LEGAL TABLE */
+.legal-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.lc{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:8px 11px}
+.lc-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px}
+.lc-value{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--cyan)}
+.lc-note{font-size:7px;color:var(--muted2);margin-top:2px}
+.lock-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green);font-size:8px;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:10px}
+
+/* FORM FIELDS */
+.fsec{margin-bottom:18px}
+.flabel{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--p3);margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:8px}
+.ffield{margin-bottom:8px}
+label{display:block;font-size:9px;font-weight:500;color:var(--muted);margin-bottom:3px;letter-spacing:.3px}
+input,select{width:100%;padding:8px 11px;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:7px;font-family:'Sora',sans-serif;font-size:12px;color:#fff;outline:none;transition:all .2s}
+input:focus,select:focus{border-color:var(--p1);background:rgba(124,92,252,.08);box-shadow:0 0 0 3px rgba(124,92,252,.12)}
+select option{background:#1a2240}
+input.vi{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.04)}
+input.vi:focus{border-color:var(--gold);background:rgba(245,158,11,.08);box-shadow:0 0 0 3px rgba(245,158,11,.12)}
+input[type=checkbox]{width:auto;padding:0;accent-color:var(--p1)}
+
+/* TOGGLE ROWS */
+.toggle-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.toggle-row label{margin:0;font-size:10px;color:var(--text);font-weight:500}
+.tswitch{position:relative;display:inline-block;width:34px;height:18px;flex-shrink:0}
+.tswitch input{opacity:0;width:0;height:0}
+.tslider{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:18px;cursor:pointer;transition:.2s}
+.tslider:before{content:'';position:absolute;height:13px;width:13px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s}
+.tswitch input:checked + .tslider{background:var(--p1)}
+.tswitch input:checked + .tslider:before{transform:translateX(16px)}
+
+.evp-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.22);border-radius:11px;padding:12px 13px;margin-bottom:14px}
+.evp-title{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.evp-sub{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,158,11,.65);margin-bottom:5px;margin-top:9px}
+.evp-note{font-size:8px;color:rgba(245,158,11,.6);line-height:1.5;padding:6px 8px;background:rgba(245,158,11,.07);border-radius:6px;margin-top:8px}
+
+.div{height:1px;background:var(--border);margin:14px 0}
+
+.btn{width:100%;padding:11px;background:var(--grad);color:#fff;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;box-shadow:0 4px 18px rgba(124,92,252,.4);transition:all .22s;letter-spacing:.3px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 26px rgba(124,92,252,.55)}
+.btn2{width:100%;padding:9px;background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text);font-family:'Sora',sans-serif;font-size:11px;font-weight:500;border-radius:9px;cursor:pointer;margin-top:7px;transition:all .2s}
+.btn2:hover{background:rgba(255,255,255,.09)}
+
+/* ===================== PAYSLIP ===================== */
+.payslip{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;font-size:10.5px;color:#1a2035;position:relative}
+.demo-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-family:'Sora',sans-serif;font-size:88px;font-weight:800;color:rgba(124,92,252,.04);letter-spacing:12px;pointer-events:none;white-space:nowrap;z-index:1;user-select:none}
+
+/* payslip header */
+.ps-top{background:linear-gradient(135deg,#080b18,#141b30);padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start}
+.ps-logo{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ps-lm{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,#7c5cfc,#5b8af7);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.ps-ln{font-size:13px;font-weight:700;background:linear-gradient(135deg,#7c5cfc,#5b8af7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ps-info{font-size:8px;color:rgba(255,255,255,.42);line-height:2}
+.ps-doc{text-align:right}
+.ps-dt{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.3px;margin-bottom:3px}
+.ps-pr{font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.5px}
+.ps-badge{display:inline-block;margin-top:5px;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#080b18;font-size:7px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:1px}
+.ps-dtag{background:#f87171;color:#fff;font-size:6px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:5px;vertical-align:middle}
+
+/* emp section */
+.ps-emp{padding:12px 24px;background:#f6f8fc;border-bottom:1px solid #eaecf4;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.en{font-size:12px;font-weight:700;color:#080b18;margin-bottom:2px;letter-spacing:-.2px}
+.er{font-size:8px;color:#8896b0;font-weight:500}
+.ed{font-size:8px;color:#344055;margin-top:4px;line-height:2}
+.em{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.em label{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#9ba8be;margin-bottom:1px}
+.em span{font-size:10px;font-weight:600;color:#080b18}
+
+/* summary */
+.ps-sum{display:grid;grid-template-columns:repeat(4,1fr);padding:11px 24px;background:#fff;border-bottom:2px solid #eaecf4;gap:10px}
+.si{text-align:center}
+.sl{font-size:7px;color:#9ba8be;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px}
+.sv{font-size:14px;font-weight:700;letter-spacing:-.4px}
+.sv.brut{color:#080b18}.sv.ch{color:#f87171}.sv.ai{color:#fb923c}.sv.net{color:#059669}
+
+/* cotisations table */
+.ps-tbl{padding:12px 24px}
+.ps-ttl{font-size:7px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#080b18;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #7c5cfc;display:flex;align-items:center;justify-content:space-between}
+.var-legend{background:rgba(124,92,252,.08);color:#7c5cfc;font-size:6.5px;padding:1px 7px;border-radius:4px;font-weight:600;letter-spacing:.5px;border:1px solid rgba(124,92,252,.2)}
+
+table{width:100%;border-collapse:collapse;font-size:9.5px}
+thead th{background:#080b18;color:#fff;padding:6px 7px;text-align:left;font-size:7.5px;font-weight:600;letter-spacing:.5px}
+thead th:not(:first-child){text-align:right}
+tbody tr{border-bottom:1px solid #f0f2f8}
+tbody tr:hover{background:#fafbfe}
+tbody td{padding:4px 7px;color:#1a2035}
+tbody td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:8.5px}
+.rg td{font-weight:700;background:#f0f2fa;color:#7c5cfc;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 7px}
+/* info icon on section rows */
+.rg td .iico{display:inline-block;width:13px;height:13px;border-radius:50%;background:rgba(124,92,252,.15);color:#7c5cfc;font-size:7px;font-weight:700;text-align:center;line-height:13px;cursor:pointer;margin-left:5px;vertical-align:middle;border:1px solid rgba(124,92,252,.25);transition:all .15s}
+.rg td .iico:hover{background:var(--p1);color:#fff}
+
+.neg{color:#f87171}.pos{color:#22c55e}
+.vbadge{display:inline-block;background:linear-gradient(135deg,#fef9c3,#fef08a);color:#92400e;font-size:6px;font-weight:700;padding:1px 4px;border-radius:3px;letter-spacing:.5px;vertical-align:middle;margin-left:3px;border:1px solid rgba(202,138,4,.25)}
+.condline{background:#fffbeb!important} /* conditional lines get a subtle tint */
+.condline td:first-child::before{content:'◆ ';color:#f59e0b;font-size:7px}
+
+/* INFO TOOLTIP (modal) */
+.info-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.info-overlay.show{display:flex}
+.info-modal{background:#1a2240;border:1px solid rgba(124,92,252,.35);border-radius:16px;max-width:520px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.im-head{padding:16px 20px 12px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;justify-content:space-between}
+.im-title{font-size:13px;font-weight:700;color:#fff}
+.im-section{font-size:8px;color:var(--p3);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+.im-close{background:rgba(255,255,255,.08);border:none;color:var(--muted);width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.im-close:hover{background:var(--red);color:#fff}
+.im-body{padding:16px 20px}
+.im-block{margin-bottom:14px}
+.im-bt{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--p3);margin-bottom:8px}
+.im-cond{display:flex;align-items:flex-start;gap:8px;padding:9px 11px;border-radius:9px;font-size:10px;line-height:1.5}
+.im-cond.always{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:rgba(52,211,153,.9)}
+.im-cond.cond{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:rgba(245,158,11,.85)}
+.im-cond.never{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);color:rgba(248,113,113,.85)}
+.im-cond-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.variant-list{list-style:none;display:flex;flex-wrap:wrap;gap:5px}
+.variant-list li{background:rgba(124,92,252,.12);border:1px solid rgba(124,92,252,.2);color:var(--p3);font-size:9px;padding:3px 9px;border-radius:5px}
+.variant-list li.main{background:rgba(124,92,252,.25);color:#fff;font-weight:600}
+.im-note{background:rgba(255,255,255,.04);border-radius:8px;padding:9px 11px;font-size:9px;color:var(--muted);line-height:1.6;border-left:2px solid var(--p1)}
+.im-warn{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);border-radius:8px;padding:9px 11px;font-size:9px;color:rgba(248,113,113,.85);line-height:1.6}
+
+/* net block */
+.ps-net{margin:10px 24px 14px;background:linear-gradient(135deg,#080b18,#141b30);border-radius:12px;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(124,92,252,.2)}
+.nl{color:rgba(255,255,255,.6);font-size:10px;font-weight:500}
+.na{font-size:26px;font-weight:800;letter-spacing:-1px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ni{font-size:7px;color:rgba(255,255,255,.3);margin-top:2px}
+.ps-foot{padding:6px 24px 12px;background:#f6f8fc;font-size:7px;color:#9ba8be;text-align:center}
+
+/* PAS block: always shown */
+.pas-block{padding:7px 24px;background:#fff;border-top:1px solid #eaecf4}
+.pas-block table{font-size:9px}
+.pas-always-note{display:inline-block;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:#34d399;font-size:7px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600}
+
+/* ===================== GUIDE TAB ===================== */
+.guide-hero{margin-bottom:26px}
+.gh1{font-size:24px;font-weight:800;letter-spacing:-.5px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
+.gh2{color:var(--muted);font-size:12px;line-height:1.6}
+
+.guide-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.gs-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.gs-head{padding:13px 16px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border)}
+.gs-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.gs-title{font-size:12px;font-weight:700;color:#fff}
+.gs-count{margin-left:auto;background:rgba(255,255,255,.08);border-radius:10px;font-size:8px;padding:2px 8px;color:var(--muted)}
+.gs-body{padding:14px 16px}
+
+.guide-line{border-bottom:1px solid var(--border);padding:10px 0;display:grid;grid-template-columns:1fr;gap:6px}
+.guide-line:last-child{border-bottom:none}
+.gl-main{font-size:10px;font-weight:600;color:#fff;display:flex;align-items:center;gap:6px}
+.gl-cond{display:inline-flex;align-items:center;gap:3px;font-size:7px;font-weight:700;padding:2px 7px;border-radius:8px}
+.gl-cond.always{background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.2);color:#34d399}
+.gl-cond.cond{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2);color:#fbbf24}
+.gl-cond.never{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.2);color:#f87171}
+.gl-sub{font-size:8px;color:var(--muted);line-height:1.5}
+.gl-vars{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.gl-var{background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.18);color:var(--p3);font-size:8px;padding:2px 7px;border-radius:4px}
+.gl-var.main{background:rgba(124,92,252,.22);color:#c4b5fd;font-weight:600}
+.gl-warn{display:flex;gap:6px;background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.18);border-radius:7px;padding:7px 9px;font-size:8px;color:rgba(248,113,113,.85);line-height:1.5;margin-top:5px}
+.gl-info{display:flex;gap:6px;background:rgba(124,92,252,.07);border:1px solid rgba(124,92,252,.15);border-radius:7px;padding:7px 9px;font-size:8px;color:var(--p3);line-height:1.5;margin-top:5px}
+
+/* ARCHI TAB */
+.archi-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.archi-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.archi-head{padding:14px 18px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.archi-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.archi-t{font-size:13px;font-weight:700;color:#fff}
+.archi-s{font-size:8px;color:var(--muted);margin-top:1px}
+.archi-body{padding:14px 18px}
+.archi-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--border)}
+.archi-item:last-child{border-bottom:none}
+.archi-bullet{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.archi-text strong{display:block;font-size:10px;color:#fff;margin-bottom:2px}
+.archi-text span{font-size:9px;color:var(--muted);line-height:1.5}
+.code-block{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:11px 13px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--cyan);line-height:1.8;overflow-x:auto}
+.code-block .c-comment{color:rgba(255,255,255,.28)}
+.code-block .c-key{color:#a78bfa}
+.code-block .c-val{color:#34d399}
+.code-block .c-num{color:#fb923c}
+.code-block .c-str{color:#fbbf24}
+
+@media(max-width:1000px){.gen-layout,.guide-sections,.archi-grid{grid-template-columns:1fr}.ps-sum{grid-template-columns:repeat(2,1fr)}.hdr{padding:0 14px}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo">
+    <div class="lmark">A</div>
+    <div>
+      <div class="lname">Ascendia RH</div>
+      <div class="ltag">Moteur de Paie 2026 — Architecture Robuste</div>
+    </div>
+  </div>
+  <div class="hright">
+    <a href="index.html" style="font-size:11px;font-weight:600;color:rgba(167,139,250,.7);padding:6px 14px;border-radius:99px;border:1px solid rgba(124,92,252,.2);text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(124,92,252,.12)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='rgba(167,139,250,.7)'">← Portfolio</a>
+    <span class="dpill">✦ Démo</span>
+    <div class="tabs">
+      <button class="tbtn active" onclick="sw('gen',this)">⚡ Générateur</button>
+      <button class="tbtn" onclick="sw('guide',this)">📖 Guide Libellés</button>
+      <button class="tbtn" onclick="sw('archi',this)">🏗 Architecture</button>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+<!-- ==================== GÉNÉRATEUR ==================== -->
+<div id="panel-gen" class="panel active">
+<div class="gen-layout">
+
+<!-- FORMULAIRE -->
+<div>
+  <!-- CONSTANTES LÉGALES (READ-ONLY) -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="ch">
+      <div class="ci" style="background:rgba(52,211,153,.15)">🔒</div>
+      <div>
+        <div class="ct">Constantes légales 2026</div>
+        <div class="cs">Immutables — codées en dur dans le moteur</div>
+      </div>
+    </div>
+    <div class="cb">
+      <div class="lock-badge">🔒 Socle légal — lecture seule</div>
+      <div class="legal-grid">
+        <div class="lc"><div class="lc-label">PSS Mensuel</div><div class="lc-value">4 005 €</div><div class="lc-note">Plafond SS mensuel 2026</div></div>
+        <div class="lc"><div class="lc-label">PSS Annuel</div><div class="lc-value">48 060 €</div><div class="lc-note">4×PSS = 16 020 €</div></div>
+        <div class="lc"><div class="lc-label">SMIC mensuel</div><div class="lc-value">1 801,80 €</div><div class="lc-note">Base 35h/sem.</div></div>
+        <div class="lc"><div class="lc-label">SMIC horaire</div><div class="lc-value">11,88 €</div><div class="lc-note">Brut horaire 2026</div></div>
+        <div class="lc"><div class="lc-label">CSG déductible</div><div class="lc-value">6,80 %</div><div class="lc-note">Base 98,25% du brut</div></div>
+        <div class="lc"><div class="lc-label">CSG/CRDS n.d.</div><div class="lc-value">2,90 %</div><div class="lc-note">CSG 2,40% + CRDS 0,50%</div></div>
+        <div class="lc"><div class="lc-label">Retraite plaf. sal.</div><div class="lc-value">6,90 %</div><div class="lc-note">Sur tranche ≤ PSS</div></div>
+        <div class="lc"><div class="lc-label">Retraite plaf. pat.</div><div class="lc-value">8,55 %</div><div class="lc-note">Sur tranche ≤ PSS</div></div>
+        <div class="lc"><div class="lc-label">Retraite déplaf. sal.</div><div class="lc-value">0,40 %</div><div class="lc-note">Sur totalité brut</div></div>
+        <div class="lc"><div class="lc-label">Retraite déplaf. pat.</div><div class="lc-value">1,90 %</div><div class="lc-note">Sur totalité brut</div></div>
+        <div class="lc"><div class="lc-label">Chômage patronal</div><div class="lc-value">4,05 %</div><div class="lc-note">Plafonné 4×PSS</div></div>
+        <div class="lc"><div class="lc-label">AGS patronal</div><div class="lc-value">0,15 %</div><div class="lc-note">Plafonné 4×PSS</div></div>
+        <div class="lc"><div class="lc-label">Famille (≤ 3,5 SMIC)</div><div class="lc-value">3,45 %</div><div class="lc-note">Taux réduit</div></div>
+        <div class="lc"><div class="lc-label">Famille (> 3,5 SMIC)</div><div class="lc-value">5,25 %</div><div class="lc-note">Taux plein</div></div>
+        <div class="lc"><div class="lc-label">Fillon max (TPE)</div><div class="lc-value">32,05 %</div><div class="lc-note">< 50 salariés</div></div>
+        <div class="lc"><div class="lc-label">Fillon max (GE)</div><div class="lc-value">32,45 %</div><div class="lc-note">≥ 50 salariés</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVP -->
+  <div class="card">
+    <div class="ch">
+      <div class="ci" style="background:rgba(124,92,252,.2)">⚡</div>
+      <div>
+        <div class="ct">Éléments Variables de Paie (EVP)</div>
+        <div class="cs">Modifiables — propres à chaque salarié / entreprise</div>
+      </div>
+    </div>
+    <div class="cb">
+
+      <!-- RÉMUNÉRATION -->
+      <div class="fsec">
+        <div class="flabel">💰 Rémunération</div>
+        <div class="frow">
+          <div><label>Salaire de base brut (€)</label><input type="number" id="brut" value="2800" min="0" step="50" oninput="gen()"></div>
+          <div><label>Heures normales</label><input type="number" id="heures" value="151.67" step="0.01" oninput="gen()"></div>
+        </div>
+        <div class="frow">
+          <div>
+            <label>Mois</label>
+            <select id="mois" onchange="gen()">
+              <option>Janvier</option><option>Février</option><option>Mars</option><option>Avril</option><option selected>Mai</option><option>Juin</option><option>Juillet</option><option>Août</option><option>Septembre</option><option>Octobre</option><option>Novembre</option><option>Décembre</option>
+            </select>
+          </div>
+          <div><label>Année</label><input type="number" id="annee" value="2026" oninput="gen()"></div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- HEURES SUP -->
+      <div class="fsec">
+        <div class="flabel">⏱ Heures supplémentaires <span style="font-size:8px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(affichage conditionnel)</span></div>
+        <div class="toggle-row">
+          <label class="tswitch"><input type="checkbox" id="hs25-on" onchange="gen()"><span class="tslider"></span></label>
+          <label>Heures supp. 25% actives</label>
+        </div>
+        <div id="hs25-fields" style="display:none">
+          <div class="frow" style="margin-top:6px">
+            <div><label>Nb heures (25%)</label><input type="number" id="hs25" value="4" min="0" step="0.5" oninput="gen()"></div>
+            <div><label>Libellé personnalisé</label><input type="text" id="hs25-label" value="Heures supplémentaires – Majoration 25%" oninput="gen()"></div>
+          </div>
+        </div>
+        <div class="toggle-row" style="margin-top:8px">
+          <label class="tswitch"><input type="checkbox" id="hs50-on" onchange="gen()"><span class="tslider"></span></label>
+          <label>Heures supp. 50% actives</label>
+        </div>
+        <div id="hs50-fields" style="display:none">
+          <div class="frow" style="margin-top:6px">
+            <div><label>Nb heures (50%)</label><input type="number" id="hs50" value="2" min="0" step="0.5" oninput="gen()"></div>
+            <div><label>Libellé personnalisé</label><input type="text" id="hs50-label" value="Heures supplémentaires – Majoration 50%" oninput="gen()"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- PRIMES -->
+      <div class="fsec">
+        <div class="flabel">🎯 Prime <span style="font-size:8px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(affichage conditionnel)</span></div>
+        <div class="toggle-row">
+          <label class="tswitch"><input type="checkbox" id="prime-on" onchange="gen()"><span class="tslider"></span></label>
+          <label>Ajouter une prime ce mois</label>
+        </div>
+        <div id="prime-fields" style="display:none;margin-top:8px">
+          <div class="frow">
+            <div><label>Montant prime (€)</label><input type="number" id="prime-mt" value="500" min="0" step="10" oninput="gen()"></div>
+            <div><label>Libellé (libre)</label><input type="text" id="prime-label" value="Prime exceptionnelle" oninput="gen()"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- AVANTAGES -->
+      <div class="fsec">
+        <div class="flabel">🍽 Avantages & Frais</div>
+        <div class="toggle-row">
+          <label class="tswitch"><input type="checkbox" id="tr-on" onchange="gen()"><span class="tslider"></span></label>
+          <label>Titres Restaurant</label>
+        </div>
+        <div id="tr-fields" style="display:none;margin-top:6px">
+          <div class="frow">
+            <div><label>Nb titres / mois</label><input type="number" id="tr-nb" value="20" min="0" oninput="gen()"></div>
+            <div><label>Val. faciale (€)</label><input type="number" id="tr-val" value="10" step="0.5" oninput="gen()"></div>
+          </div>
+          <div class="frow">
+            <div><label>Part patronale (%)</label><input type="number" id="tr-pat-pct" value="60" min="50" max="60" oninput="gen()"></div>
+            <div><label>Libellé</label><input type="text" id="tr-label" value="Titres Restaurant" oninput="gen()"></div>
+          </div>
+        </div>
+        <div class="toggle-row" style="margin-top:8px">
+          <label class="tswitch"><input type="checkbox" id="trans-on" onchange="gen()"><span class="tslider"></span></label>
+          <label>Remboursement transport en commun</label>
+        </div>
+        <div id="trans-fields" style="display:none;margin-top:6px">
+          <div class="frow">
+            <div><label>Abonnement mensuel (€)</label><input type="number" id="trans-mt" value="86.40" step="0.1" oninput="gen()"></div>
+            <div><label>Libellé</label><input type="text" id="trans-label" value="Remboursement Navigo 50%" oninput="gen()"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- TAUX VARIABLES ENTREPRISE -->
+      <div class="fsec">
+        <div class="flabel">🏷 Taux Variables Entreprise</div>
+        <div class="evp-box">
+          <div class="evp-title">⚠️ À paramétrer selon vos accords</div>
+          <div class="evp-sub">🏥 Mutuelle (complémentaire santé)</div>
+          <div class="toggle-row">
+            <label class="tswitch"><input type="checkbox" id="mut-on" checked onchange="gen()"><span class="tslider"></span></label>
+            <label>Mutuelle active</label>
+          </div>
+          <div id="mut-fields">
+            <div class="frow" style="margin-top:6px">
+              <div><label>Part salarié (€/mois)</label><input class="vi" type="number" id="mut-s" value="40" step="0.5" oninput="gen()"></div>
+              <div><label>Part patronal (€/mois)</label><input class="vi" type="number" id="mut-p" value="40" step="0.5" oninput="gen()"></div>
+            </div>
+            <div class="ffield"><label>Libellé mutuelle</label><input type="text" id="mut-label" value="Complémentaire Santé" oninput="gen()"></div>
+          </div>
+          <div class="evp-sub">🛡 Prévoyance</div>
+          <div class="toggle-row">
+            <label class="tswitch"><input type="checkbox" id="prv-on" checked onchange="gen()"><span class="tslider"></span></label>
+            <label>Prévoyance active</label>
+          </div>
+          <div id="prv-fields">
+            <div class="frow" style="margin-top:6px">
+              <div><label>Sal. (%)</label><input class="vi" type="number" id="prv-s" value="0.50" step="0.05" oninput="gen()"></div>
+              <div><label>Pat. (%)</label><input class="vi" type="number" id="prv-p" value="1.00" step="0.05" oninput="gen()"></div>
+            </div>
+            <div class="ffield"><label>Libellé prévoyance</label><input type="text" id="prv-label" value="Complémentaire Incapacité Invalidité Décès" oninput="gen()"></div>
+          </div>
+          <div class="evp-sub">🔴 AGIRC-ARRCO</div>
+          <div class="frow">
+            <div><label>T1 sal. (%)</label><input class="vi" type="number" id="t1s" value="3.15" step="0.01" oninput="gen()"></div>
+            <div><label>T1 pat. (%)</label><input class="vi" type="number" id="t1p" value="4.72" step="0.01" oninput="gen()"></div>
+          </div>
+          <div class="frow">
+            <div><label>T2 sal. (%)</label><input class="vi" type="number" id="t2s" value="8.64" step="0.01" oninput="gen()"></div>
+            <div><label>T2 pat. (%)</label><input class="vi" type="number" id="t2p" value="12.95" step="0.01" oninput="gen()"></div>
+          </div>
+          <div class="evp-sub">⚠️ AT/MP & Fillon</div>
+          <div class="frow">
+            <div><label>AT/MP pat. (%)</label><input class="vi" type="number" id="at" value="1.00" step="0.01" oninput="gen()"></div>
+            <div><label>PAS (%)</label><input class="vi" type="number" id="pas" value="0" min="0" max="45" step="0.1" oninput="gen()"></div>
+          </div>
+          <div class="evp-sub">⚙️ Paramètres employeur</div>
+          <div class="toggle-row">
+            <label class="tswitch"><input type="checkbox" id="cadre" onchange="gen()"><span class="tslider"></span></label>
+            <label>Salarié cadre (APEC obligatoire)</label>
+          </div>
+          <div class="toggle-row" style="margin-top:6px">
+            <label class="tswitch"><input type="checkbox" id="ge" onchange="gen()"><span class="tslider"></span></label>
+            <label>Effectif ≥ 50 salariés</label>
+          </div>
+          <div class="evp-note">💡 AT/MP : fixé par la CARSAT selon le code risque APE. Fillon : calculé automatiquement selon l'effectif et le salaire.</div>
+        </div>
+      </div>
+
+      <button class="btn" onclick="gen()">⚡ Générer la fiche de paie</button>
+      <button class="btn2" onclick="window.print()">🖨 Imprimer / Exporter PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- RÉSULTAT -->
+<div id="ps-out"></div>
+
+</div>
+</div>
+
+<!-- ==================== GUIDE LIBELLÉS ==================== -->
+<div id="panel-guide" class="panel">
+<div class="guide-hero">
+  <div class="gh1">📖 Guide des Libellés & Conditions d'Affichage</div>
+  <div class="gh2">Référence complète : comment les lignes d'une fiche de paie peuvent être nommées différemment d'une entreprise à l'autre, et dans quelles conditions elles apparaissent ou non.</div>
+</div>
+<div class="guide-sections" id="guide-content"></div>
+</div>
+
+<!-- ==================== ARCHITECTURE ==================== -->
+<div id="panel-archi" class="panel">
+<div class="guide-hero">
+  <div class="gh1">🏗 Architecture Métier — Moteur de Paie</div>
+  <div class="gh2">Séparation stricte entre le socle légal universel et les éléments variables de paie (EVP)</div>
+</div>
+<div class="archi-grid">
+  <div class="archi-card">
+    <div class="archi-head">
+      <div class="archi-icon" style="background:rgba(52,211,153,.15)">🔒</div>
+      <div>
+        <div class="archi-t">Constantes Légales (Socle Universel)</div>
+        <div class="archi-s">Codées en dur — jamais modifiables par l'UI</div>
+      </div>
+    </div>
+    <div class="archi-body">
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:#34d399"></div>
+        <div class="archi-text"><strong>PSS 2026 = 4 005 €/mois</strong><span>Plafond de la Sécurité Sociale. Mis à jour chaque année par décret. Sert de base pour toutes les tranches de cotisations.</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:#34d399"></div>
+        <div class="archi-text"><strong>CSG 6,80% + CRDS 0,50% = 9,20% total</strong><span>Taux fixes universels. Base = 98,25% du brut (abattement de 1,75% pour frais professionnels).</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:#34d399"></div>
+        <div class="archi-text"><strong>Retraite SS plafonnée / déplafonnée</strong><span>Ces deux lignes ne peuvent JAMAIS être fusionnées. Bases différentes : T1 sur PSS, déplafonnée sur la totalité du brut.</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:#34d399"></div>
+        <div class="archi-text"><strong>Réduction Fillon (formule légale)</strong><span>Coefficient = (T/0,6) × (1,6×SMIC×12 / brut_annuel − 1). T = 0,3205 (TPE) ou 0,3245 (≥50 sal.). Plafonné à T, ≥ 0.</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:#34d399"></div>
+        <div class="archi-text"><strong>Famille 3,45% ou 5,25%</strong><span>Taux réduit si salaire ≤ 3,5×SMIC (≤ 6 306,30 €). Taux plein au-delà. Calcul automatique dans le moteur.</span></div>
+      </div>
+      <div class="code-block" style="margin-top:10px">
+<span class="c-comment">// LEGAL_2026 — immuable</span>
+<br><span class="c-key">const</span> <span class="c-val">LEGAL</span> = {
+<br>  PSS: <span class="c-num">4005</span>,
+<br>  SMIC: <span class="c-num">1801.80</span>,
+<br>  CSG_DED: <span class="c-num">0.068</span>,
+<br>  CSG_ND: <span class="c-num">0.029</span>,
+<br>  RET_PLA_S: <span class="c-num">0.069</span>,
+<br>  RET_PLA_P: <span class="c-num">0.0855</span>,
+<br>  RET_DEP_S: <span class="c-num">0.004</span>,
+<br>  RET_DEP_P: <span class="c-num">0.019</span>,
+<br>  <span class="c-comment">// ...etc</span>
+<br>};
+      </div>
+    </div>
+  </div>
+
+  <div class="archi-card">
+    <div class="archi-head">
+      <div class="archi-icon" style="background:rgba(245,158,11,.15)">⚡</div>
+      <div>
+        <div class="archi-t">Éléments Variables de Paie (EVP)</div>
+        <div class="archi-s">Modifiables via l'UI — propres à chaque entreprise/salarié</div>
+      </div>
+    </div>
+    <div class="archi-body">
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:var(--gold)"></div>
+        <div class="archi-text"><strong>Mutuelle — montants en €/mois</strong><span>Ni un taux ni une base standard. Défini par le contrat assureur et l'accord d'entreprise. Part patronale ≥ 50%.</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:var(--gold)"></div>
+        <div class="archi-text"><strong>Prévoyance — taux en %</strong><span>Variable selon la convention collective et le statut (cadre/non-cadre). Obligatoire pour les cadres (ACC 14/03/1947).</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:var(--gold)"></div>
+        <div class="archi-text"><strong>AT/MP — taux patronal</strong><span>Notifié par la CARSAT. Dépend du code risque APE et du taux d'accidentalité de l'entreprise. De 0,5% à +10%.</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:var(--gold)"></div>
+        <div class="archi-text"><strong>AGIRC-ARRCO T1/T2</strong><span>Taux contractuels. Les taux minimaux sont fixés, mais l'entreprise peut majorer par accord. T2 disparaît si brut ≤ PSS.</span></div>
+      </div>
+      <div class="archi-item">
+        <div class="archi-bullet" style="background:var(--gold)"></div>
+        <div class="archi-text"><strong>HS, Primes, Frais — conditionnel</strong><span>N'apparaissent que si actifs dans le mois. Le libellé est libre. Ces EVP modifient la base de cotisation.</span></div>
+      </div>
+      <div class="code-block" style="margin-top:10px">
+<span class="c-comment">// EVP — modifiable par l'UI</span>
+<br><span class="c-key">let</span> <span class="c-val">evp</span> = {
+<br>  brut: <span class="c-num">2800</span>,
+<br>  hs25: { on: <span class="c-num">false</span>, nb: <span class="c-num">0</span>, label: <span class="c-str">"HS 25%"</span> },
+<br>  prime: { on: <span class="c-num">false</span>, mt: <span class="c-num">0</span>, label: <span class="c-str">"Prime"</span> },
+<br>  mutuelle: { on: <span class="c-num">true</span>, sal: <span class="c-num">40</span>, pat: <span class="c-num">40</span> },
+<br>  at_taux: <span class="c-num">0.01</span>, <span class="c-comment">// VAR. entreprise</span>
+<br>  pas_taux: <span class="c-num">0</span>,   <span class="c-comment">// taux perso salarié</span>
+<br>  is_cadre: <span class="c-num">false</span>,
+<br>};
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="archi-card" style="max-width:800px">
+  <div class="archi-head">
+    <div class="archi-icon" style="background:rgba(124,92,252,.2)">📋</div>
+    <div>
+      <div class="archi-t">Règles de conditions d'affichage</div>
+      <div class="archi-s">Logique displayRules — appliquée dans render()</div>
+    </div>
+  </div>
+  <div class="archi-body">
+    <div class="code-block">
+<span class="c-comment">// DISPLAY_RULES — chaque ligne a sa condition</span>
+<br><span class="c-key">const</span> <span class="c-val">DISPLAY_RULES</span> = {
+<br>  <span class="c-comment">// 🟢 TOUJOURS affiché (même à 0€)</span>
+<br>  maladie:     () => <span class="c-num">true</span>,
+<br>  ret_pla:     () => <span class="c-num">true</span>,   <span class="c-comment">// ← jamais fusionner avec déplaf</span>
+<br>  ret_dep:     () => <span class="c-num">true</span>,   <span class="c-comment">// ← toujours ligne séparée</span>
+<br>  arrco_t1:    () => <span class="c-num">true</span>,
+<br>  chomage:     () => <span class="c-num">true</span>,
+<br>  csg_ded:     () => <span class="c-num">true</span>,
+<br>  csg_nd:      () => <span class="c-num">true</span>,
+<br>  pas:         () => <span class="c-num">true</span>,   <span class="c-comment">// ← PAS : toujours, même à 0%</span>
+<br>
+<br>  <span class="c-comment">// 🟡 CONDITIONNEL — masqué si non applicable</span>
+<br>  hs_25:       (e) => e.hs25.on && e.hs25.nb > <span class="c-num">0</span>,
+<br>  hs_50:       (e) => e.hs50.on && e.hs50.nb > <span class="c-num">0</span>,
+<br>  prime:       (e) => e.prime.on && e.prime.mt > <span class="c-num">0</span>,
+<br>  mutuelle:    (e) => e.mutuelle.on,
+<br>  prevoyance:  (e) => e.prevoyance.on,
+<br>  arrco_t2:    (e) => e.brut_total > LEGAL.PSS,  <span class="c-comment">// ← uniquement si brut > PSS</span>
+<br>  transport:   (e) => e.transport.on,
+<br>  tr:          (e) => e.tr.on,
+<br>  apec:        (e) => e.is_cadre,
+<br>  fillon:      (e) => calcFillon(e) > <span class="c-num">0</span>,
+<br>};
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- INFO MODAL -->
+<div class="info-overlay" id="modal" onclick="closeModal(event)">
+  <div class="info-modal" id="modal-content"></div>
+</div>
+
+<script>
+/* ============================================================
+   LEGAL CONSTANTS 2026 — IMMUTABLES
+   ============================================================ */
+const L = {
+  PSS: 4005, PSS4: 4005*4, PSS8: 4005*8,
+  SMIC: 1801.80,
+  CSG_D: 0.068, CSG_ND: 0.029, ABATT: 0.9825,
+  MAL_S: 0.004,
+  MAL_P_R: 0.07,  // ≤ 2,5 SMIC
+  MAL_P_N: 0.13,  // > 2,5 SMIC
+  RET_PLA_S: 0.069, RET_PLA_P: 0.0855,
+  RET_DEP_S: 0.004, RET_DEP_P: 0.019,
+  FAM_R: 0.0345, FAM_N: 0.0525, // ≤ ou > 3,5 SMIC
+  CHO_P: 0.0405, AGS_P: 0.0015,
+  FNAL_S: 0.001, FNAL_G: 0.005,
+  APEC_S: 0.00036, APEC_P: 0.00036,
+  FILLON_T: 0.3205, FILLON_TG: 0.3245,
+  TR_EXON_MAX: 6.91, // max exonéré/titre 2026
+  TRANS_RATE: 0.50,  // 50% obligatoire
+};
+
+/* ============================================================
+   CALCUL FILLON
+   ============================================================ */
+function calcFillon(brut_total, ge) {
+  const T = ge ? L.FILLON_TG : L.FILLON_T;
+  if (brut_total <= 0) return 0;
+  let c = (T / 0.6) * (1.6 * L.SMIC / brut_total - 1);
+  c = Math.min(Math.max(c, 0), T);
+  return brut_total * c;
+}
+
+/* ============================================================
+   CALCUL PRINCIPAL — pure function
+   ============================================================ */
+function calculate(evp) {
+  const {
+    brut_base, hs25_on, hs25_nb, hs50_on, hs50_nb,
+    prime_on, prime_mt, mut_on, mut_s, mut_p,
+    prv_on, prv_s_pct, prv_p_pct,
+    t1s, t1p, t2s, t2p, at_pct, pas_pct,
+    tr_on, tr_nb, tr_val, tr_pat_pct,
+    trans_on, trans_mt,
+    is_cadre, ge
+  } = evp;
+
+  // Taux horaire
+  const h = parseFloat(document.getElementById('heures').value) || 151.67;
+  const th = brut_base / h;
+
+  // HS
+  const hs25_mt = hs25_on ? hs25_nb * th * 1.25 : 0;
+  const hs50_mt = hs50_on ? hs50_nb * th * 1.50 : 0;
+  const prime_mt2 = prime_on ? prime_mt : 0;
+
+  // Brut total soumis à cotisations
+  const brut = brut_base + hs25_mt + hs50_mt + prime_mt2;
+
+  // Bases
+  const pla = Math.min(brut, L.PSS);
+  const pla4 = Math.min(brut, L.PSS4);
+  const t2_base = Math.max(0, Math.min(brut, L.PSS8) - L.PSS);
+  const ass = brut * L.ABATT; // CSG/CRDS base
+
+  // ========= SALARIALES =========
+  const mal_s = brut * L.MAL_S;
+  const ret_pla_s = pla * L.RET_PLA_S;
+  const ret_dep_s = brut * L.RET_DEP_S;
+  const t1_s = pla * (t1s / 100);
+  const t2_s = t2_base * (t2s / 100);
+  const prv_s = prv_on ? brut * (prv_s_pct / 100) : 0;
+  const mut_s2 = mut_on ? mut_s : 0;
+  const csg_d = ass * L.CSG_D;
+  const csg_nd = ass * L.CSG_ND;
+  const apec_s = is_cadre ? Math.min(brut, L.PSS4) * L.APEC_S : 0;
+
+  const tot_s = mal_s + ret_pla_s + ret_dep_s + t1_s + t2_s + prv_s + mut_s2 + csg_d + csg_nd + apec_s;
+
+  // ========= PATRONALES =========
+  const mal_p_taux = brut <= 2.5 * L.SMIC ? L.MAL_P_R : L.MAL_P_N;
+  const mal_p = brut * mal_p_taux;
+  const ret_pla_p = pla * L.RET_PLA_P;
+  const ret_dep_p = brut * L.RET_DEP_P;
+  const t1_p = pla * (t1p / 100);
+  const t2_p = t2_base * (t2p / 100);
+  const prv_p = prv_on ? brut * (prv_p_pct / 100) : 0;
+  const mut_p2 = mut_on ? mut_p : 0;
+  const cho_p = pla4 * L.CHO_P;
+  const ags_p = pla4 * L.AGS_P;
+  const at_p = brut * (at_pct / 100);
+  const fam_p = brut * (brut <= 3.5 * L.SMIC ? L.FAM_R : L.FAM_N);
+  const fnal_p = brut * (ge ? L.FNAL_G : L.FNAL_S);
+  const apec_p = is_cadre ? Math.min(brut, L.PSS4) * L.APEC_P : 0;
+  const fillon = calcFillon(brut, ge);
+
+  const tot_p = mal_p + ret_pla_p + ret_dep_p + t1_p + t2_p + prv_p + mut_p2 + cho_p + ags_p + at_p + fam_p + fnal_p + apec_p - fillon;
+
+  // ========= AVANTAGES =========
+  const tr_pat = tr_on ? tr_nb * tr_val * (tr_pat_pct / 100) : 0;
+  const tr_sal = tr_on ? tr_nb * tr_val * (1 - tr_pat_pct / 100) : 0;
+  const trans_rembours = trans_on ? trans_mt * L.TRANS_RATE : 0;
+
+  // ========= NET =========
+  const net_ai = brut - tot_s + trans_rembours + tr_pat;
+  const net_imp = net_ai + csg_nd;
+  const pas = net_imp * (pas_pct / 100);
+  const net_pay = net_ai - pas;
+
+  return {
+    brut_base, hs25_mt, hs50_mt, prime_mt2, brut,
+    pla, t2_base, ass,
+    s: { mal_s, ret_pla_s, ret_dep_s, t1_s, t2_s, prv_s, mut_s2, csg_d, csg_nd, apec_s, tot: tot_s },
+    p: { mal_p, mal_p_taux, ret_pla_p, ret_dep_p, t1_p, t2_p, prv_p, mut_p2, cho_p, ags_p, at_p, fam_p, fnal_p, apec_p, fillon, tot: tot_p },
+    tr_pat, tr_sal, trans_rembours,
+    net_ai, net_imp, pas, net_pay,
+    cout: brut + tot_p,
+    evp
+  };
+}
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+const f2 = n => n.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
+const fe = n => f2(n) + '\u00a0€';
+const fp = n => (n * 100).toFixed(2) + '\u00a0%';
+const ft = p => parseFloat(p).toFixed(2) + '\u00a0%';
+
+function gv(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function gc(id) { return document.getElementById(id).checked; }
+function gt(id) { return document.getElementById(id).value || ''; }
+
+function getDates(mois, annee) {
+  const M = { Janvier:1,Février:2,Mars:3,Avril:4,Mai:5,Juin:6,Juillet:7,Août:8,Septembre:9,Octobre:10,Novembre:11,Décembre:12 };
+  const m = M[mois]; const last = new Date(annee, m, 0).getDate();
+  const p = n => String(n).padStart(2, '0');
+  const nm = m === 12 ? 1 : m + 1; const ny = m === 12 ? +annee + 1 : annee;
+  return { from: `01/${p(m)}/${annee}`, to: `${last}/${p(m)}/${annee}`, pay: `05/${p(nm)}/${ny}` };
+}
+
+/* ============================================================
+   RENDER — Gère les conditions d'affichage
+   ============================================================ */
+function tr_row(label, base, ts_str, mt_s, mt_p, isVar=false, isCond=false) {
+  const vb = isVar ? '<span class="vbadge">VAR.</span>' : '';
+  const cls = isCond ? ' class="condline"' : '';
+  const sc = mt_s > 0 ? ' class="neg"' : '';
+  const pc = mt_p < 0 ? ` class="pos"` : '';
+  return `<tr${cls}><td>${label}${vb}</td><td>${base}</td><td>${ts_str}</td><td${sc}>${mt_s === 0 ? '–' : f2(mt_s)}</td><td${pc}>${mt_p < 0 ? '– ' + f2(-mt_p) : f2(mt_p)}</td></tr>`;
+}
+
+function sectionRow(label, infoKey) {
+  return `<tr class="rg"><td>${label}<span class="iico" onclick="showInfo('${infoKey}')">ℹ</span></td><td colspan="4"></td></tr>`;
+}
+
+function gen() {
+  // Toggle visibility
+  document.getElementById('hs25-fields').style.display = gc('hs25-on') ? 'block' : 'none';
+  document.getElementById('hs50-fields').style.display = gc('hs50-on') ? 'block' : 'none';
+  document.getElementById('prime-fields').style.display = gc('prime-on') ? 'block' : 'none';
+  document.getElementById('tr-fields').style.display = gc('tr-on') ? 'block' : 'none';
+  document.getElementById('trans-fields').style.display = gc('trans-on') ? 'block' : 'none';
+  document.getElementById('mut-fields').style.display = gc('mut-on') ? 'block' : 'none';
+  document.getElementById('prv-fields').style.display = gc('prv-on') ? 'block' : 'none';
+
+  const evp = {
+    brut_base: gv('brut'),
+    hs25_on: gc('hs25-on'), hs25_nb: gv('hs25'),
+    hs50_on: gc('hs50-on'), hs50_nb: gv('hs50'),
+    prime_on: gc('prime-on'), prime_mt: gv('prime-mt'),
+    mut_on: gc('mut-on'), mut_s: gv('mut-s'), mut_p: gv('mut-p'),
+    prv_on: gc('prv-on'), prv_s_pct: gv('prv-s'), prv_p_pct: gv('prv-p'),
+    t1s: gv('t1s'), t1p: gv('t1p'), t2s: gv('t2s'), t2p: gv('t2p'),
+    at_pct: gv('at'), pas_pct: gv('pas'),
+    tr_on: gc('tr-on'), tr_nb: gv('tr-nb'), tr_val: gv('tr-val'), tr_pat_pct: gv('tr-pat-pct'),
+    trans_on: gc('trans-on'), trans_mt: gv('trans-mt'),
+    is_cadre: gc('cadre'), ge: gc('ge'),
+  };
+
+  const r = calculate(evp);
+  const mois = gt('mois'); const annee = gt('annee');
+  const d = getDates(mois, annee);
+  const tauxC = r.brut > 0 ? ((r.s.tot / r.brut) * 100).toFixed(1) : '0.0';
+
+  let html = `
+  <div class="payslip">
+    <div class="demo-wm">DÉMO</div>
+    <div class="ps-top">
+      <div>
+        <div class="ps-logo"><div class="ps-lm">A</div><div class="ps-ln">Ascendia RH</div></div>
+        <div class="ps-info">DÉMO – Entreprise Fictive SAS<br>1 rue de la Démo – 75000 Paris [FICTIF]<br>SIRET : 00 000 000 000 000 / 0000Z [DÉMO]</div>
+      </div>
+      <div class="ps-doc">
+        <div class="ps-dt">Bulletin de Paie<span class="ps-dtag">DÉMO</span></div>
+        <div class="ps-pr">Du ${d.from} au ${d.to}</div>
+        <div class="ps-badge">DEMO · ${annee}</div>
+      </div>
+    </div>
+    <div class="ps-emp">
+      <div><div class="en">NOM Prénom [DÉMO]</div><div class="er">Poste Exemple — Coeff. 100</div>
+      <div class="ed">N° SS : 0 00 00 00 000 000 [FICTIF]<br>Matricule : DEMO-001 · IDCC : 0000 [DÉMO]</div></div>
+      <div class="em">
+        <div><label>Heures</label><span>${document.getElementById('heures').value} h</span></div>
+        <div><label>PAS</label><span>${evp.pas_pct} %</span></div>
+        <div><label>Statut</label><span>${evp.is_cadre ? 'Cadre' : 'Non-cadre'}</span></div>
+        <div><label>Période</label><span>${mois} ${annee}</span></div>
+      </div>
+    </div>
+
+    <div class="ps-sum">
+      <div class="si"><div class="sl">Brut total</div><div class="sv brut">${fe(r.brut)}</div></div>
+      <div class="si"><div class="sl">Cotis. salariales</div><div class="sv ch">− ${fe(r.s.tot)}</div></div>
+      <div class="si"><div class="sl">Net avant impôt</div><div class="sv ai">${fe(r.net_ai)}</div></div>
+      <div class="si"><div class="sl">Net à payer</div><div class="sv net">${fe(r.net_pay)}</div></div>
+    </div>
+
+    <div class="ps-tbl">
+      <div class="ps-ttl">
+        Détail des cotisations & contributions
+        <span class="var-legend">VAR. = taux variable entreprise · ◆ = ligne conditionnelle</span>
+      </div>
+      <table>
+        <thead><tr><th style="width:41%">Libellé</th><th>Base (€)</th><th>Taux sal.</th><th>Sal. (–)</th><th>Patronal</th></tr></thead>
+        <tbody>`;
+
+  // ── RÉMUNÉRATION BRUTE ──
+  html += sectionRow('RÉMUNÉRATION BRUTE', 'remun');
+  html += tr_row('Salaire de base – Heures normales', f2(r.brut_base), '–', 0, 0);
+
+  // HS 25% : CONDITIONNEL
+  if (evp.hs25_on && r.hs25_mt > 0) {
+    html += tr_row(gt('hs25-label') || 'Heures supplémentaires – Majoration 25%', f2(r.hs25_mt), '–', 0, 0, false, true);
+  }
+  // HS 50% : CONDITIONNEL
+  if (evp.hs50_on && r.hs50_mt > 0) {
+    html += tr_row(gt('hs50-label') || 'Heures supplémentaires – Majoration 50%', f2(r.hs50_mt), '–', 0, 0, false, true);
+  }
+  // PRIME : CONDITIONNEL
+  if (evp.prime_on && r.prime_mt2 > 0) {
+    html += tr_row(gt('prime-label') || 'Prime exceptionnelle', f2(r.prime_mt2), '–', 0, 0, false, true);
+  }
+  html += `<tr style="font-weight:700;background:#f0f2fa"><td><strong>RÉMUNÉRATION BRUTE</strong></td><td style="text-align:right;font-family:'JetBrains Mono'">${f2(r.brut)}</td><td></td><td></td><td></td></tr>`;
+
+  // ── SANTÉ ──
+  html += sectionRow('SANTÉ', 'sante');
+  html += tr_row('Sécurité Sociale Maladie Maternité Invalidité Décès', f2(r.brut), fp(L.MAL_S), r.s.mal_s, r.p.mal_p);
+  if (evp.prv_on) html += tr_row(gt('prv-label') || 'Complémentaire Incapacité Invalidité Décès', f2(r.brut), ft(evp.prv_s_pct), r.s.prv_s, r.p.prv_p, true, true);
+  if (evp.mut_on) html += tr_row(gt('mut-label') || 'Complémentaire Santé', '–', 'forfait', r.s.mut_s2, r.p.mut_p2, true, true);
+
+  // ── AT/MP ──
+  html += sectionRow('ACCIDENTS DU TRAVAIL — MALADIES PROFESSIONNELLES', 'atmp');
+  html += tr_row('Accidents du Travail – Maladies Professionnelles', f2(r.brut), '– (pat. only)', 0, r.p.at_p, true);
+
+  // ── RETRAITE ── (les deux lignes sont TOUJOURS séparées)
+  html += sectionRow('RETRAITE', 'retraite');
+  html += tr_row('Sécurité Sociale plafonnée', f2(r.pla), fp(L.RET_PLA_S), r.s.ret_pla_s, r.p.ret_pla_p);
+  html += tr_row('Sécurité Sociale déplafonnée', f2(r.brut), fp(L.RET_DEP_S), r.s.ret_dep_s, r.p.ret_dep_p);
+  html += tr_row('Complémentaire Retraite Tranche 1 (AGIRC-ARRCO)', f2(r.pla), ft(evp.t1s), r.s.t1_s, r.p.t1_p, true);
+  // T2 : CONDITIONNEL (uniquement si brut > PSS)
+  if (r.t2_base > 0) {
+    html += tr_row('Complémentaire Retraite Tranche 2 (AGIRC-ARRCO)', f2(r.t2_base), ft(evp.t2s), r.s.t2_s, r.p.t2_p, true, true);
+  }
+
+  // ── FAMILLE ──
+  html += sectionRow('FAMILLE', 'famille');
+  html += tr_row('Allocations familiales', f2(r.brut), '– (pat.)', 0, r.p.fam_p);
+
+  // ── CHÔMAGE ──
+  html += sectionRow('ASSURANCE CHÔMAGE', 'chomage');
+  html += tr_row('Assurance chômage', f2(Math.min(r.brut, L.PSS4)), '0,00 %', 0, r.p.cho_p);
+  html += tr_row('AGS (Garantie des créances)', f2(Math.min(r.brut, L.PSS4)), '– (pat.)', 0, r.p.ags_p);
+
+  // ── AUTRES CONTRIBUTIONS ──
+  html += sectionRow('AUTRES CONTRIBUTIONS DUE PAR L\'EMPLOYEUR', 'autres');
+  html += tr_row('FNAL', f2(r.brut), fp(evp.ge ? L.FNAL_G : L.FNAL_S), 0, r.p.fnal_p, true);
+  if (evp.is_cadre) {
+    html += tr_row('APEC (cadres)', f2(Math.min(r.brut, L.PSS4)), fp(L.APEC_S), r.s.apec_s, r.p.apec_p, false, true);
+  }
+
+  // ── CSG / CRDS ──
+  html += sectionRow('COTISATIONS STATUTAIRES — CSG / CRDS', 'csg');
+  html += tr_row('CSG déductible de l\'impôt sur le revenu', f2(r.ass), fp(L.CSG_D), r.s.csg_d, 0);
+  html += tr_row('CSG-CRDS non déductible de l\'impôt sur le revenu', f2(r.ass), fp(L.CSG_ND), r.s.csg_nd, 0);
+
+  // ── EXONÉRATIONS ──
+  if (r.p.fillon > 0) {
+    html += sectionRow('EXONÉRATIONS ET ALLÈGEMENTS DE COTISATIONS', 'fillon');
+    html += tr_row('Réduction générale des cotisations patronales (Fillon)', f2(r.brut), '–', 0, -r.p.fillon, false, true);
+  }
+
+  // TOTAL
+  html += `<tr style="font-weight:700;background:#eef0fa;font-size:10px">
+    <td><strong>TOTAL DES COTISATIONS</strong></td><td></td>
+    <td style="text-align:right;font-family:'JetBrains Mono';color:#9ba8be">${tauxC} %</td>
+    <td class="neg"><strong>${f2(r.s.tot)}</strong></td>
+    <td><strong>${f2(r.p.tot)}</strong></td>
+  </tr>`;
+
+  html += `</tbody></table></div>`;
+
+  // ── AVANTAGES (si actifs) ──
+  if (evp.tr_on || evp.trans_on) {
+    html += `<div class="ps-tbl" style="padding-top:0">
+    <div class="ps-ttl" style="color:#059669;border-color:#059669">Avantages & Remboursements de frais</div>
+    <table><thead><tr><th style="width:55%">Libellé</th><th colspan="3">Montant</th></tr></thead><tbody>`;
+    if (evp.tr_on) {
+      html += `<tr class="condline"><td>${gt('tr-label') || 'Titres Restaurant'} — Part patronale <span class="vbadge">EXON.</span></td><td colspan="3" style="text-align:right;font-family:'JetBrains Mono';color:#059669">+ ${f2(r.tr_pat)}</td></tr>`;
+      html += `<tr class="condline"><td>${gt('tr-label') || 'Titres Restaurant'} — Déduction salariale</td><td colspan="3" style="text-align:right;font-family:'JetBrains Mono';color:#f87171">– ${f2(r.tr_sal)}</td></tr>`;
+    }
+    if (evp.trans_on) {
+      html += `<tr class="condline"><td>${gt('trans-label') || 'Remboursement Navigo 50%'} <span class="vbadge">EXON.</span></td><td colspan="3" style="text-align:right;font-family:'JetBrains Mono';color:#059669">+ ${f2(r.trans_rembours)}</td></tr>`;
+    }
+    html += `</tbody></table></div>`;
+  }
+
+  // ── RECAP NET ──
+  html += `<div class="ps-tbl" style="padding-top:0"><table><tbody>
+    <tr><td>Brut total soumis à cotisations</td><td style="text-align:right;font-family:'JetBrains Mono'">${f2(r.brut)}</td></tr>
+    <tr><td style="color:#f87171">− Cotisations salariales</td><td style="text-align:right;font-family:'JetBrains Mono';color:#f87171">− ${f2(r.s.tot)}</td></tr>
+    <tr style="font-weight:600"><td>= Net avant impôt sur le revenu</td><td style="text-align:right;font-family:'JetBrains Mono'">${f2(r.net_ai)}</td></tr>
+    <tr><td style="color:#9ba8be;font-size:9px">Base nette imposable</td><td style="text-align:right;font-family:'JetBrains Mono';font-size:9px;color:#9ba8be">${f2(r.net_imp)}</td></tr>
+    <tr><td style="color:#9ba8be;font-size:9px">Coût total employeur (indicatif)</td><td style="text-align:right;font-family:'JetBrains Mono';font-size:9px;color:#9ba8be">${f2(r.cout)}</td></tr>
+  </tbody></table></div>`;
+
+  // ── PAS (TOUJOURS affiché, même à 0%) ──
+  html += `<div class="pas-block">
+    <table><tbody>
+      <tr><td>Net avant impôt sur le revenu</td><td style="text-align:right;font-family:'JetBrains Mono';font-weight:600">${f2(r.net_ai)}</td></tr>
+      <tr>
+        <td>Prélèvement à la source (PAS) – Taux ${evp.pas_pct} % <span class="pas-always-note">⚠ Toujours affiché</span></td>
+        <td style="text-align:right;font-family:'JetBrains Mono';color:#f87171">– ${f2(r.pas)}</td>
+      </tr>
+    </tbody></table>
+  </div>`;
+
+  html += `<div class="ps-net">
+    <div><div class="nl">✅ Net à payer après impôt sur le revenu</div><div class="ni">Virement le ${d.pay} · ⚠ Données fictives DÉMO</div></div>
+    <div class="na">${fe(r.net_pay)}</div>
+  </div>
+  <div class="ps-foot">⚠ Document de démonstration Ascendia RH · Données fictives · Aucune valeur juridique · Page 1/1</div>
+  </div>`;
+
+  document.getElementById('ps-out').innerHTML = html;
+}
+
+/* ============================================================
+   GUIDE DATA — Libellés & Conditions
+   ============================================================ */
+const GUIDE = [
+  {
+    id:'remun', title:'RÉMUNÉRATION BRUTE', color:'#7c5cfc',
+    lines:[
+      {
+        main:'Salaire de base – Heures normales',
+        cond:'always', cond_txt:'Toujours présent. Base du contrat de travail.',
+        vars:['Salaire mensuel brut','Rémunération mensuelle brute','Salaire fixe mensuel','Salaire de base','Appointements'],
+        note:'Peut mentionner ou non le nombre d\'heures (151,67h pour un 35h) selon le logiciel.'
+      },
+      {
+        main:'Heures supplémentaires – Majoration 25%',
+        cond:'cond', cond_txt:'Visible UNIQUEMENT si des HS ont été effectuées. Masqué sinon.',
+        vars:['Heures sup. 25%','H.S. 1 (25%)','Heures supp. 36h–43h','Majorations HS 25%'],
+        note:'Exonérées d\'IR (loi PACTE 2019). Taux peut être réduit à 10% par accord. Base = taux horaire × 1,25.',
+        warn:'Ne jamais confondre avec les astreintes ou le travail de nuit.'
+      },
+      {
+        main:'Heures supplémentaires – Majoration 50%',
+        cond:'cond', cond_txt:'Visible uniquement si heures > 43h/semaine.',
+        vars:['Heures sup. 50%','H.S. 2 (50%)','Heures supplémentaires > 43h'],
+      },
+      {
+        main:'Prime exceptionnelle / Bonus / Gratification',
+        cond:'cond', cond_txt:'Visible uniquement si une prime est accordée ce mois.',
+        vars:['Prime exceptionnelle','Bonus sur objectifs','Prime d\'ancienneté','Garantie d\'ancienneté','Prime commerciale','Gratification','Prime de vacances','13e mois (1/12)','Complément de salaire'],
+        note:'Le libellé est entièrement libre selon la politique d\'entreprise ou la convention collective.',
+      }
+    ]
+  },
+  {
+    id:'sante', title:'SANTÉ', color:'#f87171',
+    lines:[
+      {
+        main:'Sécurité Sociale Maladie Maternité Invalidité Décès',
+        cond:'always', cond_txt:'Obligatoire. Toujours présent même à 0 € de cotisation salariale.',
+        vars:['SS Maladie','Cotisation Maladie','Assurance maladie','Sécurité sociale maladie','SS Maladie-Maternité'],
+        note:'Taux patronal : 7% si salaire ≤ 2,5 SMIC, 13% au-delà. Calculé automatiquement.',
+      },
+      {
+        main:'Complémentaire Incapacité Invalidité Décès',
+        cond:'cond', cond_txt:'Si l\'entreprise a souscrit un contrat de prévoyance. Obligatoire pour les cadres (ACC 14/03/1947).',
+        vars:['Prévoyance','Prévoyance collective','Garantie incapacité/invalidité/décès','Prévoyance cadres','Cotisation prévoyance','IIJ – Incapacité Invalidité','Contrat de prévoyance'],
+        warn:'Ne jamais fusionner avec la ligne Complémentaire Santé. Ce sont deux risques distincts.'
+      },
+      {
+        main:'Complémentaire Santé',
+        cond:'cond', cond_txt:'Si l\'entreprise a mis en place une mutuelle collective (ANI 2016). Part patronale ≥ 50% obligatoire.',
+        vars:['Mutuelle','Mutuelle obligatoire','Mutuelle – Part isolée','Mutuelle famille','Garantie frais de santé','Complémentaire santé obligatoire','Frais de santé'],
+        note:'Apparaît généralement en € forfaitaire (pas en %). La cotisation est définie par le contrat assureur.',
+      }
+    ]
+  },
+  {
+    id:'atmp', title:'AT/MP', color:'#fb923c',
+    lines:[
+      {
+        main:'Accidents du Travail – Maladies Professionnelles',
+        cond:'always', cond_txt:'Obligatoire. Part PATRONALE uniquement. Aucune retenue salariale.',
+        vars:['AT/MP','Cotisation AT','Accidents du travail','AT – Maladies prof.'],
+        warn:'Taux fixé par la CARSAT selon le code risque APE et l\'historique d\'accidents. De 0,5% à +10%.'
+      }
+    ]
+  },
+  {
+    id:'retraite', title:'RETRAITE', color:'#a78bfa',
+    lines:[
+      {
+        main:'Sécurité Sociale plafonnée',
+        cond:'always', cond_txt:'OBLIGATOIRE. Ne peut jamais être fusionnée avec la ligne déplafonnée.',
+        vars:['SS Retraite T1','Cotisation vieillesse plafonnée','Retraite de base Tranche 1','Assurance vieillesse plafonnée'],
+        warn:'⚠ RÈGLE ABSOLUE : Ces deux lignes (plafonnée et déplafonnée) doivent TOUJOURS rester séparées sur le bulletin. Bases et taux distincts.'
+      },
+      {
+        main:'Sécurité Sociale déplafonnée',
+        cond:'always', cond_txt:'OBLIGATOIRE. Toujours distincte. Base = totalité du brut.',
+        vars:['Cotisation vieillesse déplafonnée','Assurance vieillesse déplafonnée','Retraite de base sur totalité'],
+        warn:'⚠ RÈGLE ABSOLUE : Ne jamais fusionner avec la ligne plafonnée, même si les montants semblent proches.'
+      },
+      {
+        main:'Complémentaire Retraite Tranche 1 (AGIRC-ARRCO)',
+        cond:'always', cond_txt:'Obligatoire pour tous les salariés du privé. Base = part de salaire ≤ PSS.',
+        vars:['AGIRC-ARRCO T1','Retraite complémentaire T1','ARRCO Tranche 1','Complémentaire retraite'],
+        note:'Taux minimum fixé par accord AGIRC-ARRCO. L\'entreprise peut pratiquer des taux supérieurs.',
+      },
+      {
+        main:'Complémentaire Retraite Tranche 2 (AGIRC-ARRCO)',
+        cond:'cond', cond_txt:'Visible UNIQUEMENT si le salaire brut > PSS (4 005 €/mois en 2026). Masqué sinon.',
+        vars:['AGIRC-ARRCO T2','Retraite complémentaire T2','ARRCO Tranche 2','Retraite cadre T2','Cotisation complémentaire T2'],
+      }
+    ]
+  },
+  {
+    id:'famille', title:'FAMILLE', color:'#34d399',
+    lines:[
+      {
+        main:'Allocations familiales',
+        cond:'always', cond_txt:'Obligatoire. Part patronale uniquement.',
+        vars:['Cotisations familiales','Famille','Allocations fam.'],
+        note:'Taux réduit 3,45% si salaire ≤ 3,5 SMIC (6 306,30 €). Taux plein 5,25% au-delà.',
+      }
+    ]
+  },
+  {
+    id:'chomage', title:'ASSURANCE CHÔMAGE', color:'#22d3ee',
+    lines:[
+      {
+        main:'Assurance chômage',
+        cond:'always', cond_txt:'Toujours présent. Part salariale = 0% (depuis 2018). Part patronale = 4,05%.',
+        vars:['Assurance chômage','AC','Chômage'],
+        note:'La ligne salariale peut afficher 0,00% ou être omise selon les logiciels, mais la ligne doit figurer.',
+      },
+      {
+        main:'AGS – Garantie des créances des Salariés',
+        cond:'always', cond_txt:'Obligatoire. Part patronale uniquement. Taux = 0,15% plafonné 4×PSS.',
+        vars:['AGS','FNGS','Fonds de garantie AGS'],
+      }
+    ]
+  },
+  {
+    id:'csg', title:'CSG / CRDS', color:'#f59e0b',
+    lines:[
+      {
+        main:'CSG déductible de l\'impôt sur le revenu',
+        cond:'always', cond_txt:'Toujours présent. Taux légal fixe = 6,80%. Base = 98,25% du brut.',
+        vars:['C.S.G. déductible','CSG déductible','Contribution Sociale Généralisée déductible'],
+        note:'Déductible = réduit l\'assiette imposable. L\'abattement de 1,75% représente les frais professionnels forfaitaires.',
+      },
+      {
+        main:'CSG-CRDS non déductible de l\'impôt sur le revenu',
+        cond:'always', cond_txt:'Toujours présent. Taux légal fixe = 2,90%. Même base que CSG déductible.',
+        vars:['CSG/CRDS','C.S.G.-C.R.D.S. non déductible','CSG + CRDS non déductible'],
+        note:'Non déductible = n\'impacte pas l\'assiette imposable. CRDS = 0,50%, CSG non déd. = 2,40%.',
+      }
+    ]
+  },
+  {
+    id:'fillon', title:'EXONÉRATIONS', color:'#059669',
+    lines:[
+      {
+        main:'Réduction générale des cotisations patronales',
+        cond:'cond', cond_txt:'Visible si salaire < 1,6 × SMIC × 12. Au-delà, réduction = 0, ligne masquée.',
+        vars:['Réduction Fillon','Allègement général','Allègement Fillon','Exonération bas salaires','Réduction Loi Fillon'],
+        warn:'Apparaît en NÉGATIF dans la colonne patronale. Réduit uniquement les charges patronales. Coefficient calculé automatiquement.',
+        note:'Formule : C = (T/0,6) × (1,6×SMIC / brut − 1). T = 0,3205 (TPE) ou 0,3245 (≥50 sal.).',
+      }
+    ]
+  },
+  {
+    id:'avantages', title:'AVANTAGES & FRAIS', color:'#fb923c',
+    lines:[
+      {
+        main:'Titres Restaurant – Part patronale (exonérée)',
+        cond:'cond', cond_txt:'Visible uniquement si l\'entreprise a mis en place des TR. Exonérée dans la limite de 6,91 €/titre (2026).',
+        vars:['TR – Part entreprise','Titres repas','Chèques déjeuner','Tickets restaurant – Part employeur'],
+        note:'La part patronale est une addition au net. La part salariale est une retenue. Part patronale doit être entre 50% et 60%.',
+      },
+      {
+        main:'Remboursement titre de transport',
+        cond:'cond', cond_txt:'Obligatoire si le salarié utilise les TC et présente son abonnement. 50% minimum de l\'abonnement.',
+        vars:['Remboursement Navigo 50%','Participation abonnement transport','Indemnité transport en commun','Prise en charge transport'],
+        note:'Exonéré de cotisations et d\'IR dans la limite de 50% du coût. Au-delà, soumis.',
+      }
+    ]
+  }
+];
+
+/* ============================================================
+   RENDER GUIDE
+   ============================================================ */
+function renderGuide() {
+  const container = document.getElementById('guide-content');
+  container.innerHTML = GUIDE.map(sec => {
+    const lines = sec.lines.map(l => {
+      const condCls = l.cond === 'always' ? 'always' : l.cond === 'cond' ? 'cond' : 'never';
+      const condTxt = l.cond === 'always' ? '🟢 Toujours affiché' : l.cond === 'cond' ? '🟡 Conditionnel' : '🔴 Jamais';
+      const vars = l.vars ? `<div class="gl-vars">${l.vars.map((v,i) => `<span class="gl-var${i===0?' main':''}">${v}</span>`).join('')}</div>` : '';
+      const warn = l.warn ? `<div class="gl-warn"><span>⚠</span><span>${l.warn}</span></div>` : '';
+      const info = l.note ? `<div class="gl-info"><span>💡</span><span>${l.note}</span></div>` : '';
+      return `<div class="guide-line">
+        <div class="gl-main">${l.main}<span class="gl-cond ${condCls}">${condTxt}</span></div>
+        <div class="gl-sub">${l.cond_txt}</div>
+        ${vars}${warn}${info}
+      </div>`;
+    }).join('');
+    return `<div class="gs-card">
+      <div class="gs-head">
+        <div class="gs-dot" style="background:${sec.color}"></div>
+        <div class="gs-title">${sec.title}</div>
+        <div class="gs-count">${sec.lines.length} ligne(s)</div>
+      </div>
+      <div class="gs-body">${lines}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   INFO MODAL — section tooltips in payslip
+   ============================================================ */
+const INFO_DATA = {};
+GUIDE.forEach(sec => { INFO_DATA[sec.id] = sec; });
+
+function showInfo(key) {
+  const data = INFO_DATA[key];
+  if (!data) return;
+  const modal = document.getElementById('modal-content');
+  modal.innerHTML = `
+    <div class="im-head">
+      <div>
+        <div class="im-section">Section</div>
+        <div class="im-title">${data.title}</div>
+      </div>
+      <button class="im-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="im-body">
+      ${data.lines.map(l => {
+        const condCls = l.cond === 'always' ? 'always' : l.cond === 'cond' ? 'cond' : 'never';
+        const condIcon = l.cond === 'always' ? '🟢' : l.cond === 'cond' ? '🟡' : '🔴';
+        const condTxt = l.cond === 'always' ? 'Toujours affiché — même si montant = 0 €' : l.cond === 'cond' ? 'Conditionnel — masqué si non applicable' : 'Jamais affiché';
+        return `<div class="im-block">
+          <div class="im-bt">📄 ${l.main}</div>
+          <div class="im-cond ${condCls}">
+            <span class="im-cond-icon">${condIcon}</span>
+            <span><strong>${condTxt}</strong><br>${l.cond_txt}</span>
+          </div>
+          ${l.vars ? `<div style="margin-top:10px"><div class="im-bt">Variantes de libellé courantes</div>
+            <ul class="variant-list">${l.vars.map((v,i) => `<li${i===0?' class="main"':''}>${v}</li>`).join('')}</ul></div>` : ''}
+          ${l.warn ? `<div class="im-warn" style="margin-top:8px">⚠ ${l.warn}</div>` : ''}
+          ${l.note ? `<div class="im-note" style="margin-top:8px">💡 ${l.note}</div>` : ''}
+        </div>`;
+      }).join('<hr style="border:none;border-top:1px solid rgba(255,255,255,.07);margin:12px 0">')}
+    </div>`;
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('show');
+  }
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+function sw(tab, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// INIT
+gen();
+renderGuide();
+</script>
+</body>
+</html>

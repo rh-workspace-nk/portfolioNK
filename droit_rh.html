@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Droit RH 2026 — Guide Complet · Ascendia RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080f;
+  --card:rgba(124,111,255,.06);
+  --border:rgba(124,111,255,.15);
+  --tx:#f5f5f5;
+  --muted:rgba(167,139,250,.7);
+  --blue:#7c6fff;
+  --blue-light:#a78bfa;
+  --grad:linear-gradient(135deg,#a78bfa 0%,#7c6fff 60%,#6d4fe0 100%);
+  --grad-h:linear-gradient(90deg,#a78bfa,#7c6fff);
+  --font:'Inter',sans-serif;
+  --serif:'Playfair Display',serif;
+}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.65}
+
+/* ── COVER ── */
+.cover{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(124,111,255,.18),transparent 70%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(124,111,255,.1),transparent)}
+.cover-brand{position:absolute;top:2rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:.75rem}
+.cover-logo{width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;color:#fff;font-size:15px;flex-shrink:0}
+.cover-brand-name{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.cover-tag{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;background:rgba(124,111,255,.1);padding:.35rem 1rem;border-radius:99px;border:1px solid var(--border)}
+.cover-edition{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem}
+.cover-title{font-family:var(--serif);font-size:clamp(3rem,9vw,7rem);line-height:.92;letter-spacing:-.03em;color:#f5f5f5;margin-bottom:.75rem}
+.cover-title span{color:var(--blue-light)}
+.cover-sub{font-size:clamp(.85rem,1.5vw,.95rem);color:var(--muted);max-width:52ch;margin:0 auto 2.5rem;line-height:1.7}
+.cover-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2.5rem}
+.pill{background:rgba(124,111,255,.1);border:1px solid var(--border);border-radius:99px;padding:.35rem .9rem;font-size:.68rem;color:var(--blue-light);font-weight:500}
+.cover-divider{width:4rem;height:2px;background:var(--grad);border-radius:99px;margin:0 auto 2rem}
+.cover-author{font-size:.75rem;color:var(--muted)}
+.cover-author strong{color:var(--tx)}
+.cover-sources{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-top:1.5rem}
+.cover-src{font-size:.6rem;color:rgba(167,139,250,.5);letter-spacing:.05em}
+
+/* ── NAV ── */
+.toc{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem 2.5rem;margin:3rem auto;max-width:900px}
+.toc-title{font-family:var(--serif);font-size:1.4rem;color:var(--tx);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.toc-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.toc-item{display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;border-radius:10px;transition:background .2s;text-decoration:none;color:var(--tx)}
+.toc-item:hover{background:rgba(124,111,255,.08)}
+.toc-num{font-size:.6rem;font-weight:700;color:var(--blue-light);width:18px;flex-shrink:0}
+.toc-label{font-size:.78rem;color:var(--muted)}
+
+/* ── LAYOUT ── */
+.wrap{max-width:900px;margin:0 auto;padding:0 1.5rem}
+.chapter{padding:4rem 0 2rem}
+.chapter-header{display:flex;align-items:flex-start;gap:1.25rem;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.chapter-num{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding-top:.4rem;flex-shrink:0}
+.chapter-title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.05;letter-spacing:-.02em;color:var(--tx)}
+.chapter-title em{color:var(--blue-light);font-style:italic}
+.chapter-intro{font-size:.88rem;color:var(--muted);line-height:1.75;margin-bottom:2rem}
+
+/* ── CARDS ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem 1.4rem}
+.card-val{font-family:var(--serif);font-size:2rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.4rem}
+.card-lbl{font-size:.72rem;color:var(--muted);line-height:1.5}
+.card-sub{font-size:.65rem;color:rgba(167,139,250,.5);margin-top:.25rem}
+
+/* ── TABLE ── */
+.t-wrap{overflow-x:auto;margin:1.5rem 0}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+thead tr{background:rgba(124,111,255,.1)}
+th{padding:.65rem 1rem;text-align:left;font-weight:600;color:var(--blue-light);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--border)}
+td{padding:.6rem 1rem;border-bottom:1px solid rgba(124,111,255,.07);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(137,170,204,.04)}
+td strong{color:var(--tx)}
+
+/* ── ALERTE / INFO ── */
+.alert{border-radius:14px;padding:1.1rem 1.4rem;margin:1.25rem 0;display:flex;gap:.85rem;align-items:flex-start}
+.alert-red{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2)}
+.alert-blue{background:rgba(78,133,191,.08);border:1px solid rgba(78,133,191,.2)}
+.alert-green{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.18)}
+.alert-yellow{background:rgba(250,204,21,.06);border:1px solid rgba(250,204,21,.2)}
+.alert-icon{font-size:1.1rem;flex-shrink:0;margin-top:.05rem}
+.alert-body{flex:1}
+.alert-title{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem}
+.alert-red .alert-title{color:#ef4444}
+.alert-blue .alert-title{color:var(--blue-light)}
+.alert-green .alert-title{color:#4ade80}
+.alert-yellow .alert-title{color:#facc15}
+.alert-text{font-size:.78rem;color:var(--muted);line-height:1.6}
+
+/* ── SCHEMA / PROCESS ── */
+.schema{display:flex;align-items:stretch;gap:0;margin:1.5rem 0;overflow-x:auto}
+.schema-step{flex:1;min-width:120px;background:var(--card);border:1px solid var(--border);border-right:none;padding:1rem .9rem;text-align:center;position:relative}
+.schema-step:last-child{border-right:1px solid var(--border);border-radius:0 12px 12px 0}
+.schema-step:first-child{border-radius:12px 0 0 12px}
+.schema-step::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:.75rem;color:var(--blue-light);z-index:1;background:var(--bg);padding:0 2px}
+.schema-step:last-child::after{display:none}
+.schema-num{font-size:.58rem;font-weight:700;color:var(--blue-light);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem}
+.schema-lbl{font-size:.7rem;color:var(--tx);font-weight:500;line-height:1.35}
+.schema-sub{font-size:.63rem;color:var(--muted);margin-top:.25rem;line-height:1.3}
+
+/* ── AVANT/APRÈS ── */
+.avap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.avap-box{border-radius:14px;padding:1.1rem 1.3rem}
+.avap-avant{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18)}
+.avap-apres{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.18)}
+.avap-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.65rem}
+.avap-avant .avap-label{color:#ef4444}
+.avap-apres .avap-label{color:#4ade80}
+.avap-item{font-size:.76rem;color:var(--muted);padding:.2rem 0;display:flex;gap:.5rem;align-items:flex-start;line-height:1.45}
+.avap-item::before{content:'•';color:var(--muted);flex-shrink:0;margin-top:.05rem}
+.avap-apres .avap-item::before{content:'✓';color:#4ade80}
+.avap-avant .avap-item::before{content:'✗';color:#ef4444}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:.6rem;margin:1.5rem 0}
+.check-item{display:flex;gap:.85rem;align-items:flex-start;padding:.75rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:.1rem;position:relative}
+.check-urgent .check-box{border-color:#ef4444;background:rgba(239,68,68,.12)}
+.check-important .check-box{border-color:var(--blue-light);background:rgba(124,111,255,.12)}
+.check-anticipation .check-box{border-color:#4ade80;background:rgba(74,222,128,.1)}
+.check-text{font-size:.79rem;color:var(--muted);line-height:1.55;flex:1}
+.check-badge{font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;border-radius:99px;flex-shrink:0;margin-top:.15rem}
+.check-urgent .check-badge{background:rgba(239,68,68,.15);color:#ef4444}
+.check-important .check-badge{background:rgba(124,111,255,.12);color:var(--blue-light)}
+.check-anticipation .check-badge{background:rgba(74,222,128,.1);color:#4ade80}
+
+/* ── SEPARATEUR ── */
+.sep{display:flex;align-items:center;gap:1rem;margin:3rem 0 2rem}
+.sep-line{flex:1;height:1px;background:var(--border)}
+.sep-icon{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* ── FOOTER ── */
+.doc-footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid var(--border);margin-top:4rem}
+.doc-footer-logo{font-family:var(--serif);font-style:italic;font-size:1.5rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.doc-footer-note{font-size:.68rem;color:rgba(167,139,250,.45);line-height:1.7;max-width:50ch;margin:0 auto}
+
+/* ── PRINT ── */
+@media print{body{background:#fff;color:#000}
+  .cover-bg,.toc,.chapter-header,.alert,.card,.schema-step,.avap-box,.check-item{background:rgba(0,0,0,.04)!important;color:#000!important}
+}
+@media(max-width:600px){.avap{grid-template-columns:1fr}.schema{flex-direction:column}.schema-step{border-right:1px solid var(--border)!important;border-bottom:none!important;border-radius:12px!important;margin-bottom:.5rem}.schema-step::after{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TOP NAV ═══════════════ -->
+<nav style="
+  position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:900;
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(7,8,15,.88);backdrop-filter:blur(20px);
+  border:1px solid rgba(124,111,255,.18);border-radius:99px;
+  padding:.35rem .5rem;box-shadow:0 8px 32px rgba(0,0,0,.5);
+">
+  <a href="index.html" style="
+    display:flex;align-items:center;gap:.5rem;
+    font-size:.7rem;font-weight:600;color:rgba(167,139,250,.8);
+    padding:.3rem .8rem;border-radius:99px;
+    transition:all .2s;text-decoration:none;
+    border:1px solid rgba(124,111,255,.15);
+  " onmouseover="this.style.background='rgba(124,111,255,.12)';this.style.color='#f5f5f5'"
+     onmouseout="this.style.background='transparent';this.style.color='rgba(167,139,250,.8)'">
+    ← Portfolio
+  </a>
+  <span style="width:1px;height:16px;background:rgba(124,111,255,.2)"></span>
+  <span style="font-size:.68rem;color:rgba(167,139,250,.5);padding:0 .4rem;white-space:nowrap;">Droit RH 2026</span>
+  <span style="width:1px;height:16px;background:rgba(124,111,255,.2)"></span>
+  <a href="Droit_RH_2026_eBook.pdf" download style="
+    display:flex;align-items:center;gap:.4rem;
+    font-size:.7rem;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,#a78bfa,#7c6fff);
+    padding:.35rem 1rem;border-radius:99px;
+    text-decoration:none;transition:opacity .2s;white-space:nowrap;
+  " onmouseover="this.style.opacity='.85'"
+     onmouseout="this.style.opacity='1'">
+    ↓ Télécharger PDF
+  </a>
+</nav>
+
+<!-- ═══════════════ COVER ═══════════════ -->
+<section class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-brand">
+    <div class="cover-logo">NK</div>
+    <span class="cover-brand-name">N. Keddari · Ascendia RH</span>
+  </div>
+  <div style="position:relative;z-index:2;margin-top:4rem">
+    <div class="cover-tag">ÉDITION 2026 — MIS À JOUR AVRIL 2026</div>
+    <h1 class="cover-title">Droit RH<br><span>2026</span></h1>
+    <p class="cover-sub">Le guide complet des lois, réformes et obligations pour les professionnels des Ressources Humaines — secteur privé, public, intérim, CDD, CDI et nouveaux contrats.</p>
+    <div class="cover-pills">
+      <span class="pill">Transparence salariale</span>
+      <span class="pill">Emploi seniors</span>
+      <span class="pill">CDD reconversion</span>
+      <span class="pill">Congé de naissance</span>
+      <span class="pill">RGDU ex-Fillon</span>
+      <span class="pill">SMIC 2026</span>
+      <span class="pill">Public vs Privé</span>
+      <span class="pill">IA & RH</span>
+    </div>
+    <div class="cover-divider"></div>
+    <p class="cover-author">Par <strong>N. Keddari</strong> · Master RH · Montpellier</p>
+    <div class="cover-sources">
+      <span class="cover-src">Legifrance</span>
+      <span class="cover-src">·</span>
+      <span class="cover-src">Ministère du Travail</span>
+      <span class="cover-src">·</span>
+      <span class="cover-src">Directives UE</span>
+      <span class="cover-src">·</span>
+      <span class="cover-src">Cour de cassation</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SOMMAIRE ═══════════════ -->
+<div class="wrap">
+  <div class="toc">
+    <div class="toc-title"><span style="font-family:var(--serif);font-style:italic">Sommaire</span></div>
+    <div class="toc-grid">
+      <a href="#ch1" class="toc-item"><span class="toc-num">01</span><span class="toc-label">SMIC, Paie & Cotisations 2026</span></a>
+      <a href="#ch2" class="toc-item"><span class="toc-num">02</span><span class="toc-label">Transparence Salariale</span></a>
+      <a href="#ch3" class="toc-item"><span class="toc-num">03</span><span class="toc-label">Emploi des Seniors</span></a>
+      <a href="#ch4" class="toc-item"><span class="toc-num">04</span><span class="toc-label">Congé de Naissance 2026</span></a>
+      <a href="#ch5" class="toc-item"><span class="toc-num">05</span><span class="toc-label">CDI, CDD, Intérim & Nouveaux Contrats</span></a>
+      <a href="#ch6" class="toc-item"><span class="toc-num">06</span><span class="toc-label">Public vs Privé</span></a>
+      <a href="#ch7" class="toc-item"><span class="toc-num">07</span><span class="toc-label">Télétravail & IA</span></a>
+      <a href="#ch8" class="toc-item"><span class="toc-num">08</span><span class="toc-label">Sanctions & Contrôles</span></a>
+      <a href="#ch9" class="toc-item"><span class="toc-num">09</span><span class="toc-label">Checklist RH 2026</span></a>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 1 ═══ -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 01</div>
+      <h2 class="chapter-title">SMIC, Paie & <em>Cotisations 2026</em></h2>
+    </div>
+    <p class="chapter-intro">Le SMIC est revalorisé de +1,18% au 1er janvier 2026. La réduction Fillon disparaît au profit de la RGDU, et le plafond d'exonération monte à 3 SMIC.</p>
+    <div class="cards">
+      <div class="card"><div class="card-val">12,02€</div><div class="card-lbl">SMIC horaire brut</div><div class="card-sub">+1,18% vs nov. 2024</div></div>
+      <div class="card"><div class="card-val">1 823€</div><div class="card-lbl">SMIC mensuel brut — temps plein 35h</div></div>
+      <div class="card"><div class="card-val">1 443€</div><div class="card-lbl">SMIC net estimé</div></div>
+      <div class="card"><div class="card-val">4 003€</div><div class="card-lbl">Plafond SS mensuel 2026</div></div>
+    </div>
+    <div class="sep"><div class="sep-line"></div><div class="sep-icon">RGDU — Réforme Fillon</div><div class="sep-line"></div></div>
+    <div class="avap">
+      <div class="avap-box avap-avant">
+        <div class="avap-label">❌ Avant — Réduction Fillon</div>
+        <div class="avap-item">Plafond 1,6 SMIC</div>
+        <div class="avap-item">Taux réduits maladie & alloc. fam.</div>
+        <div class="avap-item">Déduction forfaitaire 250 salariés</div>
+        <div class="avap-item">Heures sup. exonération plafonnée</div>
+      </div>
+      <div class="avap-box avap-apres">
+        <div class="avap-label">✅ Après — RGDU 2026</div>
+        <div class="avap-item">Plafond porté à <strong>3 SMIC</strong></div>
+        <div class="avap-item">Seuil minimal d'exonération 2%</div>
+        <div class="avap-item">Déduction étendue aux +250 sal.</div>
+        <div class="avap-item">Heures sup. exo. totale sans plafond</div>
+      </div>
+    </div>
+    <div class="alert alert-red">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body">
+        <div class="alert-title">Action requise — Logiciels de paie</div>
+        <div class="alert-text">Les équipes paie doivent impérativement adapter leurs logiciels de paie dès janvier 2026. La formule de calcul intègre désormais un paramètre de puissance visant à adoucir la dégressivité.</div>
+      </div>
+    </div>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Cotisation</th><th>Taux 2025</th><th>Taux 2026</th><th>Évolution</th></tr></thead>
+        <tbody>
+          <tr><td>Assurance vieillesse déplafonnée patronale</td><td>2,02%</td><td><strong>2,11%</strong></td><td style="color:#4ade80">+0,09 pts</td></tr>
+          <tr><td>AT-MP (taux moyen national)</td><td>2,12%</td><td><strong>2,08%</strong></td><td style="color:#ef4444">-0,04 pts</td></tr>
+          <tr><td>Plafond Sécurité Sociale mensuel</td><td>3 925€</td><td><strong>4 003€</strong></td><td style="color:#4ade80">+2%</td></tr>
+          <tr><td>Gratification stagiaires</td><td>4,35€/h</td><td><strong>4,50€/h</strong></td><td style="color:#4ade80">+0,15€</td></tr>
+          <tr><td>Exonération CVE cotis. retraite patronales</td><td>—</td><td><strong>30%</strong></td><td style="color:var(--blue-light)">NOUVEAU</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 2 ═══ -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 02</div>
+      <h2 class="chapter-title">Transparence <em>Salariale</em></h2>
+    </div>
+    <p class="chapter-intro">La directive européenne 2023/970 doit être transposée en droit français avant le 7 juin 2026. Elle impose une révolution dans la manière dont les entreprises communiquent sur les salaires.</p>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Obligation</th><th>&lt;50 sal.</th><th>50-99 sal.</th><th>100-249 sal.</th><th>250+ sal.</th></tr></thead>
+        <tbody>
+          <tr><td>Fourchette salariale dans offres d'emploi</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Interdiction de demander l'historique salaire</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Critères de rémunération accessibles</td><td>Sur dem.</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Rapport périodique écarts H/F</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Audit externe indépendant</td><td>—</td><td>—</td><td>—</td><td>✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sep"><div class="sep-line"></div><div class="sep-icon">Processus de recrutement conforme</div><div class="sep-line"></div></div>
+    <div class="schema">
+      <div class="schema-step"><div class="schema-num">1</div><div class="schema-lbl">Offre d'emploi</div><div class="schema-sub">Fourchette obligatoire</div></div>
+      <div class="schema-step"><div class="schema-num">2</div><div class="schema-lbl">Publication</div><div class="schema-sub">Critères accessibles</div></div>
+      <div class="schema-step"><div class="schema-num">3</div><div class="schema-lbl">Entretien</div><div class="schema-sub">❌ INTERDIT ancien salaire</div></div>
+      <div class="schema-step"><div class="schema-num">4</div><div class="schema-lbl">Proposition</div><div class="schema-sub">Dans la fourchette</div></div>
+      <div class="schema-step"><div class="schema-num">5</div><div class="schema-lbl">Intégration</div><div class="schema-sub">Grilles accessibles</div></div>
+    </div>
+    <div class="avap">
+      <div class="avap-box avap-avant">
+        <div class="avap-label">❌ Avant — Interdit après juin 2026</div>
+        <div class="avap-item">"Responsable Marketing — Rémunération selon profil et expérience."</div>
+        <div class="avap-item">"Merci de préciser vos prétentions salariales."</div>
+      </div>
+      <div class="avap-box avap-apres">
+        <div class="avap-label">✅ Après — Conforme 2026</div>
+        <div class="avap-item">"Responsable Marketing — Fourchette <strong>42 000€ à 55 000€</strong> brut/an."</div>
+        <div class="avap-item">Critères : ancienneté, niveau de responsabilité, performance SMART.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 3 ═══ -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 03</div>
+      <h2 class="chapter-title">Emploi des <em>Seniors</em></h2>
+    </div>
+    <p class="chapter-intro">La loi n°2025-989 du 24 octobre 2025 impose aux entreprises de revoir en profondeur leurs pratiques de gestion des fins de carrière. Trois dispositifs clés entrent en vigueur en 2026.</p>
+    <div class="cards">
+      <div class="card"><div class="card-val">60,4%</div><div class="card-lbl">Taux emploi seniors 55-64 ans — France 2026</div></div>
+      <div class="card"><div class="card-val">38,9%</div><div class="card-lbl">Taux emploi 60-64 ans — France</div></div>
+      <div class="card"><div class="card-val">51,0%</div><div class="card-lbl">Taux emploi 60-64 ans — Moyenne UE</div></div>
+      <div class="card"><div class="card-val">3 000€</div><div class="card-lbl">Abondement CPF si entretien 60 ans absent</div></div>
+    </div>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Dispositif</th><th>Entreprises concernées</th><th>Entrée en vigueur</th><th>Sanction</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Entretien fin de carrière avant 60 ans</strong></td><td>50+ salariés</td><td>2026</td><td>Abondement CPF 3 000€</td></tr>
+          <tr><td><strong>Index Senior — publication annuelle</strong></td><td>1 000+ salariés</td><td>2026</td><td>Risques financiers & contentieux</td></tr>
+          <tr><td><strong>CVE — Contrat Valorisation Emploi</strong></td><td>Tous employeurs</td><td>2026-2028</td><td>Non applicable (volontaire)</td></tr>
+          <tr><td><strong>Retraite progressive des 60 ans</strong></td><td>Tous employeurs</td><td>2026</td><td>Refus non motivé → voie de recours</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-blue">
+      <div class="alert-icon">💡</div>
+      <div class="alert-body">
+        <div class="alert-title">CVE — Exemple concret</div>
+        <div class="alert-text">Jean-Paul, 61 ans, recruté via CVE → <strong>Exonération 30%</strong> sur les cotisations patronales retraite jusqu'au 31/12/2028. Sortie juridiquement sécurisée lors du départ en retraite.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 4 ═══ -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 04</div>
+      <h2 class="chapter-title">Congé de <em>Naissance 2026</em></h2>
+    </div>
+    <p class="chapter-intro">Un congé supplémentaire entre en vigueur le 1er juillet 2026 pour les parents d'enfants nés à partir du 1er janvier 2026 — secteur privé ET fonction publique.</p>
+    <div class="alert alert-yellow">
+      <div class="alert-icon">📅</div>
+      <div class="alert-body">
+        <div class="alert-title">Date d'application importante</div>
+        <div class="alert-text">Bien que prévu initialement au 1er janvier 2026, ce congé ne sera effectif qu'à partir du <strong>1er juillet 2026</strong>. Les parents d'enfants nés entre janvier et juin 2026 pourront toutefois le prendre à partir de juillet.</div>
+      </div>
+    </div>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Caractéristique</th><th>Détail</th></tr></thead>
+        <tbody>
+          <tr><td>Bénéficiaires</td><td>Tous les parents (privé & public) — enfants nés/adoptés à partir du 1er janv. 2026</td></tr>
+          <tr><td>Condition d'ancienneté</td><td><strong>Aucune</strong> — accessible dès le premier jour</td></tr>
+          <tr><td>Durée</td><td>1 à 2 mois par parent, <strong>fractionnable</strong></td></tr>
+          <tr><td>Indemnisation 1er mois</td><td><strong>70%</strong> du salaire net — versée par la Sécurité sociale</td></tr>
+          <tr><td>Indemnisation 2e mois</td><td><strong>60%</strong> du salaire net — versée par la Sécurité sociale</td></tr>
+          <tr><td>Refus employeur</td><td><strong>Impossible</strong> — l'employeur ne peut s'y opposer</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 5 ═══ -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 05</div>
+      <h2 class="chapter-title">CDI, CDD, Intérim & <em>Nouveaux Contrats</em></h2>
+    </div>
+    <p class="chapter-intro">2026 innove avec le CDD reconversion (Décret n°2026-39 du 28 janv. 2026) et le CVE seniors. Tour complet de l'arsenal contractuel.</p>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Contrat</th><th>Durée</th><th>Caractéristique principale</th><th>Nouveauté</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CDI</strong></td><td>Indéterminée</td><td>Norme légale — protection maximale</td><td>—</td></tr>
+          <tr><td><strong>CDD classique</strong></td><td>18 mois max (privé)</td><td>Motifs limités — prime précarité 10%</td><td>—</td></tr>
+          <tr><td><strong>CDD Reconversion</strong></td><td>À définir</td><td>Contrat initial suspendu non rompu</td><td style="color:var(--blue-light)"><strong>NOUVEAU JAN. 2026</strong></td></tr>
+          <tr><td><strong>CVE</strong></td><td>Jusqu'au 31/12/2028</td><td>60+ ans — exo. 30% cotis. retraite</td><td style="color:var(--blue-light)"><strong>NOUVEAU 2026</strong></td></tr>
+          <tr><td><strong>CTT / Intérim</strong></td><td>18 mois max</td><td>Triangle ETT — utilisatrice — intérimaire</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sep"><div class="sep-line"></div><div class="sep-icon">CDD Reconversion — Fonctionnement</div><div class="sep-line"></div></div>
+    <div class="schema">
+      <div class="schema-step"><div class="schema-num">1</div><div class="schema-lbl">Accord mutuel</div><div class="schema-sub">Notification OPCO 30j avant</div></div>
+      <div class="schema-step"><div class="schema-num">2</div><div class="schema-lbl">CDD dans Entreprise B</div><div class="schema-sub">Contrat A suspendu</div></div>
+      <div class="schema-step"><div class="schema-num">3</div><div class="schema-lbl">Période d'essai</div><div class="schema-sub">CDD non poursuivi → retour A</div></div>
+      <div class="schema-step"><div class="schema-num">4</div><div class="schema-lbl">CDD poursuivi</div><div class="schema-sub">Contrat A rompu de plein droit</div></div>
+    </div>
+    <div class="alert alert-red">
+      <div class="alert-icon">⚖️</div>
+      <div class="alert-body">
+        <div class="alert-title">Exemple — Requalification CDD en CDI</div>
+        <div class="alert-text">La société Lemaire enchaîne 4 CDD avec Marie sur un poste de comptable pendant 3 ans. → <strong>Requalification automatique en CDI</strong> : indemnité min. 1 mois de salaire + rappels + dommages-intérêts + redressement URSSAF possible.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 6 ═══ -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 06</div>
+      <h2 class="chapter-title">Secteur Public <em>vs Privé</em></h2>
+    </div>
+    <p class="chapter-intro">Deux systèmes juridiques distincts, mais 2026 les rapproche sur la transparence salariale, le congé de naissance et l'emploi des seniors.</p>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Critère</th><th>Secteur Public</th><th>Secteur Privé</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Base juridique</strong></td><td>Statut général des fonctionnaires</td><td>Code du travail</td></tr>
+          <tr><td><strong>Sécurité emploi</strong></td><td>Très élevée (titulaires)</td><td>CDI protégé, licenciement possible</td></tr>
+          <tr><td><strong>Retraite</strong></td><td>CNRACL / SRE État</td><td>CNAV + AGIRC-ARRCO</td></tr>
+          <tr><td><strong>CDD durée max</strong></td><td>6 mois / 12 mois / 6 ans selon motif</td><td>18 mois</td></tr>
+          <tr><td><strong>Prime de précarité</strong></td><td>Non applicable</td><td>10% du salaire brut total</td></tr>
+          <tr><td><strong>SMIC</strong></td><td>12,02€/h</td><td>12,02€/h</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 7 ═══ -->
+  <div class="chapter" id="ch7">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 07</div>
+      <h2 class="chapter-title">Télétravail, IA & <em>Nouvelles Technologies</em></h2>
+    </div>
+    <p class="chapter-intro">Le Règlement européen sur l'IA, transposé en France, impose 4 obligations cumulatives aux entreprises utilisant des algorithmes dans la sélection des candidats.</p>
+    <div class="cards">
+      <div class="card"><div class="card-val">01</div><div class="card-lbl">Certification annuelle — outil IA sans biais discriminatoires</div></div>
+      <div class="card"><div class="card-val">02</div><div class="card-lbl">Droit à l'explication algorithmique pour le candidat</div></div>
+      <div class="card"><div class="card-val">03</div><div class="card-lbl">Intervention humaine significative — décision documentée</div></div>
+      <div class="card"><div class="card-val">04</div><div class="card-lbl">Droit de contester toute décision automatisée</div></div>
+    </div>
+    <div class="alert alert-blue">
+      <div class="alert-icon">🤖</div>
+      <div class="alert-body">
+        <div class="alert-title">Conseil pratique — ATS & IA de recrutement</div>
+        <div class="alert-text">Vérifiez que votre fournisseur dispose d'une certification de non-discrimination. Documentez systématiquement la décision humaine finale pour chaque candidature retenue ou écartée.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 8 ═══ -->
+  <div class="chapter" id="ch8">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 08</div>
+      <h2 class="chapter-title">Sanctions & <em>Contrôles 2026</em></h2>
+    </div>
+    <p class="chapter-intro">Le législateur durcit les sanctions et les rend plus rapides grâce aux outils numériques de l'inspection du travail.</p>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Infraction</th><th>Type</th><th>Montant / Conséquence</th><th>Récidive</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Transparence salariale non respectée</strong></td><td>Financière</td><td>Amende proportionnelle + publication</td><td style="color:#ef4444">Mesures aggravées</td></tr>
+          <tr><td><strong>CDD abusif → requalification CDI</strong></td><td>Civile</td><td>Indemnité 1 mois + rappels</td><td>Dommages-intérêts supp.</td></tr>
+          <tr><td><strong>CTT irrégulier (intérim)</strong></td><td>Pénale + Civile</td><td>Amende max <strong>7 500€</strong> + 6 mois prison</td><td style="color:#ef4444">Doublement amendes</td></tr>
+          <tr><td><strong>Discrimination à l'embauche</strong></td><td>Pénale</td><td>Poursuites systématiques 2026</td><td style="color:#ef4444">Responsabilité dirigeant</td></tr>
+          <tr><td><strong>Entretien senior absent (50 sal.)</strong></td><td>Administrative</td><td>Abondement CPF <strong>3 000€</strong></td><td>Contentieux prud'homal</td></tr>
+          <tr><td><strong>Index Senior non publié (1 000 sal.)</strong></td><td>Administrative</td><td>Risques financiers + contentieux syndical</td><td>Mise en demeure publique</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPITRE 9 — CHECKLIST ═══ -->
+  <div class="chapter" id="ch9">
+    <div class="chapter-header">
+      <div class="chapter-num">Chapitre 09</div>
+      <h2 class="chapter-title">Checklist RH 2026 — <em>Plan d'action</em></h2>
+    </div>
+    <p class="chapter-intro">Un plan d'action concret pour chaque professionnel RH, classé par urgence et thématique.</p>
+
+    <p style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ef4444;margin-bottom:.75rem">🔴 Urgent — Janvier-Mars 2026</p>
+    <div class="checklist">
+      <div class="check-item check-urgent"><div class="check-box"></div><div class="check-text">Mettre à jour les logiciels de paie pour intégrer la RGDU et les nouvelles règles AT-MP. Obligation avant le versement des premières paies 2026.</div><div class="check-badge">URGENT</div></div>
+      <div class="check-item check-urgent"><div class="check-box"></div><div class="check-text">Revaloriser les salaires au SMIC — tout salarié au plancher doit passer à <strong>12,02€/h</strong> brut au 1er janvier 2026.</div><div class="check-badge">URGENT</div></div>
+      <div class="check-item check-urgent"><div class="check-box"></div><div class="check-text">Vérifier tous les CDD en cours — motifs valides, durées maximales, délais de carence. Anticiper les risques de requalification en CDI.</div><div class="check-badge">URGENT</div></div>
+      <div class="check-item check-urgent"><div class="check-box"></div><div class="check-text">Supprimer (selon profil) des offres d'emploi et préparer les fourchettes salariales — directive transparence échéance 7 juin 2026.</div><div class="check-badge">URGENT</div></div>
+    </div>
+
+    <p style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-light);margin:1.5rem 0 .75rem">🔵 Important — Avant juin 2026</p>
+    <div class="checklist">
+      <div class="check-item check-important"><div class="check-box"></div><div class="check-text">Auditer les grilles salariales — identifier les écarts H/F et entre postes de valeur égale. Préparer les justifications documentées.</div><div class="check-badge">IMPORTANT</div></div>
+      <div class="check-item check-important"><div class="check-box"></div><div class="check-text">Former les RH et managers — nouvelles obligations transparence, règles seniors, congé de naissance, interdiction historique salaire en recrutement.</div><div class="check-badge">IMPORTANT</div></div>
+      <div class="check-item check-important"><div class="check-box"></div><div class="check-text">Planifier les entretiens avant 60 ans pour tous les collaborateurs concernés — obligatoire entreprises 50 salariés (sanction 3 000€ CPF).</div><div class="check-badge">IMPORTANT</div></div>
+      <div class="check-item check-important"><div class="check-box"></div><div class="check-text">Mettre à jour la charte de télétravail — équipements, cybersécurité, suivi des heures, droit à la déconnexion, prévention RPS.</div><div class="check-badge">IMPORTANT</div></div>
+    </div>
+
+    <p style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4ade80;margin:1.5rem 0 .75rem">🟢 Anticipation — Avant décembre 2026</p>
+    <div class="checklist">
+      <div class="check-item check-anticipation"><div class="check-box"></div><div class="check-text">Publier l'Index Senior — entreprises de 1 000 salariés : indicateurs sur l'emploi des collaborateurs de 55+ ans.</div><div class="check-badge">ANTICIPER</div></div>
+      <div class="check-item check-anticipation"><div class="check-box"></div><div class="check-text">Évaluer l'opportunité du CVE pour les recrutements de profils 60+ ans — exonération 30% cotisations retraite patronales jusqu'au 31/12/2028.</div><div class="check-badge">ANTICIPER</div></div>
+      <div class="check-item check-anticipation"><div class="check-box"></div><div class="check-text">Préparer les process congé de naissance — effectif au 1er juillet 2026 : SIRH, procédure de demande, communication managers.</div><div class="check-badge">ANTICIPER</div></div>
+      <div class="check-item check-anticipation"><div class="check-box"></div><div class="check-text">Anticiper les réformes 2027 — plateformes numériques, IA générative en formation, structurer la veille juridique RH.</div><div class="check-badge">ANTICIPER</div></div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="doc-footer">
+  <div class="doc-footer-logo">Ascendia RH</div>
+  <p style="font-size:.72rem;color:var(--muted);margin:.35rem 0 .75rem">Par <strong style="color:var(--tx)">N. Keddari</strong> · Master RH · Montpellier · Avril 2026</p>
+  <p class="doc-footer-note">Document informatif — Non opposable juridiquement.<br>Toute décision à risque juridique doit être validée par un professionnel qualifié (avocat en droit social, juriste RH).<br>Sources : Legifrance · Ministère du Travail · Directives UE · Cour de cassation</p>
+</footer>
+
+</body>
+</html>
