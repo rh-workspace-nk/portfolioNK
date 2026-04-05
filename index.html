@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ascendia RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#04050f;
+  --card:rgba(255,255,255,.04);
+  --border:rgba(255,255,255,.08);
+  --tx:#f0f2ff;
+  --muted:rgba(200,210,255,.55);
+  --accent:#7c6fff;
+  --accent2:#4e85bf;
+  --accent3:#a78bfa;
+  --grad:linear-gradient(135deg,#7c6fff,#4e85bf,#a78bfa);
+  --grad2:linear-gradient(135deg,#a78bfa,#7c6fff);
+  --radius:18px;
+  --font:'Inter',sans-serif;
+  --serif:'Playfair Display',serif;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+img{display:block}
+
+/* ── CANVAS BG ── */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── LOADER ── */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .6s}
+.ld-logo{font-family:var(--serif);font-size:clamp(2rem,6vw,4rem);background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ld-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+.ld-bar{height:100%;width:0;background:var(--grad);transition:width .04s linear}
+
+/* ── NAV ── */
+nav{position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:500;display:flex;align-items:center;gap:2px;background:rgba(10,10,30,.8);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:99px;padding:.35rem .5rem;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.nav-logo{width:34px;height:34px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:13px;color:#fff;flex-shrink:0;margin-right:4px}
+.nav-link{font-size:.72rem;padding:.32rem .85rem;border-radius:99px;color:var(--muted);transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.on{color:var(--tx);background:rgba(255,255,255,.07)}
+.nav-cta{font-size:.72rem;padding:.32rem .85rem;border-radius:99px;background:var(--grad);color:#fff;font-weight:600;transition:opacity .2s;white-space:nowrap}
+.nav-cta:hover{opacity:.85}
+
+/* ── HERO ── */
+#hero{min-height:100dvh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-inner{position:relative;z-index:2;text-align:center;padding:2rem 1.5rem;max-width:820px;width:100%}
+.hero-tag{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:.6rem}
+.hero-tag::before,.hero-tag::after{content:'';flex:1;height:1px;width:2rem;background:var(--border)}
+.hero-title{font-family:var(--serif);font-size:clamp(3rem,10vw,8rem);line-height:.92;letter-spacing:-.03em;margin-bottom:1.5rem}
+.hero-title span{color:#ffffff;display:block;text-shadow:0 0 60px rgba(124,111,255,.5)}
+.hero-role{font-size:clamp(.85rem,1.8vw,1rem);color:var(--muted);margin-bottom:.75rem;min-height:1.5em}
+.hero-role b{font-style:italic;font-family:var(--serif);color:var(--tx);font-weight:400}
+.hero-desc{font-size:.88rem;color:var(--muted);max-width:48ch;margin:0 auto 2.5rem;line-height:1.75}
+.hero-btns{display:flex;align-items:center;justify-content:center;gap:.875rem;flex-wrap:wrap}
+.btn-primary{background:var(--grad);color:#fff;border-radius:99px;font-size:.8rem;padding:.8rem 1.7rem;font-weight:600;transition:opacity .2s,transform .2s;position:relative}
+.btn-primary:hover{opacity:.85;transform:scale(1.03)}
+.btn-secondary{background:rgba(255,255,255,.06);color:var(--tx);border:1px solid var(--border);border-radius:99px;font-size:.8rem;padding:.8rem 1.7rem;font-weight:500;transition:all .2s}
+.btn-secondary:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:2}
+.hero-scroll span{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.scroll-line{width:1px;height:2.2rem;background:var(--border);overflow:hidden;position:relative}
+@keyframes sl{from{transform:translateY(-100%)}to{transform:translateY(200%)}}
+.scroll-hl{position:absolute;inset:0;background:var(--grad);animation:sl 1.5s ease-in-out infinite}
+
+/* ── SECTIONS ── */
+.sec{padding:clamp(3rem,6vw,5.5rem) 0;position:relative;z-index:2}
+.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(1rem,3vw,2rem)}
+.sec-eye{display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem}
+.sec-eye-line{width:2rem;height:1px;background:var(--border)}
+.sec-eye-txt{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.sec-title{font-family:var(--serif);font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.02em;line-height:1.1;margin-bottom:.65rem}
+.sec-title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:.84rem;color:var(--muted);max-width:48ch;line-height:1.65;margin-bottom:2.5rem}
+
+/* ── GRID PROJETS ── */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem;align-items:start}
+.g4{grid-column:span 4}.g5{grid-column:span 5}.g6{grid-column:span 6}
+.g7{grid-column:span 7}.g8{grid-column:span 8}.g12{grid-column:span 12}
+@media(max-width:800px){.grid>*{grid-column:span 12!important}}
+
+/* ── CARD PROJET ── */
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .35s,box-shadow .35s;position:relative}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.6)}
+.pcard-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.pcard-thumb-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.pcard:hover .pcard-thumb-bg{transform:scale(1.04)}
+.pcard-overlay{position:absolute;inset:0;background:rgba(8,8,20,.75);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.pcard:hover .pcard-overlay{opacity:1}
+.pcard-pill{background:#fff;color:#000;border-radius:99px;padding:.45rem 1.1rem;font-size:.75rem;font-weight:700;position:relative}
+.pcard-pill::before{content:'';position:absolute;inset:-2px;border-radius:99px;background:var(--grad);z-index:-1}
+.halftone{position:absolute;inset:0;background-image:radial-gradient(#000 1px,transparent 1px);background-size:4px 4px;opacity:.15;pointer-events:none;z-index:2}
+.pcard-body{padding:1.1rem 1.4rem}
+.pcard-type{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.pcard-title{font-family:var(--serif);font-size:1.2rem;line-height:1.2;margin-bottom:.35rem}
+.pcard-title em{font-style:italic}
+.pcard-desc{font-size:.74rem;color:var(--muted);line-height:1.55;margin-top:.4rem}
+.pcard-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.6rem}
+.tag{padding:2px .6rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:99px;font-size:.6rem;color:var(--muted)}
+
+/* ── ARTICLES ── */
+.acard{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:36px;transition:background .25s;position:relative;overflow:hidden}
+.acard:hover{background:var(--card)}
+.acard-cover{width:80px;height:60px;border-radius:10px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.6rem;overflow:hidden;position:relative}
+.acard-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.acard-body{flex:1;min-width:0}
+.acard-cat{font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+.acard-title{font-family:var(--serif);font-size:1rem;line-height:1.28;margin-bottom:.35rem}
+.acard-summary{font-size:.74rem;color:var(--muted);line-height:1.55;margin-bottom:.3rem}
+.acard-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.acard-time,.acard-date{font-size:.63rem;color:var(--muted);opacity:.7}
+.art-list{display:flex;flex-direction:column;gap:.65rem}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-cell{padding:clamp(2rem,5vw,4rem) 1.5rem;text-align:center;border-right:1px solid var(--border)}
+.stat-cell:last-child{border-right:none}
+.stat-num{font-size:clamp(2.5rem,5vw,4.5rem);line-height:1;margin-bottom:.4rem;}
+.stat-lbl{font-size:.78rem;color:var(--muted);line-height:1.55}
+@media(max-width:520px){.stats-grid{grid-template-columns:1fr}.stat-cell{border-right:none;border-bottom:1px solid var(--border)}.stat-cell:last-child{border-bottom:none}}
+
+/* ── MARQUEE ── */
+.mq-wrap{width:100%;overflow:hidden;padding:1.5rem 0}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-tr{display:flex;white-space:nowrap;width:max-content;animation:mq 36s linear infinite}
+.mq-tr:hover{animation-play-state:paused}
+.mq-item{font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,3.5vw,3rem);color:rgba(255,255,255,.06);padding:0 1.2rem}
+
+/* ── FOOTER ── */
+#foot{position:relative;overflow:hidden;padding:4rem 0 2.5rem}
+#fc{position:absolute;inset:0;width:100%;height:100%;transform:scaleY(-1)}
+.foot-ov{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+.foot-top{position:absolute;top:0;left:0;right:0;height:5rem;background:linear-gradient(to bottom,var(--bg),transparent)}
+.foot-in{position:relative;z-index:2}
+.f-cta{display:flex;flex-direction:column;align-items:center;gap:1.25rem;text-align:center;padding:1rem 0 2.25rem}
+.f-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.f-email{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,2.5vw,2rem);color:var(--tx);border-bottom:1px solid var(--border);padding-bottom:.35rem;transition:border-color .3s}
+.f-email:hover{border-color:rgba(124,111,255,.5)}
+.f-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.f-socials{display:flex;gap:1.25rem}
+.f-soc{font-size:.7rem;color:var(--muted);transition:color .2s}
+.f-soc:hover{color:var(--tx)}
+.avail{display:flex;align-items:center;gap:.5rem;font-size:.7rem;color:var(--muted)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite;flex-shrink:0}
+.f-copy{font-size:.63rem;color:var(--muted);letter-spacing:.04em}
+
+/* ══════════════════════════════════
+   EDIT MODE
+══════════════════════════════════ */
+#edit-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:8998;background:var(--grad);color:#fff;padding:.4rem 1.5rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;pointer-events:none}
+body.em #edit-bar{display:block}
+body.em nav{margin-top:1.7rem}
+
+/* Editable elements - style seulement en mode edition */
+body.em .editable{
+  outline:1px dashed rgba(124,111,255,.45)!important;
+  background:rgba(124,111,255,.06)!important;
+  border-radius:4px;
+  cursor:text;
+  transition:outline .15s,background .15s;
+}
+body.em .editable:hover{outline-color:#7c6fff!important;background:rgba(124,111,255,.1)!important;}
+body.em .editable:focus{outline:2px solid #7c6fff!important;background:rgba(124,111,255,.12)!important;}
+/* En dehors du mode edition : rien */
+.editable{outline:none!important;background:transparent!important;}
+
+/* Cards en mode edition - overlay desactivé */
+body.em .pcard-overlay{pointer-events:none!important;opacity:0!important;}
+body.em .pcard-pill{pointer-events:none!important;}
+body.em .halftone{pointer-events:none!important;}
+body.em .pcard{cursor:default}
+
+/* Bouton modifier flottant */
+#fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9000;display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;background:rgba(10,10,30,.95);border:1px solid var(--border);color:var(--tx);border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:.04em;box-shadow:0 4px 24px rgba(0,0,0,.7);transition:all .2s}
+body.em #fab{background:var(--grad);color:#fff;border-color:transparent}
+#fab:hover{transform:scale(1.04)}
+.fab-icon{font-size:1rem;line-height:1}
+
+/* Groupe d'actions export */
+#fab-wrap{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9000;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
+#exp-group{display:none;flex-direction:column;align-items:flex-end;gap:.4rem}
+body.em #exp-group{display:flex}
+.ebtn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;border-radius:99px;font-size:.68rem;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.5);letter-spacing:.02em;white-space:nowrap}
+.ebtn-nl{background:var(--grad);color:#fff;border:none}
+.ebtn-sv{background:rgba(15,15,35,.95);color:var(--tx);border:1px solid var(--border)}
+
+/* Toast */
+#toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:rgba(15,15,35,.95);border:1px solid rgba(124,111,255,.3);color:var(--tx);padding:.48rem 1.3rem;border-radius:99px;font-size:.72rem;font-weight:600;z-index:9999;opacity:0;transition:opacity .35s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+
+/* Add buttons */
+.add-pcard,.add-acard{display:none;align-items:center;justify-content:center;gap:.5rem;background:rgba(255,255,255,.02);border:1.5px dashed rgba(124,111,255,.25);border-radius:var(--radius);color:rgba(124,111,255,.6);font-size:.73rem;font-weight:600;cursor:pointer;transition:all .25s;font-family:var(--font)}
+body.em .add-pcard{display:flex;min-height:170px;grid-column:span 6}
+body.em .add-acard{display:flex;padding:.9rem 1.25rem;border-radius:36px}
+.add-pcard:hover,.add-acard:hover{background:rgba(124,111,255,.07);border-color:#7c6fff;color:#7c6fff}
+
+/* Card toolbar */
+.ct{display:none;position:absolute;top:.55rem;right:.55rem;gap:.3rem;z-index:30;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 1.1rem)}
+body.em .ct{display:flex}
+.ctb{height:26px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;font-size:.62rem;cursor:pointer;border:none;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.6);transition:all .15s;white-space:nowrap;padding:0 .5rem}
+.ct-img{background:rgba(10,10,30,.92);color:#a78bfa;border:1px solid rgba(167,139,250,.3);min-width:26px}
+.ct-img:hover{background:#a78bfa;color:#fff}
+.ct-lnk{background:rgba(10,10,30,.92);color:#7c6fff;border:1px solid rgba(124,111,255,.3);min-width:26px}
+.ct-lnk:hover{background:#7c6fff;color:#fff}
+.ct-del{background:rgba(10,10,30,.92);color:#ef4444;border:1px solid rgba(239,68,68,.3);min-width:26px}
+.ct-del:hover{background:#ef4444;color:#fff}
+
+/* Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9500;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px)}
+.modal.on{display:flex}
+.mbox{background:#0d0e1f;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:clamp(1.25rem,3vw,1.75rem);max-width:440px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.85);display:flex;flex-direction:column;gap:1rem;max-height:90dvh;overflow-y:auto}
+.mbox h3{font-family:var(--serif);font-size:1.4rem;color:var(--tx)}
+.mbox p{font-size:.74rem;color:var(--muted);line-height:1.6}
+.mfg{display:flex;flex-direction:column;gap:.38rem}
+.mfg label{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mfg input,.mfg textarea{padding:.58rem .9rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:.82rem;font-family:var(--font);color:var(--tx);width:100%;transition:border-color .2s}
+.mfg input:focus,.mfg textarea:focus{outline:none;border-color:#7c6fff;background:rgba(124,111,255,.07)}
+.macts{display:flex;gap:.6rem;justify-content:flex-end;padding-top:.4rem;border-top:1px solid var(--border)}
+.mcancel{padding:.48rem 1.1rem;border-radius:99px;border:1px solid var(--border);font-size:.72rem;font-weight:600;color:var(--muted);cursor:pointer;background:none;font-family:var(--font);transition:all .2s}
+.mcancel:hover{color:var(--tx)}
+.msave{padding:.48rem 1.3rem;border-radius:99px;background:var(--grad);color:#fff;font-size:.72rem;font-weight:700;cursor:pointer;border:none;font-family:var(--font);transition:opacity .2s}
+.msave:hover{opacity:.85}
+.mup{display:flex;align-items:center;gap:.6rem;width:100%;padding:.62rem .9rem;background:rgba(255,255,255,.03);border:1.5px dashed rgba(124,111,255,.22);border-radius:8px;font-size:.74rem;color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .2s;text-align:left}
+.mup:hover{border-color:#7c6fff;color:#7c6fff;background:rgba(124,111,255,.05)}
+.iprev-wrap{border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.iprev{width:100%;height:100px;object-fit:cover;display:none}
+.iprev.on{display:block}
+
+/* ── HERO TITLE ── */
+.hero-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem,11vw,9rem); line-height:.9; letter-spacing:-.03em; margin-bottom:1.5rem; }
+.hero-title .ht1 { display:block; color:#ffffff; text-shadow:0 0 80px rgba(124,111,255,.5); }
+.hero-title .ht2 { display:block; color:#a78bfa; text-shadow:0 0 60px rgba(167,139,250,.7); }
+/* Fix GSAP - titre visible par défaut, GSAP anime depuis opacity initial */
+.hero-title, .hero-tag, .hero-role, .hero-desc, .hero-btns { opacity:1; }
+/* Edit mode */
+body.em .hero-title .ht1,
+body.em .hero-title .ht2 { color:#f0f2ff !important; text-shadow:none !important; }
+/* sec-title em et stat-num - sans webkit gradient */
+.sec-title em { color:#a78bfa; font-style:italic; }
+.stat-num { color:#a78bfa; font-family:'Playfair Display',serif; }
+body.em .sec-title em { color:#c8d0ff !important; }
+body.em .stat-num { color:#c8d0ff !important; }
+
+/* ── EDIT MODE TEXTES VISIBLES ── */
+body.em .editable { outline:1px dashed rgba(124,111,255,.5) !important; background:rgba(124,111,255,.07) !important; border-radius:3px; cursor:text; color:#f0f2ff !important; -webkit-text-fill-color:#f0f2ff !important; }
+body.em .editable:hover { outline-color:#a78bfa !important; }
+body.em .editable:focus { outline:2px solid #a78bfa !important; background:rgba(124,111,255,.12) !important; }
+.editable { outline:none !important; background:transparent !important; }
+body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:none !important; opacity:0 !important; }
+
+/* ── RESIZE TOOLBAR ── */
+.ct-sz-g{background:rgba(10,10,30,.92);border:1px solid rgba(255,255,255,.12);border-radius:99px;display:inline-flex;align-items:center;height:26px;overflow:hidden}
+.ct-sz{padding:0 .5rem;font-size:.55rem;font-weight:700;color:var(--muted);cursor:pointer;height:100%;display:flex;align-items:center;transition:all .15s;font-family:var(--font);user-select:none}
+.ct-sz:hover{background:rgba(124,111,255,.3);color:#fff}
+.ct-sz.on{background:#7c6fff;color:#fff}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo">Ascendia RH</div>
+  <div class="ld-bar-wrap"><div class="ld-bar" id="ld-bar"></div></div>
+</div>
+
+<!-- EDIT BAR -->
+<div id="edit-bar">✏️ MODE ÉDITION — Cliquez sur un texte pour le modifier · Image · Lien · Supprimer</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">A</div>
+  <a href="#hero" class="nav-link on" data-s="hero">Accueil</a>
+  <a href="#projects" class="nav-link" data-s="projects">Projets</a>
+  <a href="#articles" class="nav-link" data-s="articles">Articles</a>
+  <a href="#foot" class="nav-cta">Contact ↗</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-tag editable" contenteditable="false">ASCENDIA RH</p>
+    <h1 class="hero-title"><span class="ht1 editable" contenteditable="false">Ascendia</span><span class="ht2 editable" contenteditable="false">RH</span></h1>
+    <p class="hero-role">Plateforme <b id="rw" class="editable" contenteditable="false" style="font-family:var(--serif);font-style:italic;font-weight:400;color:var(--tx)">RH unifiée</b></p>
+    <p class="hero-desc editable" contenteditable="false">Une expérience RH premium — recrutement, IA, pilotage et bien-être au travail, tout en un seul espace.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary" id="btn1">Découvrir la plateforme</a>
+      <a href="#foot" class="btn-secondary" id="btn2">Nous contacter</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-line"><div class="scroll-hl"></div></div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section class="sec" id="projects">
+  <div class="wrap">
+    <div class="sec-eye"><div class="sec-eye-line"></div><span class="sec-eye-txt">Sélection</span></div>
+    <h2 class="sec-title editable" contenteditable="false">Réalisations <em>récentes</em></h2>
+    <p class="sec-sub editable" contenteditable="false">Nos solutions RH digitales, de la conception au déploiement.</p>
+    <div class="grid" id="bento">
+
+      <!-- Projet 1 -->
+      <div class="pcard g7" data-id="p1">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#0d1b2a,#0e2d3d)">
+          <span class="pcard-emoji">🏛️</span>
+          <div class="halftone"></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Ascendia RH</em></div></div>
+        </div>
+        <div class="ct">
+          <div class="ct-sz-g">
+            <span class="ct-sz" onclick="rzCard(this,'g4','p1')">S</span>
+            <span class="ct-sz" onclick="rzCard(this,'g6','p1')">M</span>
+            <span class="ct-sz on" onclick="rzCard(this,'g7','p1')">L</span>
+            <span class="ct-sz" onclick="rzCard(this,'g12','p1')">XL</span>
+          </div>
+          <button class="ctb ct-img" onclick="oImg('p1')" title="Image">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('p1')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('p1')">✕</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-type editable" contenteditable="false">Plateforme SIRH</div>
+          <h3 class="pcard-title editable" contenteditable="false">Ascendia <em>RH v1</em></h3>
+          <p class="pcard-desc editable" contenteditable="false">Plateforme RH complète : gestion collaborateurs, paie, recrutement. Architecture avec Supabase & Netlify.</p>
+          <div class="pcard-tags"><span class="tag">Supabase</span><span class="tag">JavaScript</span><span class="tag">Netlify</span></div>
+        </div>
+      </div>
+
+      <!-- Projet 2 -->
+      <div class="pcard g5" data-id="p2">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#1a0d2e,#2d1060)">
+          <span class="pcard-emoji">📊</span>
+          <div class="halftone"></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Dashboard</em></div></div>
+        </div>
+        <div class="ct">
+          <div class="ct-sz-g">
+            <span class="ct-sz" onclick="rzCard(this,'g4','p2')">S</span>
+            <span class="ct-sz on" onclick="rzCard(this,'g5','p2')">M</span>
+            <span class="ct-sz" onclick="rzCard(this,'g7','p2')">L</span>
+            <span class="ct-sz" onclick="rzCard(this,'g12','p2')">XL</span>
+          </div>
+          <button class="ctb ct-img" onclick="oImg('p2')" title="Image">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('p2')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('p2')">✕</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-type editable" contenteditable="false">Analyse Data</div>
+          <h3 class="pcard-title editable" contenteditable="false">Dashboard <em>RH</em></h3>
+          <p class="pcard-desc editable" contenteditable="false">KPIs, suivi des effectifs et indicateurs sociaux en temps réel.</p>
+          <div class="pcard-tags"><span class="tag">Power BI</span><span class="tag">Google Sheets</span></div>
+        </div>
+      </div>
+
+      <!-- Projet 3 -->
+      <div class="pcard g5" data-id="p3">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#0d1a0d,#122012)">
+          <span class="pcard-emoji">🧠</span>
+          <div class="halftone"></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Recherche</em></div></div>
+        </div>
+        <div class="ct">
+          <div class="ct-sz-g">
+            <span class="ct-sz" onclick="rzCard(this,'g4','p3')">S</span>
+            <span class="ct-sz on" onclick="rzCard(this,'g5','p3')">M</span>
+            <span class="ct-sz" onclick="rzCard(this,'g7','p3')">L</span>
+            <span class="ct-sz" onclick="rzCard(this,'g12','p3')">XL</span>
+          </div>
+          <button class="ctb ct-img" onclick="oImg('p3')" title="Image">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('p3')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('p3')">✕</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-type editable" contenteditable="false">Recherche</div>
+          <h3 class="pcard-title editable" contenteditable="false">IA Emploi <em>Seniors</em></h3>
+          <p class="pcard-desc editable" contenteditable="false">Mémoire sur l'IA dans le maintien en emploi des seniors et la réduction de la charge cognitive.</p>
+          <div class="pcard-tags"><span class="tag">Entretiens</span><span class="tag">Qualitatif</span></div>
+        </div>
+      </div>
+
+      <!-- Projet 4 -->
+      <div class="pcard g7" data-id="p4">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#1a0d1a,#2a102a)">
+          <span class="pcard-emoji">📚</span>
+          <div class="halftone"></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Guide</em></div></div>
+        </div>
+        <div class="ct">
+          <div class="ct-sz-g">
+            <span class="ct-sz" onclick="rzCard(this,'g4','p4')">S</span>
+            <span class="ct-sz" onclick="rzCard(this,'g6','p4')">M</span>
+            <span class="ct-sz on" onclick="rzCard(this,'g7','p4')">L</span>
+            <span class="ct-sz" onclick="rzCard(this,'g12','p4')">XL</span>
+          </div>
+          <button class="ctb ct-img" onclick="oImg('p4')" title="Image">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('p4')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('p4')">✕</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-type editable" contenteditable="false">eBook Veille</div>
+          <h3 class="pcard-title editable" contenteditable="false">Guide Droit RH <em>2026</em></h3>
+          <p class="pcard-desc editable" contenteditable="false">Réformes 2026 : RGDU, transparence salariale, emploi seniors, congé naissance et CDD reconversion.</p>
+          <div class="pcard-tags"><span class="tag">Droit social</span><span class="tag">PDF</span></div>
+        </div>
+      </div>
+
+      <button class="add-pcard" onclick="oAdd('project')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Ajouter un projet
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="sec" id="stats" style="padding:0">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-num editable" contenteditable="false">5</div>
+        <div class="stat-lbl editable" contenteditable="false">Projets RH<br>digitaux réalisés</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num editable" contenteditable="false">M2</div>
+        <div class="stat-lbl editable" contenteditable="false">Master Ressources<br>Humaines</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num editable" contenteditable="false">2026</div>
+        <div class="stat-lbl editable" contenteditable="false">Diplôme prévu<br>Montpellier</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="sec" id="articles">
+  <div class="wrap">
+    <div class="sec-eye"><div class="sec-eye-line"></div><span class="sec-eye-txt">Veille & Publications</span></div>
+    <h2 class="sec-title editable" contenteditable="false">Ressources <em>RH</em></h2>
+    <p class="sec-sub editable" contenteditable="false">Droit du travail, IA et transformation RH.</p>
+    <div class="art-list" id="art-list">
+
+      <!-- Article 1 -->
+      <div class="acard" data-id="a1">
+        <div class="acard-cover" id="cov-a1">📋</div>
+        <div class="acard-body">
+          <div class="acard-cat editable" contenteditable="false">Droit RH</div>
+          <div class="acard-title editable" contenteditable="false">Tout ce qui change en 2026 : RGDU, Transparence Salariale & Emploi des Seniors</div>
+          <div class="acard-summary editable" contenteditable="false">Un résumé des principales réformes RH de 2026 : ce que chaque DRH doit savoir et anticiper dès maintenant.</div>
+          <div class="acard-meta">
+            <span class="acard-time editable" contenteditable="false">8 min</span>
+            <span class="acard-date editable" contenteditable="false">Avr. 2026</span>
+          </div>
+        </div>
+        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
+          <button class="ctb ct-img" onclick="oImgArt('a1')" title="Photo">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('a1')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('a1')">✕</button>
+        </div>
+      </div>
+
+      <!-- Article 2 -->
+      <div class="acard" data-id="a2">
+        <div class="acard-cover" id="cov-a2">🤖</div>
+        <div class="acard-body">
+          <div class="acard-cat editable" contenteditable="false">IA & Management</div>
+          <div class="acard-title editable" contenteditable="false">L'IA peut-elle réduire la charge mentale des seniors au travail ?</div>
+          <div class="acard-summary editable" contenteditable="false">Exploration des usages de l'IA comme soutien cognitif pour les travailleurs seniors dans des environnements complexes.</div>
+          <div class="acard-meta">
+            <span class="acard-time editable" contenteditable="false">6 min</span>
+            <span class="acard-date editable" contenteditable="false">Jan. 2026</span>
+          </div>
+        </div>
+        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
+          <button class="ctb ct-img" onclick="oImgArt('a2')" title="Photo">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('a2')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('a2')">✕</button>
+        </div>
+      </div>
+
+      <!-- Article 3 -->
+      <div class="acard" data-id="a3">
+        <div class="acard-cover" id="cov-a3">🏢</div>
+        <div class="acard-body">
+          <div class="acard-cat editable" contenteditable="false">Leadership</div>
+          <div class="acard-title editable" contenteditable="false">L'entreprise libre : modèle performant ou idéal inapplicable ?</div>
+          <div class="acard-summary editable" contenteditable="false">Analyse critique des modèles d'organisation sans hiérarchie et de leur applicabilité dans les grandes structures RH.</div>
+          <div class="acard-meta">
+            <span class="acard-time editable" contenteditable="false">5 min</span>
+            <span class="acard-date editable" contenteditable="false">Mars 2026</span>
+          </div>
+        </div>
+        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
+          <button class="ctb ct-img" onclick="oImgArt('a3')" title="Photo">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('a3')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('a3')">✕</button>
+        </div>
+      </div>
+
+      <!-- Article 4 -->
+      <div class="acard" data-id="a4">
+        <div class="acard-cover" id="cov-a4">🌱</div>
+        <div class="acard-body">
+          <div class="acard-cat editable" contenteditable="false">ODD & RSE</div>
+          <div class="acard-title editable" contenteditable="false">Les 17 ODD intégrés dans la stratégie RH d'entreprise</div>
+          <div class="acard-summary editable" contenteditable="false">Comment aligner sa politique RH avec les Objectifs de Développement Durable pour un impact social concret et mesurable.</div>
+          <div class="acard-meta">
+            <span class="acard-time editable" contenteditable="false">7 min</span>
+            <span class="acard-date editable" contenteditable="false">Jan. 2026</span>
+          </div>
+        </div>
+        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
+          <button class="ctb ct-img" onclick="oImgArt('a4')" title="Photo">🖼</button>
+          <button class="ctb ct-lnk" onclick="oLnk('a4')" title="Lien">🔗</button>
+          <button class="ctb ct-del" onclick="delCard('a4')">✕</button>
+        </div>
+      </div>
+
+      <button class="add-acard" onclick="oAdd('article')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Ajouter un article
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="sec" id="foot" style="padding:4rem 0 2.5rem">
+  <canvas id="fc"></canvas>
+  <div class="foot-ov"></div>
+  <div class="foot-top"></div>
+  <div class="foot-in wrap">
+    <div class="mq-wrap">
+      <div class="mq-tr">
+        <span class="mq-item">CONSTRUIRE L'AVENIR RH</span><span class="mq-item">TRANSFORMER LES ORGANISATIONS</span>
+        <span class="mq-item">DIGITALISER LES RH</span><span class="mq-item">INNOVER ENSEMBLE</span>
+        <span class="mq-item">CONSTRUIRE L'AVENIR RH</span><span class="mq-item">TRANSFORMER LES ORGANISATIONS</span>
+        <span class="mq-item">DIGITALISER LES RH</span><span class="mq-item">INNOVER ENSEMBLE</span>
+      </div>
+    </div>
+    <div class="f-cta">
+      <span class="f-label">Travaillons ensemble</span>
+      <a class="f-email editable" id="f-email" contenteditable="false" href="mailto:contact@ascendia-rh.fr">contact@ascendia-rh.fr</a>
+    </div>
+    <div class="f-bar">
+      <div class="f-socials">
+        <a href="https://www.linkedin.com" target="_blank" class="f-soc">LinkedIn</a>
+        <a href="#" class="f-soc">Notion</a>
+        <a href="#" class="f-soc">GitHub</a>
+      </div>
+      <div class="avail"><div class="avail-dot"></div><span class="editable" contenteditable="false">Disponible pour collaborations</span></div>
+      <span class="f-copy editable" contenteditable="false">© 2026 Ascendia RH</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAB -->
+<div id="fab-wrap">
+  <div id="exp-group">
+    <button class="ebtn ebtn-nl" onclick="exportNL()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exporter pour Netlify
+    </button>
+    <button class="ebtn ebtn-sv" onclick="saveEd()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v14a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Sauvegarder
+    </button>
+  </div>
+  <button id="fab" onclick="toggleEM()">
+    <span class="fab-icon">✏️</span>
+    <span id="fab-lbl">Modifier</span>
+  </button>
+</div>
+
+<div id="toast"></div>
+
+<!-- MODAL LIEN -->
+<div class="modal" id="m-lnk">
+  <div class="mbox">
+    <h3>Ajouter un lien</h3>
+    <p>URL vers votre projet ou fichier.</p>
+    <div class="mfg"><label>URL</label><input type="url" id="lnk-url" placeholder="https://mon-projet.netlify.app"></div>
+    <div class="mfg">
+      <label>Ou importer un fichier</label>
+      <input type="file" id="lnk-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xlsx" style="display:none" onchange="onFile(this)">
+      <button class="mup" type="button" onclick="document.getElementById('lnk-file').click()">📎 <span id="lnk-fname">PDF, Word, PowerPoint, Excel</span></button>
+    </div>
+    <div class="macts">
+      <button class="mcancel" onclick="closeM('m-lnk')">Annuler</button>
+      <button class="msave" onclick="saveLnk()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL IMAGE PROJET -->
+<div class="modal" id="m-img">
+  <div class="mbox">
+    <h3>Image de couverture</h3>
+    <p>JPG, PNG, WebP depuis votre bureau.</p>
+    <div class="mfg">
+      <input type="file" id="img-file" accept="image/*" style="display:none" onchange="onImgFile(this)">
+      <div class="iprev-wrap"><img class="iprev" id="img-prev" src="" alt=""></div>
+      <button class="mup" style="margin-top:.5rem" type="button" onclick="document.getElementById('img-file').click()">🖼 <span id="img-fname">Choisir une image</span></button>
+    </div>
+    <div class="macts">
+      <button class="mcancel" onclick="closeM('m-img')">Annuler</button>
+      <button class="msave" onclick="saveImg()">Appliquer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJOUT -->
+<div class="modal" id="m-add">
+  <div class="mbox">
+    <h3 id="add-title">Nouveau projet</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+      <div class="mfg"><label>Catégorie</label><input type="text" id="add-type" placeholder="SIRH / Recherche"></div>
+      <div class="mfg"><label>Emoji</label><input type="text" id="add-emoji" placeholder="🚀" maxlength="4"></div>
+    </div>
+    <div class="mfg"><label>Titre</label><input type="text" id="add-titl" placeholder="Nom du projet ou article"></div>
+    <div class="mfg"><label>Résumé <span style="opacity:.5">(optionnel)</span></label><textarea id="add-desc" rows="2" placeholder="Quelques mots..."></textarea></div>
+    <div class="mfg"><label>URL <span style="opacity:.5">(optionnel)</span></label><input type="url" id="add-url" placeholder="https://"></div>
+    <div class="macts">
+      <button class="mcancel" onclick="closeM('m-add')">Annuler</button>
+      <button class="msave" onclick="saveAdd()">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CANVAS BG ──────────────────────────────────────────────
+function mkBG(id){
+  const cv=document.getElementById(id);if(!cv)return;
+  const ctx=cv.getContext('2d');let W=0,H=0;
+  const pts=Array.from({length:90},()=>({
+    x:Math.random()*2000,y:Math.random()*1200,
+    dx:(Math.random()-.5)*.18,dy:(Math.random()-.5)*.18,
+    r:Math.random()*1.7+.25,o:Math.random()*.35+.05
+  }));
+  function rsz(){const p=cv.parentElement;W=cv.width=p.offsetWidth;H=cv.height=p.offsetHeight}
+  new ResizeObserver(rsz).observe(cv.parentElement);rsz();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const t=Date.now()*.0003;
+    [[.3*Math.sin(t*.6)+.12,.4*Math.cos(t*.4)+.16,'rgba(109,124,255,.14)'],
+     [.7*Math.cos(t*.5)+.1,.6*Math.sin(t*.7)+.12,'rgba(78,133,191,.1)'],
+     [.5*Math.sin(t*.35)+.06,.3*Math.cos(t*.8)+.08,'rgba(167,139,250,.09)']]
+    .forEach(([px,py,col])=>{
+      const g=ctx.createRadialGradient(W*px,H*py,0,W*px,H*py,Math.min(W,H)*.35);
+      g.addColorStop(0,col);g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    });
+    pts.forEach(p=>{
+      p.x+=p.dx;p.y+=p.dy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(124,111,255,${p.o})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+mkBG('bg-canvas');mkBG('fc');
+
+// ── LOADER ──────────────────────────────────────────────────
+(function(){
+  const bar=document.getElementById('ld-bar'),loader=document.getElementById('loader');
+  const start=performance.now(),dur=2200;
+  function step(ts){
+    const n=Math.min(100,Math.round((ts-start)/dur*100));
+    bar.style.width=n+'%';
+    if(n<100)requestAnimationFrame(step);
+    else setTimeout(()=>{
+      loader.style.opacity='0';
+      setTimeout(()=>{ loader.style.display='none'; initAnim(); },500);
+    },200);
+  }
+  requestAnimationFrame(step);
+})();
+
+// ── GSAP ────────────────────────────────────────────────────
+function initAnim(){
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.fromTo('.hero-tag',{y:14},{y:0,duration:.9,ease:'power3.out',delay:.1});
+  gsap.fromTo('.hero-title',{y:50},{y:0,duration:1.3,ease:'power3.out',delay:.2});
+  gsap.fromTo('.hero-role,.hero-desc,.hero-btns',{opacity:0,y:16},{opacity:1,y:0,duration:.9,stagger:.1,ease:'power3.out',delay:.4});
+  document.querySelectorAll('.sec-eye,.sec-title,.sec-sub,.pcard,.acard,.stat-cell').forEach(el=>{
+    gsap.fromTo(el,{opacity:0,y:24},{opacity:1,y:0,duration:.8,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}
+    });
+  });
+}
+
+// ── ROLES ANIMÉS ────────────────────────────────────────────
+const roles=['RH unifiée','intelligente','de demain','premium','innovante'];
+let ri=0;const rw=document.getElementById('rw');
+if(rw&&!document.body.classList.contains('em')){
+  setInterval(()=>{
+    ri=(ri+1)%roles.length;
+    rw.style.animation='none';rw.textContent=roles[ri];
+    void rw.offsetWidth;rw.style.animation='fadeIn .4s ease-out forwards';
+  },2600);
+}
+const style=document.createElement('style');
+style.textContent='@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}';
+document.head.appendChild(style);
+
+// ── NAV ─────────────────────────────────────────────────────
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',scrollY>80);
+  let cur='hero';
+  ['hero','projects','articles','stats','foot'].forEach(id=>{
+    const s=document.getElementById(id);if(s&&scrollY>=s.offsetTop-200)cur=id;
+  });
+  document.querySelectorAll('.nav-link').forEach(a=>{
+    a.classList.toggle('on',a.dataset.s===cur||(a.dataset.s==='articles'&&cur==='foot'));
+  });
+},{passive:true});
+
+
+// ── RESIZE CARTE ──
+function rzCard(btn, cls, id){
+  const card = document.querySelector('[data-id="'+id+'"]');
+  if(!card) return;
+  ['g4','g5','g6','g7','g8','g9','g12'].forEach(c => card.classList.remove(c));
+  card.classList.add(cls);
+  btn.closest('.ct-sz-g').querySelectorAll('.ct-sz').forEach(b => b.classList.toggle('on', b === btn));
+}
+
+// ── CARD CLICK ──────────────────────────────────────────────
+function bindClicks(){
+  document.querySelectorAll('.pcard,.acard').forEach(c=>{
+    c.removeEventListener('click',cardClick);
+    if(c.dataset.href)c.addEventListener('click',cardClick);
+  });
+}
+function cardClick(e){
+  if(EM)return;
+  const url=e.currentTarget.dataset.href;if(!url)return;
+  const dl=e.currentTarget.dataset.dl;
+  if(dl){const a=document.createElement('a');a.href=url;a.download=dl;document.body.appendChild(a);a.click();a.remove();}
+  else window.open(url,'_blank','noopener noreferrer');
+}
+bindClicks();
+
+// ── EDIT MODE ───────────────────────────────────────────────
+let EM=false;
+function toggleEM(){
+  EM=!EM;
+  document.body.classList.toggle('em',EM);
+  document.getElementById('fab-lbl').textContent=EM?'✅ Terminer':'✏️ Modifier';
+  document.querySelectorAll('.editable').forEach(el=>{
+    el.contentEditable=EM?'true':'false';
+  });
+  if(EM) toast('Cliquez sur un texte pour le modifier');
+}
+
+// ── DELETE ──────────────────────────────────────────────────
+function delCard(id){
+  const el=document.querySelector('[data-id="'+id+'"]');
+  if(el&&confirm('Supprimer cet élément ?'))el.remove();
+}
+
+// ── LINK MODAL ──────────────────────────────────────────────
+let CT=null,upFile=null;
+function oLnk(id){CT=id;document.getElementById('lnk-url').value='';document.getElementById('lnk-fname').textContent='PDF, Word, PowerPoint, Excel';upFile=null;openM('m-lnk');}
+function onFile(input){
+  const f=input.files[0];if(!f)return;
+  if(f.size>15*1024*1024){alert('Fichier trop lourd (max 15 Mo).');return;}
+  const rd=new FileReader();
+  rd.onload=ev=>{upFile={dataUrl:ev.target.result,name:f.name};document.getElementById('lnk-fname').textContent=f.name;};
+  rd.readAsDataURL(f);
+}
+function saveLnk(){
+  const url=upFile?upFile.dataUrl:document.getElementById('lnk-url').value.trim();
+  if(!url){closeM('m-lnk');return;}
+  const card=document.querySelector('[data-id="'+CT+'"]');
+  if(card){card.dataset.href=url;if(upFile)card.dataset.dl=upFile.name;else delete card.dataset.dl;bindClicks();}
+  upFile=null;closeM('m-lnk');toast('Lien enregistré !');
+}
+
+// ── IMAGE PROJET ────────────────────────────────────────────
+let upImg=null,imgTgt=null;
+function oImg(id){imgTgt=id;upImg=null;document.getElementById('img-file').value='';document.getElementById('img-prev').classList.remove('on');document.getElementById('img-fname').textContent='Choisir une image';openM('m-img');}
+function onImgFile(input){
+  const f=input.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=ev=>{upImg=ev.target.result;const p=document.getElementById('img-prev');p.src=upImg;p.classList.add('on');document.getElementById('img-fname').textContent=f.name;};
+  rd.readAsDataURL(f);
+}
+function saveImg(){
+  if(!upImg){closeM('m-img');return;}
+  const card=document.querySelector('[data-id="'+imgTgt+'"]');
+  if(card){
+    const thumb=card.querySelector('.pcard-thumb');
+    if(thumb){let bg=thumb.querySelector('.pcard-thumb-bg');if(!bg){bg=document.createElement('img');bg.className='pcard-thumb-bg';thumb.prepend(bg);}bg.src=upImg;const em=thumb.querySelector('.pcard-emoji');if(em)em.style.display='none';}
+  }
+  upImg=null;closeM('m-img');toast('Image appliquée !');
+}
+
+// ── IMAGE ARTICLE ────────────────────────────────────────────
+function oImgArt(id){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=ev=>{
+      const cov=document.getElementById('cov-'+id);
+      if(cov){cov.innerHTML='<img src="'+ev.target.result+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px">';cov.style.position='relative';}
+    };
+    rd.readAsDataURL(f);
+  };
+  inp.click();
+}
+
+// ── ADD ──────────────────────────────────────────────────────
+let addKind='project',IDX=100;
+function oAdd(kind){
+  addKind=kind;
+  document.getElementById('add-title').textContent=kind==='project'?'Nouveau projet':'Nouvel article';
+  ['add-type','add-emoji','add-titl','add-desc','add-url'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  openM('m-add');
+}
+function saveAdd(){
+  const type=document.getElementById('add-type').value.trim()||'Projet';
+  const emoji=document.getElementById('add-emoji').value.trim()||'🚀';
+  const titl=document.getElementById('add-titl').value.trim()||'Nouveau';
+  const desc=document.getElementById('add-desc').value.trim();
+  const url=document.getElementById('add-url').value.trim();
+  const id='x'+(IDX++);
+  const grads=['linear-gradient(135deg,#0d1b2a,#0e2d3d)','linear-gradient(135deg,#1a0d2e,#2d1060)','linear-gradient(135deg,#0d1a0d,#122012)','linear-gradient(135deg,#1a0d1a,#2a102a)'];
+  const bg=grads[IDX%grads.length];
+  if(addKind==='project'){
+    const html=`<div class="pcard g6${url?' linked':''}" data-id="${id}"${url?' data-href="'+url+'"':''}>
+      <div class="pcard-thumb" style="background:${bg}"><span class="pcard-emoji">${emoji}</span><div class="halftone"></div>
+      <div class="pcard-overlay"><div class="pcard-pill">Voir <em>${titl}</em></div></div></div>
+      <div class="ct">
+        <button class="ctb ct-img" onclick="oImg('${id}')" title="Image">🖼</button>
+        <button class="ctb ct-lnk" onclick="oLnk('${id}')" title="Lien">🔗</button>
+        <button class="ctb ct-del" onclick="delCard('${id}')">✕</button>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-type editable" contenteditable="true">${type}</div>
+        <h3 class="pcard-title editable" contenteditable="true">${titl}</h3>
+        ${desc?`<p class="pcard-desc editable" contenteditable="true">${desc}</p>`:''}
+      </div></div>`;
+    document.querySelector('.add-pcard').insertAdjacentHTML('beforebegin',html);
+  } else {
+    const html=`<div class="acard${url?' linked':''}" data-id="${id}"${url?' data-href="'+url+'"':''}>
+      <div class="acard-cover" id="cov-${id}">${emoji}</div>
+      <div class="acard-body">
+        <div class="acard-cat editable" contenteditable="true">${type}</div>
+        <div class="acard-title editable" contenteditable="true">${titl}</div>
+        ${desc?`<div class="acard-summary editable" contenteditable="true">${desc}</div>`:''}
+        <div class="acard-meta">
+          <span class="acard-time editable" contenteditable="true">5 min</span>
+          <span class="acard-date editable" contenteditable="true">${new Date().toLocaleDateString('fr-FR',{month:'short',year:'numeric'})}</span>
+        </div>
+      </div>
+      <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
+        <button class="ctb ct-img" onclick="oImgArt('${id}')" title="Photo">🖼</button>
+        <button class="ctb ct-lnk" onclick="oLnk('${id}')" title="Lien">🔗</button>
+        <button class="ctb ct-del" onclick="delCard('${id}')">✕</button>
+      </div></div>`;
+    document.querySelector('.add-acard').insertAdjacentHTML('beforebegin',html);
+  }
+  bindClicks();closeM('m-add');toast('Ajouté !');
+}
+
+// ── EXPORT ──────────────────────────────────────────────────
+function saveEd(){
+  document.querySelectorAll('.editable').forEach(el=>el.contentEditable='false');
+  document.body.classList.remove('em');EM=false;
+  document.getElementById('fab-lbl').textContent='Modifier';
+  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Ascendia_RH_saved.html';a.click();
+  toast('Sauvegardé !');
+}
+function exportNL(){
+  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();
+  toast('Prêt pour Netlify !');
+}
+
+// ── MODAL HELPERS ───────────────────────────────────────────
+function openM(id){document.getElementById(id).classList.add('on');}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on');}));
+
+// ── TOAST ───────────────────────────────────────────────────
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',2200);
+}
+</script>
+</body>
+</html>
