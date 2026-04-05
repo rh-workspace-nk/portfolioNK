@@ -277,10 +277,9 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
 <nav id="nav">
   <div class="nav-logo">A</div>
   <a href="#hero" class="nav-link on" data-s="hero">Accueil</a>
-  <a href="#projects" class="nav-link" data-s="projects">Projets</a>
+  <a href="#projects" class="nav-link" data-s="projects">Créations</a>
   <a href="#articles" class="nav-link" data-s="articles">Articles</a>
-  <a href="#ressources" class="nav-link">Ressources</a>
-  <a href="#foot" class="nav-cta">Contact ↗</a>
+  <a href="https://www.linkedin.com" target="_blank" class="nav-cta">LinkedIn ↗</a>
 </nav>
 
 <!-- HERO -->
@@ -304,119 +303,68 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
 <!-- PROJETS -->
 <section class="sec" id="projects">
   <div class="wrap">
-    <div class="sec-eye"><div class="sec-eye-line"></div><span class="sec-eye-txt">Sélection</span></div>
-    <h2 class="sec-title editable" contenteditable="false">Réalisations <em>récentes</em></h2>
-    <p class="sec-sub editable" contenteditable="false">Nos solutions RH digitales, de la conception au déploiement.</p>
+    <div class="sec-eye"><div class="sec-eye-line"></div><span class="sec-eye-txt">Créations</span></div>
+    <h2 class="sec-title">Ressources & <em>Outils RH</em></h2>
+    <p class="sec-sub">Plateforme, guides et outils interactifs conçus pour les professionnels des ressources humaines.</p>
     <div class="grid" id="bento">
 
-      <!-- Projet 1 -->
+      <!-- Ressource 1 : AxioRH -->
       <div class="pcard g7" data-id="p1">
-        <div class="pcard-thumb" style="background:linear-gradient(135deg,#0d1b2a,#0e2d3d)">
+        <a href="axiorh.html" style="display:contents">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#050f28,#0a2050)">
           <span class="pcard-emoji">🏛️</span>
           <div class="halftone"></div>
-          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Ascendia RH</em></div></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>la démo</em></div></div>
         </div>
-        <div class="ct">
-          <div class="ct-sz-g">
-            <span class="ct-sz" onclick="rzCard(this,'g4','p1')">S</span>
-            <span class="ct-sz" onclick="rzCard(this,'g6','p1')">M</span>
-            <span class="ct-sz on" onclick="rzCard(this,'g7','p1')">L</span>
-            <span class="ct-sz" onclick="rzCard(this,'g12','p1')">XL</span>
-          </div>
-          <button class="ctb ct-img" onclick="oImg('p1')" title="Image">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('p1')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('p1')">✕</button>
-        </div>
+        </a>
         <div class="pcard-body">
-          <div class="pcard-type editable" contenteditable="false">Plateforme SIRH</div>
-          <h3 class="pcard-title editable" contenteditable="false">Ascendia <em>RH v1</em></h3>
-          <p class="pcard-desc editable" contenteditable="false">Plateforme RH complète : gestion collaborateurs, paie, recrutement. Architecture avec Supabase & Netlify.</p>
-          <div class="pcard-tags"><span class="tag">Supabase</span><span class="tag">JavaScript</span><span class="tag">Netlify</span></div>
+          <div class="pcard-type">Plateforme SaaS</div>
+          <h3 class="pcard-title">AxioRH — <em>Plateforme RH</em></h3>
+          <p class="pcard-desc">Gestion complète des RH : congés, paie, recrutement, formations, assistant IA. Espace RH, salarié et admin. Données en temps réel via Supabase.</p>
+          <div class="pcard-tags"><span class="tag">Supabase</span><span class="tag">JavaScript</span><span class="tag">IA</span><span class="tag">Démo libre</span></div>
+          <a href="axiorh.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.75rem;font-weight:600;color:#5b9bff;border:1px solid rgba(45,126,246,.25);border-radius:99px;padding:.4rem 1rem;transition:all .2s" onmouseover="this.style.background='rgba(45,126,246,.1)'" onmouseout="this.style.background='transparent'">Voir la démo →</a>
         </div>
       </div>
 
-      <!-- Projet 2 -->
+      <!-- Ressource 2 : Droit RH 2026 -->
       <div class="pcard g5" data-id="p2">
-        <div class="pcard-thumb" style="background:linear-gradient(135deg,#1a0d2e,#2d1060)">
-          <span class="pcard-emoji">📊</span>
+        <a href="droit_rh.html" style="display:contents">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#120d2a,#1e1060)">
+          <span class="pcard-emoji">📘</span>
           <div class="halftone"></div>
-          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Dashboard</em></div></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Lire <em>le guide</em></div></div>
         </div>
-        <div class="ct">
-          <div class="ct-sz-g">
-            <span class="ct-sz" onclick="rzCard(this,'g4','p2')">S</span>
-            <span class="ct-sz on" onclick="rzCard(this,'g5','p2')">M</span>
-            <span class="ct-sz" onclick="rzCard(this,'g7','p2')">L</span>
-            <span class="ct-sz" onclick="rzCard(this,'g12','p2')">XL</span>
-          </div>
-          <button class="ctb ct-img" onclick="oImg('p2')" title="Image">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('p2')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('p2')">✕</button>
-        </div>
+        </a>
         <div class="pcard-body">
-          <div class="pcard-type editable" contenteditable="false">Analyse Data</div>
-          <h3 class="pcard-title editable" contenteditable="false">Dashboard <em>RH</em></h3>
-          <p class="pcard-desc editable" contenteditable="false">KPIs, suivi des effectifs et indicateurs sociaux en temps réel.</p>
-          <div class="pcard-tags"><span class="tag">Power BI</span><span class="tag">Google Sheets</span></div>
+          <div class="pcard-type">Guide · eBook</div>
+          <h3 class="pcard-title">Droit RH <em>2026</em></h3>
+          <p class="pcard-desc">SMIC, RGDU, transparence salariale, emploi seniors, congé naissance — 9 chapitres complets.</p>
+          <div class="pcard-tags"><span class="tag">Droit social</span><span class="tag">PDF</span><span class="tag">2026</span></div>
+          <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap">
+            <a href="droit_rh.html" style="display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:600;color:#a78bfa;border:1px solid rgba(124,111,255,.25);border-radius:99px;padding:.4rem 1rem;transition:all .2s" onmouseover="this.style.background='rgba(124,111,255,.1)'" onmouseout="this.style.background='transparent'">Lire →</a>
+            <a href="Droit_RH_2026_eBook.pdf" download style="display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:600;color:rgba(200,210,255,.6);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:.4rem 1rem;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background='transparent'">↓ PDF</a>
+          </div>
         </div>
       </div>
 
-      <!-- Projet 3 -->
+      <!-- Ressource 3 : Générateur de paie -->
       <div class="pcard g5" data-id="p3">
-        <div class="pcard-thumb" style="background:linear-gradient(135deg,#0d1a0d,#122012)">
-          <span class="pcard-emoji">🧠</span>
+        <a href="generateur-paie.html" style="display:contents">
+        <div class="pcard-thumb" style="background:linear-gradient(135deg,#0d1a18,#0d2820)">
+          <span class="pcard-emoji">⚡</span>
           <div class="halftone"></div>
-          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Recherche</em></div></div>
+          <div class="pcard-overlay"><div class="pcard-pill">Ouvrir <em>l'outil</em></div></div>
         </div>
-        <div class="ct">
-          <div class="ct-sz-g">
-            <span class="ct-sz" onclick="rzCard(this,'g4','p3')">S</span>
-            <span class="ct-sz on" onclick="rzCard(this,'g5','p3')">M</span>
-            <span class="ct-sz" onclick="rzCard(this,'g7','p3')">L</span>
-            <span class="ct-sz" onclick="rzCard(this,'g12','p3')">XL</span>
-          </div>
-          <button class="ctb ct-img" onclick="oImg('p3')" title="Image">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('p3')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('p3')">✕</button>
-        </div>
+        </a>
         <div class="pcard-body">
-          <div class="pcard-type editable" contenteditable="false">Recherche</div>
-          <h3 class="pcard-title editable" contenteditable="false">IA Emploi <em>Seniors</em></h3>
-          <p class="pcard-desc editable" contenteditable="false">Mémoire sur l'IA dans le maintien en emploi des seniors et la réduction de la charge cognitive.</p>
-          <div class="pcard-tags"><span class="tag">Entretiens</span><span class="tag">Qualitatif</span></div>
+          <div class="pcard-type">Outil interactif</div>
+          <h3 class="pcard-title">Moteur de Paie <em>2026</em></h3>
+          <p class="pcard-desc">Calculateur brut → net avec RGDU, cotisations 2026 et guide des libellés de fiche de paie.</p>
+          <div class="pcard-tags"><span class="tag">RGDU</span><span class="tag">Cotisations</span><span class="tag">Simulateur</span></div>
+          <a href="generateur-paie.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.75rem;font-weight:600;color:#34d399;border:1px solid rgba(52,211,153,.25);border-radius:99px;padding:.4rem 1rem;transition:all .2s" onmouseover="this.style.background='rgba(52,211,153,.08)'" onmouseout="this.style.background='transparent'">Ouvrir →</a>
         </div>
       </div>
 
-      <!-- Projet 4 -->
-      <div class="pcard g7" data-id="p4">
-        <div class="pcard-thumb" style="background:linear-gradient(135deg,#1a0d1a,#2a102a)">
-          <span class="pcard-emoji">📚</span>
-          <div class="halftone"></div>
-          <div class="pcard-overlay"><div class="pcard-pill">Voir <em>Guide</em></div></div>
-        </div>
-        <div class="ct">
-          <div class="ct-sz-g">
-            <span class="ct-sz" onclick="rzCard(this,'g4','p4')">S</span>
-            <span class="ct-sz" onclick="rzCard(this,'g6','p4')">M</span>
-            <span class="ct-sz on" onclick="rzCard(this,'g7','p4')">L</span>
-            <span class="ct-sz" onclick="rzCard(this,'g12','p4')">XL</span>
-          </div>
-          <button class="ctb ct-img" onclick="oImg('p4')" title="Image">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('p4')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('p4')">✕</button>
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-type editable" contenteditable="false">eBook Veille</div>
-          <h3 class="pcard-title editable" contenteditable="false">Guide Droit RH <em>2026</em></h3>
-          <p class="pcard-desc editable" contenteditable="false">Réformes 2026 : RGDU, transparence salariale, emploi seniors, congé naissance et CDD reconversion.</p>
-          <div class="pcard-tags"><span class="tag">Droit social</span><span class="tag">PDF</span></div>
-        </div>
-      </div>
-
-      <button class="add-pcard" onclick="oAdd('project')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        Ajouter un projet
-      </button>
     </div>
   </div>
 </section>
@@ -426,16 +374,16 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
   <div class="wrap">
     <div class="stats-grid">
       <div class="stat-cell">
-        <div class="stat-num editable" contenteditable="false">5</div>
-        <div class="stat-lbl editable" contenteditable="false">Projets RH<br>digitaux réalisés</div>
+        <div class="stat-num">3</div>
+        <div class="stat-lbl">Outils RH<br>créés & déployés</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-num editable" contenteditable="false">M2</div>
-        <div class="stat-lbl editable" contenteditable="false">Master Ressources<br>Humaines</div>
+        <div class="stat-num">9</div>
+        <div class="stat-lbl">Chapitres de veille<br>Droit RH 2026</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-num editable" contenteditable="false">2026</div>
-        <div class="stat-lbl editable" contenteditable="false">Diplôme prévu<br>Montpellier</div>
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">Projets orientés<br>impact RH</div>
       </div>
     </div>
   </div>
@@ -549,7 +497,7 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
     </div>
     <div class="f-cta">
       <span class="f-label">Travaillons ensemble</span>
-      <a class="f-email editable" id="f-email" contenteditable="false" href="mailto:contact@ascendia-rh.fr">contact@ascendia-rh.fr</a>
+      <a href="https://www.linkedin.com" target="_blank" class="f-email" style="font-size:clamp(1rem,2vw,1.6rem);">Me contacter sur LinkedIn ↗</a>
     </div>
     <div class="f-bar">
       <div class="f-socials">
@@ -636,7 +584,7 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── CANVAS BG ──────────────────────────────────────────────
 function mkBG(id){
   const cv=document.getElementById(id);if(!cv)return;
@@ -1017,9 +965,3 @@ function toast(msg){
 
 <!--
   ─────────────────────────────────────────────
-  AJOUTE aussi dans ton menu <nav> :
-  <a href="#ressources" class="nav-link">Ressources</a>
-  ─────────────────────────────────────────────
--->
-</body>
-</html>
