@@ -279,6 +279,7 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
   <a href="#hero" class="nav-link on" data-s="hero">Accueil</a>
   <a href="#projects" class="nav-link" data-s="projects">Projets</a>
   <a href="#articles" class="nav-link" data-s="articles">Articles</a>
+  <a href="#ressources" class="nav-link">Ressources</a>
   <a href="#foot" class="nav-cta">Contact ↗</a>
 </nav>
 
@@ -903,5 +904,91 @@ function toast(msg){
   setTimeout(()=>t.style.opacity='0',2200);
 }
 </script>
+  <!-- ══ SECTION : PUBLICATIONS & RESSOURCES ══ -->
+<section class="sec" id="ressources">
+  <div class="wrap">
+
+    <div class="sec-eye">
+      <div class="sec-eye-line"></div>
+      <span class="sec-eye-txt">Publications & Outils</span>
+    </div>
+
+    <h2 class="sec-title">Ressources & <em>Outils RH</em></h2>
+    <p class="sec-sub">Guides pratiques et outils interactifs pour les professionnels des ressources humaines — lois, réformes, calculs de paie.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:1rem;">
+
+      <!-- CARTE 1 : eBook Droit RH 2026 -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;"
+        onmouseover="this.style.borderColor='rgba(124,111,255,.35)';this.style.transform='translateY(-4px)'"
+        onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.transform='none'">
+
+        <div style="position:absolute;top:1.25rem;right:1.25rem;background:linear-gradient(135deg,rgba(124,111,255,.2),rgba(167,139,250,.15));border:1px solid rgba(124,111,255,.25);border-radius:99px;padding:.25rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a78bfa;">Édition 2026</div>
+
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#7c6fff,#4e85bf,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;">📘</div>
+
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:-.02em;line-height:1.15;margin-bottom:.5rem;color:#f0f2ff;">
+          Droit RH 2026<br>
+          <span style="background:linear-gradient(135deg,#7c6fff,#4e85bf,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;font-size:1rem;">Le Guide Complet</span>
+        </div>
+
+        <p style="font-size:.78rem;color:rgba(200,210,255,.55);line-height:1.7;margin-bottom:1.25rem;">
+          SMIC 2026, Transparence salariale, Emploi seniors, Congé de naissance, CDD reconversion, IA & RH — toutes les réformes RH en clair. 9 chapitres.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem;">
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Guide PDF</span>
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">SMIC</span>
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Seniors</span>
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">IA & RH</span>
+        </div>
+
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+          <a href="droit_rh.html" class="btn-primary" style="font-size:.78rem;padding:.7rem 1.4rem;">Lire le guide →</a>
+          <a href="Droit_RH_2026_eBook.pdf" download class="btn-secondary" style="font-size:.78rem;padding:.7rem 1.4rem;">↓ PDF</a>
+        </div>
+      </div>
+
+      <!-- CARTE 2 : Générateur de Paie -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;"
+        onmouseover="this.style.borderColor='rgba(124,111,255,.35)';this.style.transform='translateY(-4px)'"
+        onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.transform='none'">
+
+        <div style="position:absolute;top:1.25rem;right:1.25rem;background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.08));border:1px solid rgba(52,211,153,.25);border-radius:99px;padding:.25rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#34d399;">Outil interactif</div>
+
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#7c5cfc,#5b8af7);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;">⚡</div>
+
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:-.02em;line-height:1.15;margin-bottom:.5rem;color:#f0f2ff;">
+          Moteur de Paie<br>
+          <span style="background:linear-gradient(135deg,#7c5cfc,#5b8af7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;font-size:1rem;">2026 — Architecture Robuste</span>
+        </div>
+
+        <p style="font-size:.78rem;color:rgba(200,210,255,.55);line-height:1.7;margin-bottom:1.25rem;">
+          Calculateur brut → net avec RGDU, cotisations 2026, heures supplémentaires et guide complet des libellés de fiche de paie.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem;">
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Simulateur</span>
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">RGDU</span>
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Cotisations</span>
+          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Heures sup.</span>
+        </div>
+
+        <div style="display:flex;gap:.75rem;">
+          <a href="generateur-paie.html" class="btn-primary" style="font-size:.78rem;padding:.7rem 1.4rem;">Ouvrir l'outil →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ══ FIN SECTION ══ -->
+
+<!--
+  ─────────────────────────────────────────────
+  AJOUTE aussi dans ton menu <nav> :
+  <a href="#ressources" class="nav-link">Ressources</a>
+  ─────────────────────────────────────────────
+-->
 </body>
 </html>
