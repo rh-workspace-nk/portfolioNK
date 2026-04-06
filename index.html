@@ -154,61 +154,38 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
 /* ══════════════════════════════════
    EDIT MODE
 ══════════════════════════════════ */
-#edit-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:8998;background:var(--grad);color:#fff;padding:.4rem 1.5rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;pointer-events:none}
-body.em #edit-bar{display:block}
-body.em nav{margin-top:1.7rem}
+
+
 
 /* Editable elements - style seulement en mode edition */
-body.em .editable{
-  outline:1px dashed rgba(124,111,255,.45)!important;
-  background:rgba(124,111,255,.06)!important;
-  border-radius:4px;
-  cursor:text;
-  transition:outline .15s,background .15s;
-}
-body.em .editable:hover{outline-color:#7c6fff!important;background:rgba(124,111,255,.1)!important;}
-body.em .editable:focus{outline:2px solid #7c6fff!important;background:rgba(124,111,255,.12)!important;}
+
+
+
 /* En dehors du mode edition : rien */
-.editable{outline:none!important;background:transparent!important;}
+
 
 /* Cards en mode edition - overlay desactivé */
-body.em .pcard-overlay{pointer-events:none!important;opacity:0!important;}
-body.em .pcard-pill{pointer-events:none!important;}
-body.em .halftone{pointer-events:none!important;}
-body.em .pcard{cursor:default}
+
+
+
+
 
 /* Bouton modifier flottant */
-#fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9000;display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;background:rgba(10,10,30,.95);border:1px solid var(--border);color:var(--tx);border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:.04em;box-shadow:0 4px 24px rgba(0,0,0,.7);transition:all .2s}
-body.em #fab{background:var(--grad);color:#fff;border-color:transparent}
-#fab:hover{transform:scale(1.04)}
-.fab-icon{font-size:1rem;line-height:1}
 
-/* Groupe d'actions export */
-#fab-wrap{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9000;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
-#exp-group{display:none;flex-direction:column;align-items:flex-end;gap:.4rem}
-body.em #exp-group{display:flex}
-.ebtn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;border-radius:99px;font-size:.68rem;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.5);letter-spacing:.02em;white-space:nowrap}
-.ebtn-nl{background:var(--grad);color:#fff;border:none}
-.ebtn-sv{background:rgba(15,15,35,.95);color:var(--tx);border:1px solid var(--border)}
 
-/* Toast */
-#toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:rgba(15,15,35,.95);border:1px solid rgba(124,111,255,.3);color:var(--tx);padding:.48rem 1.3rem;border-radius:99px;font-size:.72rem;font-weight:600;z-index:9999;opacity:0;transition:opacity .35s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5)}
 
 /* Add buttons */
 .add-pcard,.add-acard{display:none;align-items:center;justify-content:center;gap:.5rem;background:rgba(255,255,255,.02);border:1.5px dashed rgba(124,111,255,.25);border-radius:var(--radius);color:rgba(124,111,255,.6);font-size:.73rem;font-weight:600;cursor:pointer;transition:all .25s;font-family:var(--font)}
-body.em .add-pcard{display:flex;min-height:170px;grid-column:span 6}
-body.em .add-acard{display:flex;padding:.9rem 1.25rem;border-radius:36px}
+
+
 .add-pcard:hover,.add-acard:hover{background:rgba(124,111,255,.07);border-color:#7c6fff;color:#7c6fff}
 
 /* Card toolbar */
-.ct{display:none;position:absolute;top:.55rem;right:.55rem;gap:.3rem;z-index:30;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 1.1rem)}
-body.em .ct{display:flex}
-.ctb{height:26px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;font-size:.62rem;cursor:pointer;border:none;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.6);transition:all .15s;white-space:nowrap;padding:0 .5rem}
-.ct-img{background:rgba(10,10,30,.92);color:#a78bfa;border:1px solid rgba(167,139,250,.3);min-width:26px}
-.ct-img:hover{background:#a78bfa;color:#fff}
-.ct-lnk{background:rgba(10,10,30,.92);color:#7c6fff;border:1px solid rgba(124,111,255,.3);min-width:26px}
+
+
+
 .ct-lnk:hover{background:#7c6fff;color:#fff}
-.ct-del{background:rgba(10,10,30,.92);color:#ef4444;border:1px solid rgba(239,68,68,.3);min-width:26px}
+
 .ct-del:hover{background:#ef4444;color:#fff}
 
 /* Modal */
@@ -239,26 +216,25 @@ body.em .ct{display:flex}
 /* Fix GSAP - titre visible par défaut, GSAP anime depuis opacity initial */
 .hero-title, .hero-tag, .hero-role, .hero-desc, .hero-btns { opacity:1; }
 /* Edit mode */
-body.em .hero-title .ht1,
-body.em .hero-title .ht2 { color:#f0f2ff !important; text-shadow:none !important; }
+
 /* sec-title em et stat-num - sans webkit gradient */
 .sec-title em { color:#a78bfa; font-style:italic; }
 .stat-num { color:#a78bfa; font-family:'Playfair Display',serif; }
-body.em .sec-title em { color:#c8d0ff !important; }
-body.em .stat-num { color:#c8d0ff !important; }
+
+
 
 /* ── EDIT MODE TEXTES VISIBLES ── */
-body.em .editable { outline:1px dashed rgba(124,111,255,.5) !important; background:rgba(124,111,255,.07) !important; border-radius:3px; cursor:text; color:#f0f2ff !important; -webkit-text-fill-color:#f0f2ff !important; }
-body.em .editable:hover { outline-color:#a78bfa !important; }
-body.em .editable:focus { outline:2px solid #a78bfa !important; background:rgba(124,111,255,.12) !important; }
+
+
+
 .editable { outline:none !important; background:transparent !important; }
-body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:none !important; opacity:0 !important; }
+
 
 /* ── RESIZE TOOLBAR ── */
-.ct-sz-g{background:rgba(10,10,30,.92);border:1px solid rgba(255,255,255,.12);border-radius:99px;display:inline-flex;align-items:center;height:26px;overflow:hidden}
-.ct-sz{padding:0 .5rem;font-size:.55rem;font-weight:700;color:var(--muted);cursor:pointer;height:100%;display:flex;align-items:center;transition:all .15s;font-family:var(--font);user-select:none}
+
+
 .ct-sz:hover{background:rgba(124,111,255,.3);color:#fff}
-.ct-sz.on{background:#7c6fff;color:#fff}
+
 </style>
 </head>
 <body>
@@ -270,8 +246,6 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
   <div class="ld-bar-wrap"><div class="ld-bar" id="ld-bar"></div></div>
 </div>
 
-<!-- EDIT BAR -->
-<div id="edit-bar">✏️ MODE ÉDITION — Cliquez sur un texte pour le modifier · Image · Lien · Supprimer</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -285,10 +259,10 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
 <!-- HERO -->
 <section id="hero">
   <div class="hero-inner">
-    <p class="hero-tag editable" contenteditable="false">ASCENDIA RH</p>
-    <h1 class="hero-title"><span class="ht1 editable" contenteditable="false">Ascendia</span><span class="ht2 editable" contenteditable="false">RH</span></h1>
-    <p class="hero-role">Plateforme <b id="rw" class="editable" contenteditable="false" style="font-family:var(--serif);font-style:italic;font-weight:400;color:var(--tx)">RH unifiée</b></p>
-    <p class="hero-desc editable" contenteditable="false">Une expérience RH premium — recrutement, IA, pilotage et bien-être au travail, tout en un seul espace.</p>
+    <p class="hero-tag">ASCENDIA RH</p>
+    <h1 class="hero-title"><span class="ht1">Ascendia</span><span class="ht2">RH</span></h1>
+    <p class="hero-role">Plateforme <b id="rw" style="font-family:var(--serif);font-style:italic;font-weight:400;color:var(--tx)">RH unifiée</b></p>
+    <p class="hero-desc">Une expérience RH premium — recrutement, IA, pilotage et bien-être au travail, tout en un seul espace.</p>
     <div class="hero-btns">
       <a href="#projects" class="btn-primary" id="btn1">Découvrir la plateforme</a>
       <a href="#foot" class="btn-secondary" id="btn2">Nous contacter</a>
@@ -393,20 +367,20 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
 <section class="sec" id="articles">
   <div class="wrap">
     <div class="sec-eye"><div class="sec-eye-line"></div><span class="sec-eye-txt">Veille & Publications</span></div>
-    <h2 class="sec-title editable" contenteditable="false">Ressources <em>RH</em></h2>
-    <p class="sec-sub editable" contenteditable="false">Droit du travail, IA et transformation RH.</p>
+    <h2 class="sec-title">Ressources <em>RH</em></h2>
+    <p class="sec-sub">Droit du travail, IA et transformation RH.</p>
     <div class="art-list" id="art-list">
 
       <!-- Article 1 -->
       <div class="acard" data-id="a1">
         <div class="acard-cover" id="cov-a1">📋</div>
         <div class="acard-body">
-          <div class="acard-cat editable" contenteditable="false">Droit RH</div>
-          <div class="acard-title editable" contenteditable="false">Tout ce qui change en 2026 : RGDU, Transparence Salariale & Emploi des Seniors</div>
-          <div class="acard-summary editable" contenteditable="false">Un résumé des principales réformes RH de 2026 : ce que chaque DRH doit savoir et anticiper dès maintenant.</div>
+          <div class="acard-cat">Droit RH</div>
+          <div class="acard-title">Tout ce qui change en 2026 : RGDU, Transparence Salariale & Emploi des Seniors</div>
+          <div class="acard-summary">Un résumé des principales réformes RH de 2026 : ce que chaque DRH doit savoir et anticiper dès maintenant.</div>
           <div class="acard-meta">
-            <span class="acard-time editable" contenteditable="false">8 min</span>
-            <span class="acard-date editable" contenteditable="false">Avr. 2026</span>
+            <span class="acard-time">8 min</span>
+            <span class="acard-date">Avr. 2026</span>
           </div>
         </div>
         <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
@@ -420,12 +394,12 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
       <div class="acard" data-id="a2">
         <div class="acard-cover" id="cov-a2">🤖</div>
         <div class="acard-body">
-          <div class="acard-cat editable" contenteditable="false">IA & Management</div>
-          <div class="acard-title editable" contenteditable="false">L'IA peut-elle réduire la charge mentale des seniors au travail ?</div>
-          <div class="acard-summary editable" contenteditable="false">Exploration des usages de l'IA comme soutien cognitif pour les travailleurs seniors dans des environnements complexes.</div>
+          <div class="acard-cat">IA & Management</div>
+          <div class="acard-title">L'IA peut-elle réduire la charge mentale des seniors au travail ?</div>
+          <div class="acard-summary">Exploration des usages de l'IA comme soutien cognitif pour les travailleurs seniors dans des environnements complexes.</div>
           <div class="acard-meta">
-            <span class="acard-time editable" contenteditable="false">6 min</span>
-            <span class="acard-date editable" contenteditable="false">Jan. 2026</span>
+            <span class="acard-time">6 min</span>
+            <span class="acard-date">Jan. 2026</span>
           </div>
         </div>
         <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
@@ -439,12 +413,12 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
       <div class="acard" data-id="a3">
         <div class="acard-cover" id="cov-a3">🏢</div>
         <div class="acard-body">
-          <div class="acard-cat editable" contenteditable="false">Leadership</div>
-          <div class="acard-title editable" contenteditable="false">L'entreprise libre : modèle performant ou idéal inapplicable ?</div>
-          <div class="acard-summary editable" contenteditable="false">Analyse critique des modèles d'organisation sans hiérarchie et de leur applicabilité dans les grandes structures RH.</div>
+          <div class="acard-cat">Leadership</div>
+          <div class="acard-title">L'entreprise libre : modèle performant ou idéal inapplicable ?</div>
+          <div class="acard-summary">Analyse critique des modèles d'organisation sans hiérarchie et de leur applicabilité dans les grandes structures RH.</div>
           <div class="acard-meta">
-            <span class="acard-time editable" contenteditable="false">5 min</span>
-            <span class="acard-date editable" contenteditable="false">Mars 2026</span>
+            <span class="acard-time">5 min</span>
+            <span class="acard-date">Mars 2026</span>
           </div>
         </div>
         <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
@@ -458,12 +432,12 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
       <div class="acard" data-id="a4">
         <div class="acard-cover" id="cov-a4">🌱</div>
         <div class="acard-body">
-          <div class="acard-cat editable" contenteditable="false">ODD & RSE</div>
-          <div class="acard-title editable" contenteditable="false">Les 17 ODD intégrés dans la stratégie RH d'entreprise</div>
-          <div class="acard-summary editable" contenteditable="false">Comment aligner sa politique RH avec les Objectifs de Développement Durable pour un impact social concret et mesurable.</div>
+          <div class="acard-cat">ODD & RSE</div>
+          <div class="acard-title">Les 17 ODD intégrés dans la stratégie RH d'entreprise</div>
+          <div class="acard-summary">Comment aligner sa politique RH avec les Objectifs de Développement Durable pour un impact social concret et mesurable.</div>
           <div class="acard-meta">
-            <span class="acard-time editable" contenteditable="false">7 min</span>
-            <span class="acard-date editable" contenteditable="false">Jan. 2026</span>
+            <span class="acard-time">7 min</span>
+            <span class="acard-date">Jan. 2026</span>
           </div>
         </div>
         <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
@@ -472,11 +446,6 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
           <button class="ctb ct-del" onclick="delCard('a4')">✕</button>
         </div>
       </div>
-
-      <button class="add-acard" onclick="oAdd('article')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        Ajouter un article
-      </button>
     </div>
   </div>
 </section>
@@ -505,86 +474,16 @@ body.em .pcard-overlay, body.em .pcard-pill, body.em .halftone { pointer-events:
         <a href="#" class="f-soc">Notion</a>
         <a href="#" class="f-soc">GitHub</a>
       </div>
-      <div class="avail"><div class="avail-dot"></div><span class="editable" contenteditable="false">Disponible pour collaborations</span></div>
-      <span class="f-copy editable" contenteditable="false">© 2026 Ascendia RH</span>
+      <div class="avail"><div class="avail-dot"></div><span>Disponible pour collaborations</span></div>
+      <span class="f-copy">© 2026 Ascendia RH</span>
     </div>
   </div>
 </section>
 
-<!-- FAB -->
-<div id="fab-wrap">
-  <div id="exp-group">
-    <button class="ebtn ebtn-nl" onclick="exportNL()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Exporter pour Netlify
-    </button>
-    <button class="ebtn ebtn-sv" onclick="saveEd()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v14a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-      Sauvegarder
-    </button>
-  </div>
-  <button id="fab" onclick="toggleEM()">
-    <span class="fab-icon">✏️</span>
-    <span id="fab-lbl">Modifier</span>
-  </button>
-</div>
-
 <div id="toast"></div>
 
-<!-- MODAL LIEN -->
-<div class="modal" id="m-lnk">
-  <div class="mbox">
-    <h3>Ajouter un lien</h3>
-    <p>URL vers votre projet ou fichier.</p>
-    <div class="mfg"><label>URL</label><input type="url" id="lnk-url" placeholder="https://mon-projet.netlify.app"></div>
-    <div class="mfg">
-      <label>Ou importer un fichier</label>
-      <input type="file" id="lnk-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xlsx" style="display:none" onchange="onFile(this)">
-      <button class="mup" type="button" onclick="document.getElementById('lnk-file').click()">📎 <span id="lnk-fname">PDF, Word, PowerPoint, Excel</span></button>
-    </div>
-    <div class="macts">
-      <button class="mcancel" onclick="closeM('m-lnk')">Annuler</button>
-      <button class="msave" onclick="saveLnk()">Enregistrer</button>
-    </div>
-  </div>
-</div>
 
-<!-- MODAL IMAGE PROJET -->
-<div class="modal" id="m-img">
-  <div class="mbox">
-    <h3>Image de couverture</h3>
-    <p>JPG, PNG, WebP depuis votre bureau.</p>
-    <div class="mfg">
-      <input type="file" id="img-file" accept="image/*" style="display:none" onchange="onImgFile(this)">
-      <div class="iprev-wrap"><img class="iprev" id="img-prev" src="" alt=""></div>
-      <button class="mup" style="margin-top:.5rem" type="button" onclick="document.getElementById('img-file').click()">🖼 <span id="img-fname">Choisir une image</span></button>
-    </div>
-    <div class="macts">
-      <button class="mcancel" onclick="closeM('m-img')">Annuler</button>
-      <button class="msave" onclick="saveImg()">Appliquer</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL AJOUT -->
-<div class="modal" id="m-add">
-  <div class="mbox">
-    <h3 id="add-title">Nouveau projet</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
-      <div class="mfg"><label>Catégorie</label><input type="text" id="add-type" placeholder="SIRH / Recherche"></div>
-      <div class="mfg"><label>Emoji</label><input type="text" id="add-emoji" placeholder="🚀" maxlength="4"></div>
-    </div>
-    <div class="mfg"><label>Titre</label><input type="text" id="add-titl" placeholder="Nom du projet ou article"></div>
-    <div class="mfg"><label>Résumé <span style="opacity:.5">(optionnel)</span></label><textarea id="add-desc" rows="2" placeholder="Quelques mots..."></textarea></div>
-    <div class="mfg"><label>URL <span style="opacity:.5">(optionnel)</span></label><input type="url" id="add-url" placeholder="https://"></div>
-    <div class="macts">
-      <button class="mcancel" onclick="closeM('m-add')">Annuler</button>
-      <button class="msave" onclick="saveAdd()">Ajouter</button>
-    </div>
-  </div>
-</div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── CANVAS BG ──────────────────────────────────────────────
 function mkBG(id){
   const cv=document.getElementById(id);if(!cv)return;
@@ -677,291 +576,9 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 
-// ── RESIZE CARTE ──
-function rzCard(btn, cls, id){
-  const card = document.querySelector('[data-id="'+id+'"]');
-  if(!card) return;
-  ['g4','g5','g6','g7','g8','g9','g12'].forEach(c => card.classList.remove(c));
-  card.classList.add(cls);
-  btn.closest('.ct-sz-g').querySelectorAll('.ct-sz').forEach(b => b.classList.toggle('on', b === btn));
-}
-
-// ── CARD CLICK ──────────────────────────────────────────────
-function bindClicks(){
-  document.querySelectorAll('.pcard,.acard').forEach(c=>{
-    c.removeEventListener('click',cardClick);
-    if(c.dataset.href)c.addEventListener('click',cardClick);
-  });
-}
-function cardClick(e){
-  if(EM)return;
-  const url=e.currentTarget.dataset.href;if(!url)return;
-  const dl=e.currentTarget.dataset.dl;
-  if(dl){const a=document.createElement('a');a.href=url;a.download=dl;document.body.appendChild(a);a.click();a.remove();}
-  else window.open(url,'_blank','noopener noreferrer');
-}
-bindClicks();
-
-// ── EDIT MODE ───────────────────────────────────────────────
-let EM=false;
-function toggleEM(){
-  EM=!EM;
-  document.body.classList.toggle('em',EM);
-  document.getElementById('fab-lbl').textContent=EM?'✅ Terminer':'✏️ Modifier';
-  document.querySelectorAll('.editable').forEach(el=>{
-    el.contentEditable=EM?'true':'false';
-  });
-  if(EM) toast('Cliquez sur un texte pour le modifier');
-}
-
-// ── DELETE ──────────────────────────────────────────────────
-function delCard(id){
-  const el=document.querySelector('[data-id="'+id+'"]');
-  if(el&&confirm('Supprimer cet élément ?'))el.remove();
-}
-
-// ── LINK MODAL ──────────────────────────────────────────────
-let CT=null,upFile=null;
-function oLnk(id){CT=id;document.getElementById('lnk-url').value='';document.getElementById('lnk-fname').textContent='PDF, Word, PowerPoint, Excel';upFile=null;openM('m-lnk');}
-function onFile(input){
-  const f=input.files[0];if(!f)return;
-  if(f.size>15*1024*1024){alert('Fichier trop lourd (max 15 Mo).');return;}
-  const rd=new FileReader();
-  rd.onload=ev=>{upFile={dataUrl:ev.target.result,name:f.name};document.getElementById('lnk-fname').textContent=f.name;};
-  rd.readAsDataURL(f);
-}
-function saveLnk(){
-  const url=upFile?upFile.dataUrl:document.getElementById('lnk-url').value.trim();
-  if(!url){closeM('m-lnk');return;}
-  const card=document.querySelector('[data-id="'+CT+'"]');
-  if(card){card.dataset.href=url;if(upFile)card.dataset.dl=upFile.name;else delete card.dataset.dl;bindClicks();}
-  upFile=null;closeM('m-lnk');toast('Lien enregistré !');
-}
-
-// ── IMAGE PROJET ────────────────────────────────────────────
-let upImg=null,imgTgt=null;
-function oImg(id){imgTgt=id;upImg=null;document.getElementById('img-file').value='';document.getElementById('img-prev').classList.remove('on');document.getElementById('img-fname').textContent='Choisir une image';openM('m-img');}
-function onImgFile(input){
-  const f=input.files[0];if(!f)return;
-  const rd=new FileReader();
-  rd.onload=ev=>{upImg=ev.target.result;const p=document.getElementById('img-prev');p.src=upImg;p.classList.add('on');document.getElementById('img-fname').textContent=f.name;};
-  rd.readAsDataURL(f);
-}
-function saveImg(){
-  if(!upImg){closeM('m-img');return;}
-  const card=document.querySelector('[data-id="'+imgTgt+'"]');
-  if(card){
-    const thumb=card.querySelector('.pcard-thumb');
-    if(thumb){let bg=thumb.querySelector('.pcard-thumb-bg');if(!bg){bg=document.createElement('img');bg.className='pcard-thumb-bg';thumb.prepend(bg);}bg.src=upImg;const em=thumb.querySelector('.pcard-emoji');if(em)em.style.display='none';}
-  }
-  upImg=null;closeM('m-img');toast('Image appliquée !');
-}
-
-// ── IMAGE ARTICLE ────────────────────────────────────────────
-function oImgArt(id){
-  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
-  inp.onchange=e=>{
-    const f=e.target.files[0];if(!f)return;
-    const rd=new FileReader();
-    rd.onload=ev=>{
-      const cov=document.getElementById('cov-'+id);
-      if(cov){cov.innerHTML='<img src="'+ev.target.result+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px">';cov.style.position='relative';}
-    };
-    rd.readAsDataURL(f);
-  };
-  inp.click();
-}
-
-// ── ADD ──────────────────────────────────────────────────────
-let addKind='project',IDX=100;
-function oAdd(kind){
-  addKind=kind;
-  document.getElementById('add-title').textContent=kind==='project'?'Nouveau projet':'Nouvel article';
-  ['add-type','add-emoji','add-titl','add-desc','add-url'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  openM('m-add');
-}
-function saveAdd(){
-  const type=document.getElementById('add-type').value.trim()||'Projet';
-  const emoji=document.getElementById('add-emoji').value.trim()||'🚀';
-  const titl=document.getElementById('add-titl').value.trim()||'Nouveau';
-  const desc=document.getElementById('add-desc').value.trim();
-  const url=document.getElementById('add-url').value.trim();
-  const id='x'+(IDX++);
-  const grads=['linear-gradient(135deg,#0d1b2a,#0e2d3d)','linear-gradient(135deg,#1a0d2e,#2d1060)','linear-gradient(135deg,#0d1a0d,#122012)','linear-gradient(135deg,#1a0d1a,#2a102a)'];
-  const bg=grads[IDX%grads.length];
-  if(addKind==='project'){
-    const html=`<div class="pcard g6${url?' linked':''}" data-id="${id}"${url?' data-href="'+url+'"':''}>
-      <div class="pcard-thumb" style="background:${bg}"><span class="pcard-emoji">${emoji}</span><div class="halftone"></div>
-      <div class="pcard-overlay"><div class="pcard-pill">Voir <em>${titl}</em></div></div></div>
-      <div class="ct">
-        <button class="ctb ct-img" onclick="oImg('${id}')" title="Image">🖼</button>
-        <button class="ctb ct-lnk" onclick="oLnk('${id}')" title="Lien">🔗</button>
-        <button class="ctb ct-del" onclick="delCard('${id}')">✕</button>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-type editable" contenteditable="true">${type}</div>
-        <h3 class="pcard-title editable" contenteditable="true">${titl}</h3>
-        ${desc?`<p class="pcard-desc editable" contenteditable="true">${desc}</p>`:''}
-      </div></div>`;
-    document.querySelector('.add-pcard').insertAdjacentHTML('beforebegin',html);
-  } else {
-    const html=`<div class="acard${url?' linked':''}" data-id="${id}"${url?' data-href="'+url+'"':''}>
-      <div class="acard-cover" id="cov-${id}">${emoji}</div>
-      <div class="acard-body">
-        <div class="acard-cat editable" contenteditable="true">${type}</div>
-        <div class="acard-title editable" contenteditable="true">${titl}</div>
-        ${desc?`<div class="acard-summary editable" contenteditable="true">${desc}</div>`:''}
-        <div class="acard-meta">
-          <span class="acard-time editable" contenteditable="true">5 min</span>
-          <span class="acard-date editable" contenteditable="true">${new Date().toLocaleDateString('fr-FR',{month:'short',year:'numeric'})}</span>
-        </div>
-      </div>
-      <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
-        <button class="ctb ct-img" onclick="oImgArt('${id}')" title="Photo">🖼</button>
-        <button class="ctb ct-lnk" onclick="oLnk('${id}')" title="Lien">🔗</button>
-        <button class="ctb ct-del" onclick="delCard('${id}')">✕</button>
-      </div></div>`;
-    document.querySelector('.add-acard').insertAdjacentHTML('beforebegin',html);
-  }
-  bindClicks();closeM('m-add');toast('Ajouté !');
-}
-
-// ── EXPORT ──────────────────────────────────────────────────
-function saveEd(){
-  document.querySelectorAll('.editable').forEach(el=>el.contentEditable='false');
-  document.body.classList.remove('em');EM=false;
-  document.getElementById('fab-lbl').textContent='Modifier';
-  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Ascendia_RH_saved.html';a.click();
-  toast('Sauvegardé !');
-}
-function exportNL(){
-  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();
-  toast('Prêt pour Netlify !');
-}
-
-// ── MODAL HELPERS ───────────────────────────────────────────
-function openM(id){document.getElementById(id).classList.add('on');}
-function closeM(id){document.getElementById(id).classList.remove('on');}
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on');}));
-
 // ── TOAST ───────────────────────────────────────────────────
 function toast(msg){
   const t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';
   setTimeout(()=>t.style.opacity='0',2200);
 }
 </script>
-  <!-- ══ SECTION : PUBLICATIONS & RESSOURCES ══ -->
-<section class="sec" id="ressources">
-  <div class="wrap">
- 
-    <div class="sec-eye">
-      <div class="sec-eye-line"></div>
-      <span class="sec-eye-txt">Publications & Outils</span>
-    </div>
- 
-    <h2 class="sec-title">Ressources & <em>Outils RH</em></h2>
-    <p class="sec-sub">Guides pratiques, outils interactifs et plateforme RH — tout pour les professionnels des ressources humaines.</p>
- 
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:1rem;">
- 
-      <!-- CARTE 1 : Plateforme AxioRH -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;"
-        onmouseover="this.style.borderColor='rgba(45,126,246,.4)';this.style.transform='translateY(-4px)'"
-        onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.transform='none'">
- 
-        <div style="position:absolute;top:1.25rem;right:1.25rem;background:linear-gradient(135deg,rgba(45,126,246,.2),rgba(91,155,255,.1));border:1px solid rgba(45,126,246,.3);border-radius:99px;padding:.25rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5b9bff;">Plateforme SaaS</div>
- 
-        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#2d7ef6,#5b9bff);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;">🏛️</div>
- 
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:-.02em;line-height:1.15;margin-bottom:.5rem;color:#f0f2ff;">
-          AxioRH<br>
-          <span style="background:linear-gradient(135deg,#2d7ef6,#5b9bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;font-size:1rem;">Plateforme RH Unifiée</span>
-        </div>
- 
-        <p style="font-size:.78rem;color:rgba(200,210,255,.55);line-height:1.7;margin-bottom:1.25rem;">
-          Gestion RH complète — congés, paie, recrutement, formations, assistant IA. Espace RH, salarié et admin. Données en temps réel.
-        </p>
- 
-        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem;">
-          <span style="background:rgba(45,126,246,.1);border:1px solid rgba(45,126,246,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#5b9bff;">Congés</span>
-          <span style="background:rgba(45,126,246,.1);border:1px solid rgba(45,126,246,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#5b9bff;">Recrutement</span>
-          <span style="background:rgba(45,126,246,.1);border:1px solid rgba(45,126,246,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#5b9bff;">Assistant IA</span>
-          <span style="background:rgba(45,126,246,.1);border:1px solid rgba(45,126,246,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#5b9bff;">Démo libre</span>
-        </div>
- 
-        <div style="display:flex;gap:.75rem;">
-          <a href="axiorh.html" class="btn-primary" style="font-size:.78rem;padding:.7rem 1.4rem;">Voir la démo →</a>
-        </div>
-      </div>
- 
-      <!-- CARTE 2 : eBook Droit RH 2026 -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;"
-        onmouseover="this.style.borderColor='rgba(124,111,255,.35)';this.style.transform='translateY(-4px)'"
-        onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.transform='none'">
- 
-        <div style="position:absolute;top:1.25rem;right:1.25rem;background:linear-gradient(135deg,rgba(124,111,255,.2),rgba(167,139,250,.15));border:1px solid rgba(124,111,255,.25);border-radius:99px;padding:.25rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a78bfa;">Édition 2026</div>
- 
-        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#7c6fff,#4e85bf,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;">📘</div>
- 
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:-.02em;line-height:1.15;margin-bottom:.5rem;color:#f0f2ff;">
-          Droit RH 2026<br>
-          <span style="background:linear-gradient(135deg,#7c6fff,#4e85bf,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;font-size:1rem;">Le Guide Complet</span>
-        </div>
- 
-        <p style="font-size:.78rem;color:rgba(200,210,255,.55);line-height:1.7;margin-bottom:1.25rem;">
-          SMIC 2026, Transparence salariale, Emploi seniors, Congé de naissance, CDD reconversion, IA & RH — 9 chapitres.
-        </p>
- 
-        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem;">
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Guide PDF</span>
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">SMIC</span>
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Seniors</span>
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">IA & RH</span>
-        </div>
- 
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
-          <a href="droit_rh.html" class="btn-primary" style="font-size:.78rem;padding:.7rem 1.4rem;">Lire le guide →</a>
-          <a href="Droit_RH_2026_eBook.pdf" download class="btn-secondary" style="font-size:.78rem;padding:.7rem 1.4rem;">↓ PDF</a>
-        </div>
-      </div>
- 
-      <!-- CARTE 3 : Générateur de Paie -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;"
-        onmouseover="this.style.borderColor='rgba(52,211,153,.3)';this.style.transform='translateY(-4px)'"
-        onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.transform='none'">
- 
-        <div style="position:absolute;top:1.25rem;right:1.25rem;background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.08));border:1px solid rgba(52,211,153,.25);border-radius:99px;padding:.25rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#34d399;">Outil interactif</div>
- 
-        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#7c5cfc,#5b8af7);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;">⚡</div>
- 
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:-.02em;line-height:1.15;margin-bottom:.5rem;color:#f0f2ff;">
-          Moteur de Paie<br>
-          <span style="background:linear-gradient(135deg,#7c5cfc,#5b8af7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;font-size:1rem;">2026 — Architecture Robuste</span>
-        </div>
- 
-        <p style="font-size:.78rem;color:rgba(200,210,255,.55);line-height:1.7;margin-bottom:1.25rem;">
-          Calculateur brut → net avec RGDU, cotisations 2026, heures supplémentaires et guide complet des libellés de fiche de paie.
-        </p>
- 
-        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem;">
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Simulateur</span>
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">RGDU</span>
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Cotisations</span>
-          <span style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);border-radius:99px;padding:.2rem .65rem;font-size:.6rem;color:#a78bfa;">Heures sup.</span>
-        </div>
- 
-        <div style="display:flex;gap:.75rem;">
-          <a href="generateur-paie.html" class="btn-primary" style="font-size:.78rem;padding:.7rem 1.4rem;">Ouvrir l'outil →</a>
-        </div>
-      </div>
- 
-    </div>
-  </div>
-</section>
- 
-<!-- ══ FIN SECTION ══ -->
-
-<!--
-  ─────────────────────────────────────────────
