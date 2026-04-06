@@ -283,7 +283,7 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
     <div class="grid" id="bento">
 
       <!-- Ressource 1 : AxioRH -->
-      <div class="pcard g7" data-id="p1">
+      <div class="pcard g4" data-id="p1">
         <a href="axiorh.html" style="display:contents">
         <div class="pcard-thumb" style="background:linear-gradient(135deg,#050f28,#0a2050)">
           <span class="pcard-emoji">🏛️</span>
@@ -301,7 +301,7 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
       </div>
 
       <!-- Ressource 2 : Droit RH 2026 -->
-      <div class="pcard g5" data-id="p2">
+      <div class="pcard g4" data-id="p2">
         <a href="droit_rh.html" style="display:contents">
         <div class="pcard-thumb" style="background:linear-gradient(135deg,#120d2a,#1e1060)">
           <span class="pcard-emoji">📘</span>
@@ -322,7 +322,7 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
       </div>
 
       <!-- Ressource 3 : Générateur de paie -->
-      <div class="pcard g5" data-id="p3">
+      <div class="pcard g4" data-id="p3">
         <a href="generateur-paie.html" style="display:contents">
         <div class="pcard-thumb" style="background:linear-gradient(135deg,#0d1a18,#0d2820)">
           <span class="pcard-emoji">⚡</span>
@@ -383,11 +383,6 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
             <span class="acard-date">Avr. 2026</span>
           </div>
         </div>
-        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
-          <button class="ctb ct-img" onclick="oImgArt('a1')" title="Photo">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('a1')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('a1')">✕</button>
-        </div>
       </div>
 
       <!-- Article 2 -->
@@ -401,11 +396,6 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
             <span class="acard-time">6 min</span>
             <span class="acard-date">Jan. 2026</span>
           </div>
-        </div>
-        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
-          <button class="ctb ct-img" onclick="oImgArt('a2')" title="Photo">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('a2')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('a2')">✕</button>
         </div>
       </div>
 
@@ -421,11 +411,6 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
             <span class="acard-date">Mars 2026</span>
           </div>
         </div>
-        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
-          <button class="ctb ct-img" onclick="oImgArt('a3')" title="Photo">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('a3')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('a3')">✕</button>
-        </div>
       </div>
 
       <!-- Article 4 -->
@@ -439,11 +424,6 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,.6)}
             <span class="acard-time">7 min</span>
             <span class="acard-date">Jan. 2026</span>
           </div>
-        </div>
-        <div class="ct" style="position:absolute;top:.4rem;right:.4rem">
-          <button class="ctb ct-img" onclick="oImgArt('a4')" title="Photo">🖼</button>
-          <button class="ctb ct-lnk" onclick="oLnk('a4')" title="Lien">🔗</button>
-          <button class="ctb ct-del" onclick="delCard('a4')">✕</button>
         </div>
       </div>
     </div>
@@ -582,3 +562,162 @@ function toast(msg){
   setTimeout(()=>t.style.opacity='0',2200);
 }
 </script>
+<!-- ══ ASSISTANT IA RH ══ -->
+<style>
+/* FAB */
+#ai-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:600;width:52px;height:52px;border-radius:50%;background:var(--grad);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;box-shadow:0 8px 32px rgba(124,111,255,.45);transition:transform .25s,box-shadow .25s}
+#ai-fab:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(124,111,255,.6)}
+.ai-fab-pulse{position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(124,111,255,.35);animation:aipulse 2.2s ease-in-out infinite}
+@keyframes aipulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.2);opacity:0}}
+
+/* PANEL */
+#ai-panel{position:fixed;bottom:5.5rem;right:1.75rem;z-index:601;width:340px;max-height:520px;background:#0a0c1e;border:1px solid rgba(124,111,255,.2);border-radius:20px;display:none;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.7);overflow:hidden}
+#ai-panel.open{display:flex;animation:aipanelin .25s ease}
+@keyframes aipanelin{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+
+/* HEADER */
+#ai-header{padding:.85rem 1rem;border-bottom:1px solid rgba(124,111,255,.12);display:flex;align-items:center;justify-content:space-between;background:rgba(124,111,255,.05);flex-shrink:0}
+
+/* MESSAGES */
+#ai-msgs{flex:1;overflow-y:auto;padding:.85rem;display:flex;flex-direction:column;gap:.75rem;scrollbar-width:thin;scrollbar-color:rgba(124,111,255,.2) transparent}
+.ai-msg{display:flex;flex-direction:column}
+.ai-msg-user{align-items:flex-end}
+.ai-msg-bot{align-items:flex-start}
+.ai-bubble{max-width:88%;padding:.65rem .9rem;border-radius:14px;font-size:.78rem;line-height:1.6}
+.ai-msg-bot .ai-bubble{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);color:rgba(200,210,255,.85);border-radius:4px 14px 14px 14px}
+.ai-msg-user .ai-bubble{background:linear-gradient(135deg,rgba(124,111,255,.25),rgba(78,133,191,.2));border:1px solid rgba(124,111,255,.2);color:#f0f2ff;border-radius:14px 4px 14px 14px}
+.ai-typing{display:flex;gap:4px;padding:.5rem .9rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:4px 14px 14px 14px;width:fit-content}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:rgba(124,111,255,.7);animation:aidot 1.2s ease-in-out infinite}
+.ai-dot:nth-child(2){animation-delay:.2s}.ai-dot:nth-child(3){animation-delay:.4s}
+@keyframes aidot{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+.ai-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+.ai-chip{font-size:.63rem;padding:.28rem .7rem;border-radius:99px;background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);color:#a78bfa;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.ai-chip:hover{background:rgba(124,111,255,.2)}
+
+/* INPUT */
+#ai-input-row{display:flex;gap:.5rem;padding:.7rem .85rem;border-top:1px solid rgba(124,111,255,.1);flex-shrink:0;align-items:flex-end}
+#ai-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(124,111,255,.15);border-radius:10px;color:#f0f2ff;font-size:.76rem;padding:.55rem .75rem;outline:none;resize:none;font-family:var(--font);min-height:36px;max-height:90px;line-height:1.5}
+#ai-inp:focus{border-color:rgba(124,111,255,.4)}
+#ai-send{width:34px;height:34px;border-radius:9px;background:var(--grad);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s}
+#ai-send:hover{opacity:.85}
+@media(max-width:500px){#ai-panel{width:calc(100vw - 2rem);right:1rem}}
+</style>
+
+<div id="ai-fab" onclick="toggleAI()">
+  <div class="ai-fab-pulse"></div>
+  <span>✦</span>
+</div>
+
+<div id="ai-panel">
+  <div id="ai-header">
+    <div style="display:flex;align-items:center;gap:.65rem">
+      <div style="width:30px;height:30px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0">A</div>
+      <div>
+        <div style="font-size:.8rem;font-weight:700;color:#f0f2ff">Assistant RH</div>
+        <div style="font-size:.62rem;color:rgba(200,210,255,.5);display:flex;align-items:center;gap:.3rem">
+          <span style="width:6px;height:6px;border-radius:50%;background:#34d399;display:inline-block"></span>En ligne
+        </div>
+      </div>
+    </div>
+    <button onclick="toggleAI()" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.06);border:none;color:rgba(200,210,255,.5);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">✕</button>
+  </div>
+
+  <div id="ai-msgs">
+    <div class="ai-msg ai-msg-bot">
+      <div class="ai-bubble">Bonjour ! 👋 Je suis votre assistant RH. Posez-moi vos questions sur le droit du travail, la paie, les réformes 2026 ou la gestion RH.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="sendChip(this)">SMIC 2026 ?</button>
+        <button class="ai-chip" onclick="sendChip(this)">Transparence salariale</button>
+        <button class="ai-chip" onclick="sendChip(this)">Congé de naissance</button>
+        <button class="ai-chip" onclick="sendChip(this)">RGDU vs Fillon</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ai-input-row">
+    <textarea id="ai-inp" placeholder="Votre question RH..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+    <button id="ai-send" onclick="sendAI()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ── ASSISTANT IA RH ─────────────────────────────────────────
+let aiOpen = false;
+const aiHistory = [];
+
+const AI_SYSTEM = `Tu es un assistant RH expert francophone spécialisé dans le droit du travail français, la paie, le recrutement et la gestion des ressources humaines. Tu travailles pour le portfolio Ascendia RH de N. Keddari, étudiante en Master RH à Montpellier.
+
+Réponds toujours en français, de manière claire, précise et professionnelle. Utilise des émojis avec modération. Pour les sujets juridiques, rappelle que tes réponses sont informatives et non des conseils juridiques opposables.
+
+Tu connais parfaitement les réformes 2026 : SMIC à 12,02€/h, RGDU (ex-réduction Fillon), transparence salariale (directive EU 2023/970), emploi seniors (loi n°2025-989), congé de naissance (effectif juillet 2026), CDD reconversion (décret 2026-39). Sois concis (5-8 lignes max sauf si on te demande un développement).`;
+
+function toggleAI(){
+  aiOpen = !aiOpen;
+  document.getElementById('ai-panel').classList.toggle('open', aiOpen);
+}
+
+function sendChip(btn){
+  document.getElementById('ai-inp').value = btn.textContent;
+  btn.closest('.ai-chips')?.remove();
+  sendAI();
+}
+
+async function sendAI(){
+  const inp = document.getElementById('ai-inp');
+  const msg = inp.value.trim();
+  if(!msg) return;
+
+  inp.value = '';
+  inp.style.height = 'auto';
+
+  addMsg(msg, 'user');
+  aiHistory.push({role:'user', content: msg});
+  const typing = addTyping();
+
+  try {
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ messages: aiHistory })
+    });
+    if(!res.ok) throw new Error('Erreur serveur');
+    const data = await res.json();
+    const reply = data.reply || "Désolé, je n'ai pas pu répondre.";
+    typing.remove();
+    addMsg(reply, 'bot');
+    aiHistory.push({role:'assistant', content: reply});
+  } catch(e) {
+    typing.remove();
+    addMsg("⚠️ Une erreur est survenue. Réessayez dans un instant.", 'bot');
+  }
+}
+
+function addMsg(text, role){
+  const msgs = document.getElementById('ai-msgs');
+  const div = document.createElement('div');
+  div.className = `ai-msg ai-msg-${role}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'ai-bubble';
+  bubble.textContent = text;
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addTyping(){
+  const msgs = document.getElementById('ai-msgs');
+  const div = document.createElement('div');
+  div.className = 'ai-msg ai-msg-bot';
+  div.innerHTML = '<div class="ai-typing"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+</script>
+</body>
+</html>
